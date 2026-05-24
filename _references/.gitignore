@@ -1,0 +1,4 @@
+# Ignore all files in this folder except this .gitignore
+*
+!.gitignore
+!MTCH MENU QR Low-Res.pdf
