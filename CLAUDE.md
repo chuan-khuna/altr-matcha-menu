@@ -53,6 +53,7 @@ src/
   layouts/
     Layout.astro          # root HTML shell (<html>, <head>, global meta)
   components/
+    FontLoader.astro      # injects <Font> tags for Astro's Fonts API
     sections/             # one Astro component per page section
       Hero.astro
       About.astro
@@ -71,6 +72,32 @@ public/                   # static assets served at /
 - Section components live in `src/components/sections/` — each section is its own `.astro` file.
 - shadcn React components live in `src/components/ui/` and need a `client:*` directive when used in `.astro` files.
 - Static content (menu items, opening hours, contact info) lives in `src/data/`.
+
+## Fonts
+
+Fonts are loaded via **Astro's built-in Fonts API** — no `@import` from external CDNs. Fonts are downloaded at build time, cached, and served from the site's own domain.
+
+### Pattern
+
+1. **`astro.config.mjs`** — declare each font with a provider (e.g. `fontProviders.google()`). Name `cssVariable` after the font itself, not its role.
+
+2. **`src/components/FontLoader.astro`** — renders `<Font cssVariable="..." />` tags inside `<head>`. Add `preload` for fonts used above the fold.
+
+3. **`src/styles/presets/matcha.css`** — maps font-name variables to semantic role variables:
+   ```css
+   --font-<role>: var(--font-<name>);
+   ```
+
+4. **Rest of the codebase** references only the role variables (e.g. `var(--font-display)`) and never changes when fonts are swapped.
+
+### Swapping a font
+
+Change the entry in `astro.config.mjs`, update the `<Font>` tag in `FontLoader.astro`, and remap the role alias in `matcha.css`. Nothing else needs to change.
+
+### Cache
+
+- Dev: `.astro/fonts/` — delete to force re-download.
+- Build: `node_modules/.astro/fonts/`.
 
 ## Troubleshooting display and animation issues
 

@@ -56,8 +56,9 @@
 
     /* ─── project: typography ─── */
 
-    --font-display: 'DM Serif Display', Georgia, 'Times New Roman', serif;
-    --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
+    /* font-name variables injected by FontLoader.astro via Astro's Fonts API */
+    --font-display: var(--font-dm-serif-display);
+    --font-mono:    var(--font-ibm-plex-mono);
 
     --text-xs:       0.75rem;
     --text-sm:       0.875rem;
