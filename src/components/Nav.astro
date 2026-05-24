@@ -1,4 +1,6 @@
 ---
+import { nav } from '@/data/site';
+
 interface Props {
   showBack?: boolean;
 }
@@ -11,9 +13,9 @@ const { showBack = false } = Astro.props;
       <a href="/#menu" class="nav__back mono">← Back to menu</a>
     ) : (
       <ul class="nav__links mono">
-        <li><a href="#menu">Menu</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
+        {nav.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
       </ul>
     )}
   </div>

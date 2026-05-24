@@ -1,17 +1,5 @@
 ---
-const hours = [
-  { day: 'Mon — Fri', open: '08:00 — 18:00' },
-  { day: 'Sat',       open: '09:00 — 19:00' },
-  { day: 'Sun',       open: '09:00 — 17:00' },
-];
-
-const address = {
-  line1: '14/2 Soi Sukhumvit 49',
-  line2: 'Khlong Tan Nuea, Watthana',
-  city:  'Bangkok 10110',
-};
-
-const mapsHref = 'https://maps.google.com/?q=ALTR+Matcha+Bangkok';
+import { address, hours, reach } from '@/data/site';
 ---
 <section id="contact" class="contact page-gutter" aria-label="Visit ALTR">
   <div class="contact__inner">
@@ -28,7 +16,7 @@ const mapsHref = 'https://maps.google.com/?q=ALTR+Matcha+Bangkok';
           {address.line2}<br />
           {address.city}
         </address>
-        <a href={mapsHref} class="contact__link mono" target="_blank" rel="noopener noreferrer">
+        <a href={address.mapsHref} class="contact__link mono" target="_blank" rel="noopener noreferrer">
           Open in Google Maps →
         </a>
       </div>
@@ -50,16 +38,14 @@ const mapsHref = 'https://maps.google.com/?q=ALTR+Matcha+Bangkok';
       <div class="contact__block fade-up">
         <p class="contact__label mono">Reach</p>
         <ul class="contact__reach mono">
-          <li>
-            <a href="https://instagram.com/altr.matcha" target="_blank" rel="noopener noreferrer">
-              @altr.matcha
-            </a>
-            <span class="contact__reach-meta">— Instagram</span>
-          </li>
-          <li>
-            <a href="mailto:hello@altr.cafe">hello@altr.cafe</a>
-            <span class="contact__reach-meta">— Email</span>
-          </li>
+          {reach.map((item) => (
+            <li>
+              <a href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                {item.display}
+              </a>
+              <span class="contact__reach-meta">— {item.label}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
