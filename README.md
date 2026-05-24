@@ -1,43 +1,62 @@
-# Astro Starter Kit: Minimal
+# Matcha — Landing Page
 
-```sh
-npm create astro@latest -- --template minimal
-```
+A matcha cafe menu landing page built with Astro 6, Tailwind CSS, shadcn/ui, and TypeScript.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Stack
 
-## 🚀 Project Structure
+- **Astro 6** — file-based routing, content collections, MDX
+- **Tailwind CSS** — utility-first styling
+- **shadcn/ui** — React component library
+- **TypeScript** (strict mode)
 
-Inside of your Astro project, you'll see the following folders and files:
+## Project Structure
 
 ```text
 /
-├── public/
+├── public/                        # Static assets (served as-is)
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── assets/                    # Processed images and media
+│   ├── components/                # Astro and React components
+│   │   └── ui/                    # shadcn/ui components
+│   ├── content/                   # MDX content files
+│   ├── content-definition/        # Content collection schemas
+│   │   ├── blogs.ts
+│   │   ├── founder-quotes.ts
+│   │   ├── services.ts
+│   │   └── site.ts
+│   ├── data/                      # Static site data (site.ts, etc.)
+│   ├── layouts/
+│   │   └── Layout.astro           # Root HTML shell
+│   └── pages/                     # File-based routes
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Commands
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+All commands are run from the project root. Use `bun` (preferred) or `npm`.
 
-Any static assets, like images, can be placed in the `public/` directory.
+| Command              | Action                                  |
+| :------------------- | :-------------------------------------- |
+| `bun install`        | Install dependencies                    |
+| `bun run dev`        | Start dev server at `localhost:4321`    |
+| `bun run build`      | Build for production to `./dist/`       |
+| `bun run preview`    | Preview the production build locally    |
+| `bunx astro check`   | Run TypeScript diagnostics              |
+| `bunx astro add ...` | Add Astro integrations                  |
 
-## 🧞 Commands
+> npm equivalents: replace `bun` with `npm` and `bunx` with `npx`.
 
-All commands are run from the root of the project, from a terminal:
+## Adding shadcn Components
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```bash
+bunx shadcn@latest add <component>
+```
 
-## 👀 Want to learn more?
+Components are placed in `src/components/ui/`. Use the `client:load` or `client:visible` directive when importing them in `.astro` files.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Content Collections
+
+Content collections are defined in `src/content-definition/` and registered in `src/content.config.ts`. To add a new collection:
+
+1. Create `src/content-definition/<entity>.ts` with a `defineCollection(...)` export.
+2. Import and add it to `collections` in `src/content.config.ts`.
