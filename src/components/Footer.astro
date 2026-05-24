@@ -1,0 +1,30 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="footer page-gutter">
+  <div class="footer__inner mono">
+    <span>ALTR © {year}</span>
+    <span class="footer__sep">·</span>
+    <a href="https://instagram.com/altr.matcha" target="_blank" rel="noopener noreferrer">@altr.matcha</a>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: var(--rule-hairline);
+    padding-block: var(--space-xl);
+    margin-top: var(--space-4xl);
+  }
+  .footer__inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
+  .footer__sep { color: var(--color-sand); }
+</style>

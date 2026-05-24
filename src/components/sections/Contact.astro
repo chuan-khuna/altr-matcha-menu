@@ -1,0 +1,175 @@
+---
+const hours = [
+  { day: 'Mon — Fri', open: '08:00 — 18:00' },
+  { day: 'Sat',       open: '09:00 — 19:00' },
+  { day: 'Sun',       open: '09:00 — 17:00' },
+];
+
+const address = {
+  line1: '14/2 Soi Sukhumvit 49',
+  line2: 'Khlong Tan Nuea, Watthana',
+  city:  'Bangkok 10110',
+};
+
+const mapsHref = 'https://maps.google.com/?q=ALTR+Matcha+Bangkok';
+---
+<section id="contact" class="contact page-gutter" aria-label="Visit ALTR">
+  <div class="contact__inner">
+    <header class="contact__head fade-up">
+      <p class="eyebrow">Visit</p>
+      <h2 class="contact__title">Find us, before the leaf turns.</h2>
+    </header>
+
+    <div class="contact__grid">
+      <div class="contact__block fade-up">
+        <p class="contact__label mono">Address</p>
+        <address class="contact__address">
+          {address.line1}<br />
+          {address.line2}<br />
+          {address.city}
+        </address>
+        <a href={mapsHref} class="contact__link mono" target="_blank" rel="noopener noreferrer">
+          Open in Google Maps →
+        </a>
+      </div>
+
+      <div class="contact__block fade-up">
+        <p class="contact__label mono">Hours</p>
+        <table class="contact__hours mono">
+          <tbody>
+            {hours.map((row) => (
+              <tr>
+                <th scope="row">{row.day}</th>
+                <td>{row.open}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="contact__block fade-up">
+        <p class="contact__label mono">Reach</p>
+        <ul class="contact__reach mono">
+          <li>
+            <a href="https://instagram.com/altr.matcha" target="_blank" rel="noopener noreferrer">
+              @altr.matcha
+            </a>
+            <span class="contact__reach-meta">— Instagram</span>
+          </li>
+          <li>
+            <a href="mailto:hello@altr.cafe">hello@altr.cafe</a>
+            <span class="contact__reach-meta">— Email</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    padding-block: var(--space-3xl);
+    border-top: var(--rule-hairline);
+  }
+  .contact__inner {
+    max-width: var(--content-max);
+    margin: 0 auto;
+  }
+  .contact__head {
+    margin-bottom: var(--space-3xl);
+    max-width: 36rem;
+  }
+  .contact__title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(2.25rem, 5.5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin-top: var(--space-sm);
+  }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: var(--rule-ink);
+  }
+  .contact__block {
+    padding: var(--space-xl) 0;
+    border-bottom: var(--rule-hairline);
+    display: grid;
+    gap: var(--space-md);
+  }
+  .contact__label {
+    font-size: var(--text-xs);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .contact__address {
+    font-family: var(--font-display);
+    font-style: normal;
+    font-size: var(--text-xl);
+    line-height: 1.35;
+    color: var(--color-ink);
+  }
+  .contact__link {
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+    justify-self: start;
+  }
+  .contact__link:hover { color: var(--color-accent); }
+  .contact__hours {
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+  .contact__hours th {
+    text-align: left;
+    font-weight: 400;
+    padding: var(--space-2) var(--space-lg) var(--space-2) 0;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: var(--text-xs);
+    vertical-align: baseline;
+  }
+  .contact__hours td {
+    padding: var(--space-2) 0;
+    color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .contact__reach {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-sm);
+    font-size: var(--text-sm);
+  }
+  .contact__reach a {
+    color: var(--color-ink);
+    border-bottom: 1px solid var(--color-sand);
+  }
+  .contact__reach a:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+  .contact__reach-meta {
+    color: var(--color-ink-muted);
+    margin-left: var(--space-2);
+  }
+
+  @media (min-width: 800px) {
+    .contact__grid {
+      grid-template-columns: 1.2fr 1fr 1fr;
+    }
+    .contact__block {
+      padding: var(--space-xl);
+      border-right: var(--rule-hairline);
+    }
+    .contact__block:first-child { padding-left: 0; }
+    .contact__block:last-child  { border-right: none; padding-right: 0; }
+  }
+</style>
