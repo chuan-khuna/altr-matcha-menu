@@ -37,7 +37,7 @@ const formatPrice = (n: number) => `฿${n}`;
                 <div class="card__top">
                   <h4 class="card__name">{blend.data.name}</h4>
                   <p class="card__origin mono">
-                    {blend.data.origin.region}, {blend.data.origin.prefecture}
+                    {blend.data.info?.origin}
                   </p>
                 </div>
 

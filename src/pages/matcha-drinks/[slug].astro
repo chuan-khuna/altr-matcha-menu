@@ -27,7 +27,7 @@ const specRows = [
   ...(d.info.processing ? [{ label: 'Processing', value: d.info.processing }] : []),
 ];
 ---
-<Layout title={`${d.name} — ALTR`} description={`${d.name} · ${d.category} · ${d.origin.region}, ${d.origin.prefecture}`}>
+<Layout title={`${d.name} — ALTR`} description={`${d.name} · ${d.category} · ${d.info?.origin ?? ''}`}>
   <Nav showBack />
   <main class="page-gutter blend">
     <div class="blend__inner">
@@ -35,7 +35,7 @@ const specRows = [
         <p class="eyebrow">{d.category}</p>
         <h1 class="blend__name">{d.name}</h1>
         <p class="blend__origin mono">
-          {d.origin.region}, {d.origin.prefecture}
+          {d.info?.origin}
         </p>
       </header>
 
