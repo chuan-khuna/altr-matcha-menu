@@ -2,9 +2,6 @@
 name: "Forest Deep"
 category: "Clear Matcha"
 order: 2
-origin:
-  region: "Nishio"
-  prefecture: "Aichi"
 cuppingNotes: ["roasted chestnut", "cocoa edge", "long bitter tail"]
 info:
   cultivar: "Single Cultivar"

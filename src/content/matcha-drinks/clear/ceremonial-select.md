@@ -2,9 +2,6 @@
 name: "Ceremonial Select"
 category: "Clear Matcha"
 order: 1
-origin:
-  region: "Uji"
-  prefecture: "Kyoto"
 cuppingNotes: ["deep umami", "sweet grass", "clean finish"]
 info:
   cultivar: "Single Cultivar"

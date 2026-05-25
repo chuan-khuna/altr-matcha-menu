@@ -7,10 +7,6 @@ export const matchaDrinks = defineCollection({
     name: z.string(),
     category: z.enum(['Clear Matcha', 'Latte Matcha', 'Powder Matcha']),
     order: z.number().default(0),
-    origin: z.object({
-      region: z.string(),
-      prefecture: z.string(),
-    }),
     cuppingNotes: z.array(z.string()),
     info: z.object({
       cultivar: z.string(),

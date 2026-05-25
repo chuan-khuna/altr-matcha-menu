@@ -15,10 +15,6 @@ name: string          # Display name of the blend
 category: string      # "Clear Matcha" | "Latte Matcha" | "Powder Matcha"
 order: number         # Sort order on the menu (default: 0, lower = first)
 
-origin:
-  region: string      # e.g. "Kagoshima · Uji"
-  prefecture: string  # e.g. "Kagoshima & Kyoto"
-
 cuppingNotes:         # Array of tasting descriptors (2–5 short phrases)
   - string
 
@@ -43,9 +39,6 @@ drinks:               # List of drink formats with prices (THB)
 name: "Hana Blend"
 category: "Latte Matcha"
 order: 3
-origin:
-  region: "Kagoshima · Uji"
-  prefecture: "Kagoshima & Kyoto"
 cuppingNotes: ["floral", "creamy body", "stone fruit"]
 info:
   cultivarType: "Special Blend"

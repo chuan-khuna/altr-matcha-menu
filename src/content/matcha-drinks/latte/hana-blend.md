@@ -2,9 +2,6 @@
 name: "Hana Blend"
 category: "Latte Matcha"
 order: 3
-origin:
-  region: "Kagoshima · Uji"
-  prefecture: "Kagoshima &amp; Kyoto"
 cuppingNotes: ["floral", "creamy body", "stone fruit"]
 info:
   cultivar: "Blend"
