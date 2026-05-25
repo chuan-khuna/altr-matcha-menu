@@ -61,8 +61,9 @@ export default {
         sand: 'var(--color-sand)',
       },
       fontFamily: {
-        display: 'var(--font-dm-serif-display)',
-        mono: 'var(--font-ibm-plex-mono)',
+        display: 'var(--font-playfair-display)',
+        sans: 'var(--font-hanken-grotesk)',
+        mono: 'var(--font-inconsolata)',
       },
       borderRadius: {
         none: '0',

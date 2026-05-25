@@ -1,41 +1,41 @@
 /* preset: matcha
  * genre: editorial · macrostructure: Catalogue
  * vibe: "minimal, craft-serious, matcha, earthy-warm"
- * display: DM Serif Display · mono: IBM Plex Mono
+ * display: Playfair Display · sans: Hanken Grotesk · mono: Inconsolata
  */
 
 @layer base {
   :root {
     /* ─── shadcn / tweakcn semantic tokens ─── */
 
-    --background:             oklch(97% 0.016 90);    /* ivory cream            */
-    --foreground:             oklch(14% 0.025 115);   /* near-black, green tint */
+    --background: oklch(97% 0.016 90); /* ivory cream            */
+    --foreground: oklch(14% 0.025 115); /* near-black, green tint */
 
-    --card:                   oklch(94% 0.020 88);    /* deeper cream surface   */
-    --card-foreground:        oklch(14% 0.025 115);
+    --card: oklch(94% 0.02 88); /* deeper cream surface   */
+    --card-foreground: oklch(14% 0.025 115);
 
-    --popover:                oklch(97% 0.016 90);
-    --popover-foreground:     oklch(14% 0.025 115);
+    --popover: oklch(97% 0.016 90);
+    --popover-foreground: oklch(14% 0.025 115);
 
-    --primary:                oklch(48% 0.14 130);    /* matcha green           */
-    --primary-foreground:     oklch(97% 0.016 90);
+    --primary: oklch(48% 0.14 130); /* matcha green           */
+    --primary-foreground: oklch(97% 0.016 90);
 
-    --secondary:              oklch(94% 0.020 88);
-    --secondary-foreground:   oklch(14% 0.025 115);
+    --secondary: oklch(94% 0.02 88);
+    --secondary-foreground: oklch(14% 0.025 115);
 
-    --muted:                  oklch(94% 0.020 88);
-    --muted-foreground:       oklch(40% 0.028 125);   /* muted sage             */
+    --muted: oklch(94% 0.02 88);
+    --muted-foreground: oklch(40% 0.028 125); /* muted sage             */
 
-    --accent:                 oklch(73% 0.068 110);   /* warm sage              */
-    --accent-foreground:      oklch(14% 0.025 115);
+    --accent: oklch(73% 0.068 110); /* warm sage              */
+    --accent-foreground: oklch(14% 0.025 115);
 
-    --destructive:            oklch(52% 0.17 25);     /* terracotta             */
+    --destructive: oklch(52% 0.17 25); /* terracotta             */
     --destructive-foreground: oklch(97% 0.016 90);
 
-    --border:                 oklch(73% 0.068 110);
-    --input:                  oklch(73% 0.068 110);
-    --ring:                   oklch(48% 0.14 130);
-    --radius:                 0rem;
+    --border: oklch(73% 0.068 110);
+    --input: oklch(73% 0.068 110);
+    --ring: oklch(48% 0.14 130);
+    --radius: 0rem;
 
     /* chart palette — matcha-adjacent hues */
     --chart-1: oklch(48% 0.14 130);
@@ -45,41 +45,42 @@
     --chart-5: oklch(44% 0.06 55);
 
     /* sidebar (if used) */
-    --sidebar:                  oklch(94% 0.020 88);
-    --sidebar-foreground:       oklch(14% 0.025 115);
-    --sidebar-primary:          oklch(48% 0.14 130);
+    --sidebar: oklch(94% 0.02 88);
+    --sidebar-foreground: oklch(14% 0.025 115);
+    --sidebar-primary: oklch(48% 0.14 130);
     --sidebar-primary-foreground: oklch(97% 0.016 90);
-    --sidebar-accent:           oklch(90% 0.020 100);
+    --sidebar-accent: oklch(90% 0.02 100);
     --sidebar-accent-foreground: oklch(14% 0.025 115);
-    --sidebar-border:           oklch(73% 0.068 110);
-    --sidebar-ring:             oklch(48% 0.14 130);
+    --sidebar-border: oklch(73% 0.068 110);
+    --sidebar-ring: oklch(48% 0.14 130);
 
     /* ─── project: typography ─── */
 
     /* font-name variables injected by FontLoader.astro via Astro's Fonts API */
-    --font-display: var(--font-dm-serif-display);
-    --font-mono:    var(--font-ibm-plex-mono);
+    --font-display: var(--font-playfair-display);
+    --font-sans: var(--font-hanken-grotesk);
+    --font-mono: var(--font-inconsolata);
 
-    --text-xs:       0.75rem;
-    --text-sm:       0.875rem;
-    --text-base:     1rem;
-    --text-md:       1.125rem;
-    --text-lg:       1.25rem;
-    --text-xl:       1.5rem;
-    --text-2xl:      2rem;
-    --text-3xl:      2.5rem;
-    --text-4xl:      3.5rem;
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-md: 1.125rem;
+    --text-lg: 1.25rem;
+    --text-xl: 1.5rem;
+    --text-2xl: 2rem;
+    --text-3xl: 2.5rem;
+    --text-4xl: 3.5rem;
     --text-display-s: clamp(3rem, 7vw, 5.5rem);
-    --text-display:   clamp(4rem, 14vw, 11rem);
+    --text-display: clamp(4rem, 14vw, 10rem);
 
     /* ─── project: spacing (4pt scale) ─── */
 
-    --space-1:   0.25rem;
-    --space-2:   0.5rem;
-    --space-sm:  0.75rem;
-    --space-md:  1rem;
-    --space-lg:  1.5rem;
-    --space-xl:  2rem;
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
     --space-2xl: 3rem;
     --space-3xl: 5rem;
     --space-4xl: 8rem;
@@ -88,76 +89,76 @@
 
     --page-gutter: clamp(1rem, 5vw, 4rem);
     --content-max: 80rem;
-    --nav-h:       3.5rem;
+    --nav-h: 3.5rem;
 
     /* ─── project: motion ─── */
 
-    --ease-out:    cubic-bezier(0.0, 0, 0.2, 1);
-    --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-    --dur-fast:    150ms;
-    --dur-base:    250ms;
-    --dur-slow:    400ms;
+    --dur-fast: 150ms;
+    --dur-base: 250ms;
+    --dur-slow: 400ms;
 
     /* ─── project: hairlines ─── */
 
     --rule-hairline: 1px solid var(--border);
-    --rule-ink:      1px solid var(--foreground);
-    --rule-accent:   1px solid var(--primary);
+    --rule-ink: 1px solid var(--foreground);
+    --rule-accent: 1px solid var(--primary);
 
     /* ─── compat aliases (existing code keeps working) ─── */
 
-    --color-paper:     var(--background);
-    --color-paper-2:   var(--card);
-    --color-ink:       var(--foreground);
+    --color-paper: var(--background);
+    --color-paper-2: var(--card);
+    --color-ink: var(--foreground);
     --color-ink-muted: var(--muted-foreground);
-    --color-accent:    var(--primary);
-    --color-sand:      var(--accent);
-    --color-focus:     var(--ring);
+    --color-accent: var(--primary);
+    --color-sand: var(--accent);
+    --color-focus: var(--ring);
   }
 
   .dark {
-    --background:             oklch(13% 0.022 130);   /* deep forest            */
-    --foreground:             oklch(95% 0.015 90);    /* cream text             */
+    --background: oklch(13% 0.022 130); /* deep forest            */
+    --foreground: oklch(95% 0.015 90); /* cream text             */
 
-    --card:                   oklch(17% 0.025 128);
-    --card-foreground:        oklch(95% 0.015 90);
+    --card: oklch(17% 0.025 128);
+    --card-foreground: oklch(95% 0.015 90);
 
-    --popover:                oklch(13% 0.022 130);
-    --popover-foreground:     oklch(95% 0.015 90);
+    --popover: oklch(13% 0.022 130);
+    --popover-foreground: oklch(95% 0.015 90);
 
-    --primary:                oklch(65% 0.15 128);    /* lighter matcha green   */
-    --primary-foreground:     oklch(13% 0.022 130);
+    --primary: oklch(65% 0.15 128); /* lighter matcha green   */
+    --primary-foreground: oklch(13% 0.022 130);
 
-    --secondary:              oklch(20% 0.022 128);
-    --secondary-foreground:   oklch(95% 0.015 90);
+    --secondary: oklch(20% 0.022 128);
+    --secondary-foreground: oklch(95% 0.015 90);
 
-    --muted:                  oklch(20% 0.022 128);
-    --muted-foreground:       oklch(60% 0.024 120);
+    --muted: oklch(20% 0.022 128);
+    --muted-foreground: oklch(60% 0.024 120);
 
-    --accent:                 oklch(23% 0.028 120);
-    --accent-foreground:      oklch(95% 0.015 90);
+    --accent: oklch(23% 0.028 120);
+    --accent-foreground: oklch(95% 0.015 90);
 
-    --destructive:            oklch(55% 0.17 25);
+    --destructive: oklch(55% 0.17 25);
     --destructive-foreground: oklch(95% 0.015 90);
 
-    --border:                 oklch(23% 0.025 120);
-    --input:                  oklch(23% 0.025 120);
-    --ring:                   oklch(65% 0.15 128);
+    --border: oklch(23% 0.025 120);
+    --input: oklch(23% 0.025 120);
+    --ring: oklch(65% 0.15 128);
 
     --chart-1: oklch(65% 0.15 128);
-    --chart-2: oklch(68% 0.10 142);
+    --chart-2: oklch(68% 0.1 142);
     --chart-3: oklch(72% 0.07 115);
     --chart-4: oklch(60% 0.08 80);
     --chart-5: oklch(55% 0.06 55);
 
-    --sidebar:                  oklch(17% 0.025 128);
-    --sidebar-foreground:       oklch(95% 0.015 90);
-    --sidebar-primary:          oklch(65% 0.15 128);
+    --sidebar: oklch(17% 0.025 128);
+    --sidebar-foreground: oklch(95% 0.015 90);
+    --sidebar-primary: oklch(65% 0.15 128);
     --sidebar-primary-foreground: oklch(13% 0.022 130);
-    --sidebar-accent:           oklch(20% 0.022 128);
+    --sidebar-accent: oklch(20% 0.022 128);
     --sidebar-accent-foreground: oklch(95% 0.015 90);
-    --sidebar-border:           oklch(23% 0.025 120);
-    --sidebar-ring:             oklch(65% 0.15 128);
+    --sidebar-border: oklch(23% 0.025 120);
+    --sidebar-ring: oklch(65% 0.15 128);
   }
 }

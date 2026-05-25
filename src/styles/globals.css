@@ -11,8 +11,10 @@
   html {
     background: var(--color-paper);
     color: var(--color-ink);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 16px;
+    font-optical-sizing: auto;
+    font-kerning: normal;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -44,8 +46,12 @@
     color: var(--color-ink);
     overflow-wrap: anywhere;
     min-width: 0;
+    text-wrap: balance;
   }
-  p { margin: 0; }
+  p {
+    margin: 0;
+    text-wrap: pretty;
+  }
 }
 
 .fade-up {
