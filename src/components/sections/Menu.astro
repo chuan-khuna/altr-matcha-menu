@@ -41,30 +41,30 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
                 class="blend__link"
                 aria-label={`${blend.data.name} — full blend profile`}
               >
-                <div class="blend__head">
+                <div class="blend__meta">
                   <h4 class="blend__name">{blend.data.name}</h4>
                   {blend.data.info?.origin && (
                     <p class="blend__origin mono">{blend.data.info.origin}</p>
                   )}
+                  <ul class="blend__notes" role="list" aria-label="Cupping notes">
+                    {blend.data.cuppingNotes.map((note) => (
+                      <li class="blend__note">{note}</li>
+                    ))}
+                  </ul>
                 </div>
 
-                <ul class="blend__notes" role="list" aria-label="Cupping notes">
-                  {blend.data.cuppingNotes.map((note) => (
-                    <li class="blend__note">{note}</li>
-                  ))}
-                </ul>
-
-                <div class="blend__drinks mono">
-                  {blend.data.drinks.map((d) => (
-                    <div class="blend__row">
-                      <span class="blend__drink">{d.name}</span>
-                      <span class="blend__dots" aria-hidden="true"></span>
-                      <span class="blend__price">{formatPrice(d.price)}</span>
-                    </div>
-                  ))}
+                <div class="blend__right">
+                  <div class="blend__drinks mono">
+                    {blend.data.drinks.map((d) => (
+                      <div class="blend__row">
+                        <span class="blend__drink">{d.name}</span>
+                        <span class="blend__dots" aria-hidden="true"></span>
+                        <span class="blend__price">{formatPrice(d.price)}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <span class="blend__arrow" aria-hidden="true">→</span>
                 </div>
-
-                <span class="blend__arrow" aria-hidden="true">→</span>
               </a>
             </li>
           ))}
@@ -139,18 +139,23 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
     border-bottom: var(--rule-hairline);
   }
   .blend__link {
-    display: grid;
-    grid-template-columns: minmax(150px, 22%) 1fr minmax(200px, 30%) 1.25rem;
-    grid-template-areas: "head notes drinks arrow";
-    align-items: center;
-    gap: var(--space-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-2xl);
     padding-block: var(--space-xl);
     color: inherit;
   }
   .blend__link:hover { color: inherit; }
 
-  /* ── name + origin ───────────────────────── */
-  .blend__head { grid-area: head; }
+  /* ── left: name + origin + notes ─────────── */
+  .blend__meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
   .blend__name {
     font-family: var(--font-display);
     font-style: italic;
@@ -162,19 +167,16 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-accent);
-    margin-top: var(--space-2);
   }
 
   /* ── cupping note chips ──────────────────── */
   .blend__notes {
-    grid-area: notes;
     list-style: none;
-    margin: 0;
+    margin: var(--space-sm) 0 0;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2);
-    align-content: flex-start;
   }
   .blend__note {
     font-family: var(--font-mono);
@@ -192,13 +194,20 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
     color: var(--primary-foreground);
   }
 
-  /* ── drinks + prices ─────────────────────── */
+  /* ── right: drinks + arrow ───────────────── */
+  .blend__right {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-sm);
+  }
   .blend__drinks {
-    grid-area: drinks;
     display: grid;
-    gap: var(--space-2);
+    gap: var(--space-1);
     font-size: var(--text-sm);
     font-family: var(--font-mono);
+    min-width: 14rem;
   }
   .blend__row {
     display: flex;
@@ -215,14 +224,10 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
     color: var(--color-ink);
     font-variant-numeric: tabular-nums;
   }
-
-  /* ── arrow ───────────────────────────────── */
   .blend__arrow {
-    grid-area: arrow;
     font-size: var(--text-sm);
     font-family: var(--font-mono);
     color: var(--color-ink-muted);
-    justify-self: end;
     transition: transform var(--dur-fast) var(--ease-out),
                 color var(--dur-fast) var(--ease-out);
   }
@@ -234,14 +239,13 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
   /* ── responsive ──────────────────────────── */
   @media (max-width: 640px) {
     .blend__link {
-      grid-template-columns: 1fr 1.25rem;
-      grid-template-rows: auto auto auto;
-      grid-template-areas:
-        "head   arrow"
-        "notes  notes"
-        "drinks drinks";
+      flex-direction: column;
       gap: var(--space-md);
     }
-    .blend__arrow { align-self: start; }
+    .blend__right {
+      align-items: flex-start;
+      width: 100%;
+    }
+    .blend__drinks { min-width: 0; width: 100%; }
   }
 </style>
