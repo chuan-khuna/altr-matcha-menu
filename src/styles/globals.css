@@ -56,6 +56,10 @@
     min-width: 0;
     text-wrap: balance;
   }
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+  }
   p {
     margin: 0;
     text-wrap: pretty;
@@ -93,13 +97,13 @@
   padding-inline: var(--page-gutter);
 }
 .mono {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
 }
 .display {
   font-family: var(--font-display);
 }
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-xs);
   letter-spacing: 0.14em;
   text-transform: uppercase;

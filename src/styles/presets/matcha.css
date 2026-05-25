@@ -1,7 +1,7 @@
 /* preset: matcha
  * genre: editorial · macrostructure: Catalogue
  * vibe: "minimal, craft-serious, matcha, earthy-warm"
- * display: Playfair Display · sans: Hanken Grotesk · mono: Inconsolata
+ * display: DM Serif Display · heading: DM Serif Text · sans: Lato
  */
 
 @layer base {
@@ -57,9 +57,10 @@
     /* ─── project: typography ─── */
 
     /* font-name variables injected by FontLoader.astro via Astro's Fonts API */
-    --font-display: var(--font-playfair-display);
-    --font-sans: var(--font-hanken-grotesk);
-    --font-mono: var(--font-inconsolata);
+    --font-display: var(--font-dm-serif-display);
+    --font-heading: var(--font-dm-serif-text);
+    --font-sans: var(--font-lato);
+    --font-mono: var(--font-lato);
 
     --text-xs: 0.75rem;
     --text-sm: 0.875rem;

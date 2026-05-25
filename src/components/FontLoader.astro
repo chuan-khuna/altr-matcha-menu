@@ -2,9 +2,9 @@
 import { Font } from 'astro:assets';
 ---
 
-<!-- Preload body font (Hanken Grotesk) — used above the fold -->
-<Font cssVariable="--font-hanken-grotesk" preload />
-<!-- Display font loaded normally — headings only -->
-<Font cssVariable="--font-playfair-display" />
-<!-- Mono font — data, labels, metadata -->
-<Font cssVariable="--font-inconsolata" />
+<!-- Preload body font (Lato) — used above the fold -->
+<Font cssVariable="--font-lato" preload />
+<!-- Display serif — hero and large headings (h1, h2) -->
+<Font cssVariable="--font-dm-serif-display" />
+<!-- Text serif — subheadings (h3, h4) -->
+<Font cssVariable="--font-dm-serif-text" />

@@ -61,9 +61,10 @@ export default {
         sand: "var(--color-sand)",
       },
       fontFamily: {
-        display: "var(--font-playfair-display)",
-        sans: "var(--font-hanken-grotesk)",
-        mono: "var(--font-inconsolata)",
+        display: "var(--font-dm-serif-display)",
+        heading: "var(--font-dm-serif-text)",
+        sans: "var(--font-lato)",
+        mono: "var(--font-lato)",
       },
       fontSize: {
         display: "clamp(4rem, 14vw, 10rem)",
