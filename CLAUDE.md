@@ -114,6 +114,8 @@ export const collections = { matchaDrinks, desserts };
 
 When adding a new collection: create `src/collection-definitions/<singular>.ts`, add `src/content/<plural>/`, then register in `content.config.ts`.
 
+**Documentation rule:** Whenever you change `src/collection-definitions/**` or `src/data/**`, update the matching reference doc in `project-skills/manage-content/references/`. A task is not complete until the skill is in sync.
+
 ## Fonts
 
 **Font loading:** Astro Font API (`astro.config.mjs` → `fonts[]` with `fontProviders.google()`) + `FontLoader.astro` component injected in `BaseLayout.astro` `<head>`. CSS variables follow `--font-<kebab-name>` convention (e.g. `--font-lato`). Do **not** add Google Fonts `@import` to CSS — configure new fonts in `astro.config.mjs` and add a `<Font cssVariable="..." />` entry in `src/components/FontLoader.astro` instead.
