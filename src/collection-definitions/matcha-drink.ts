@@ -5,7 +5,7 @@ export const matchaDrinks = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/matcha-drinks' }),
   schema: z.object({
     name: z.string(),
-    category: z.enum(['Clear Matcha', 'Latte Matcha', 'Power Matcha']),
+    category: z.enum(['Clear Matcha', 'Latte Matcha', 'Powder Matcha']),
     order: z.number().default(0),
     origin: z.object({
       region: z.string(),

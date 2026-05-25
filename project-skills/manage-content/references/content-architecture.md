@@ -11,7 +11,7 @@ Content files live in `src/content/<plural-folder>/` as `.md` files.
 
 | Collection key | Definition file | Content folder | Format |
 |---|---|---|---|
-| `matchaDrinks` | `src/collection-definitions/matcha-drink.ts` | `src/content/matcha-drinks/` (`clear/`, `latte/`, `power/`) | `.md` or `.mdx` |
+| `matchaDrinks` | `src/collection-definitions/matcha-drink.ts` | `src/content/matcha-drinks/` (`clear/`, `latte/`, `powder/`) | `.md` or `.mdx` |
 | `desserts` | `src/collection-definitions/dessert.ts` | `src/content/desserts/` | `.md` or `.mdx` |
 
 ---
