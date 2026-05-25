@@ -2,7 +2,15 @@
 name: "Asatsuyu Baisen"
 category: "Clear Matcha"
 order: 3
-cuppingNotes: ["grilled nori", "toasted grains", "cereal", "roasted coconut", "cacao", "pistachio"]
+cuppingNotes:
+  [
+    "grilled nori",
+    "toasted grains",
+    "cereal",
+    "roasted coconut",
+    "cacao",
+    "pistachio",
+  ]
 info:
   cultivar: "Single Cultivar · Asatsuyu (あさつゆ)"
   origin: "Kirishima, Kagoshima"
@@ -11,9 +19,9 @@ info:
   processing: "Special Roasted (Baisen)"
 drinks:
   - { name: "Usucha Set", price: 0 }
-  - { name: "MTCH™ Light Brew", price: 0 }
-  - { name: "MTCH™ Cold Whisk Latte (Medium)", price: 0 }
-  - { name: "MTCH™ Soy Latte", price: 0 }
+  - { name: "Light Brew", price: 0 }
+  - { name: "Cold Whisk Latte (Medium)", price: 0 }
+  - { name: "Soy Latte", price: 0 }
   - { name: "Matcha Powder 40g", price: 0 }
 ---
 
