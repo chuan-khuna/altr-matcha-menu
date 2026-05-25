@@ -7,7 +7,7 @@ origin:
   prefecture: "Aichi"
 cuppingNotes: ["roasted chestnut", "cocoa edge", "long bitter tail"]
 info:
-  cultivarType: "Single Cultivar"
+  cultivar: "Single Cultivar"
   origin: "Nishio, Aichi Prefecture"
   shading: "Cheesecloth · 18 days"
   harvest: "First flush (Ichibancha)"

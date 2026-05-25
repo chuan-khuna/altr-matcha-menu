@@ -7,7 +7,7 @@ origin:
   prefecture: "Kyoto"
 cuppingNotes: ["deep umami", "sweet grass", "clean finish"]
 info:
-  cultivarType: "Single Cultivar"
+  cultivar: "Single Cultivar"
   origin: "Uji, Kyoto Prefecture"
   shading: "Tana shading · 25 days"
   harvest: "First flush (Ichibancha)"

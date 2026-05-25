@@ -7,7 +7,7 @@ origin:
   prefecture: "Kagoshima &amp; Kyoto"
 cuppingNotes: ["floral", "creamy body", "stone fruit"]
 info:
-  cultivarType: "Special Blend"
+  cultivar: "Blend"
   origin: "Kagoshima &amp; Kyoto Prefecture"
   shading: "Tana &amp; cheesecloth · mixed"
   harvest: "First &amp; second flush"
