@@ -52,9 +52,7 @@ const specRows = [
   description={`${d.name} · ${eyebrow} · ${d.info?.origin ?? ""}`}
 >
   <Nav showBack />
-  <main
-    class="page-gutter pb-20 pt-[calc(var(--nav-h)+5rem)]"
-  >
+  <main class="page-gutter pb-20 pt-[calc(var(--nav-h)+5rem)]">
     <div class="mx-auto max-w-[64rem]">
       <header class="fade-up mb-12">
         <p class="eyebrow">{eyebrow}</p>
@@ -63,9 +61,7 @@ const specRows = [
         >
           {d.name}
         </h1>
-        <p
-          class="mono mt-4 text-xs uppercase tracking-[0.18em] text-accent"
-        >
+        <p class="mono mt-4 text-xs uppercase tracking-[0.18em] text-accent">
           {
             d.info?.brand
               ? `by ${d.info.brand}${d.info.origin ? ` — ${d.info.origin}` : ""}`
@@ -77,34 +73,21 @@ const specRows = [
       <div
         class="fade-up mb-12 grid gap-4 border-b border-border border-t border-foreground py-6"
       >
-        <p
-          class="mono text-xs uppercase tracking-[0.16em] text-ink-muted"
-        >
+        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
           Cupping notes
         </p>
-        <ul
-          class="mono m-0 flex list-none flex-wrap gap-2 p-0 text-sm"
-          role="list"
-        >
-          {
-            d.notes.map((n) => (
-              <li class="border border-sand px-[10px] py-[4px]">{n}</li>
-            ))
-          }
-        </ul>
+        <p class="mono mt-2 text lowercase tracking-[0.04em] text-ink-muted">
+          {d.notes.join(' · ')}
+        </p>
       </div>
 
-      <div
-        class="grid grid-cols-1 gap-20 min-[900px]:grid-cols-[1.4fr_1fr]"
-      >
+      <div class="grid grid-cols-1 gap-20 min-[900px]:grid-cols-[1.4fr_1fr]">
         <article class="fade-up">
-          <p
-            class="mono text-xs uppercase tracking-[0.16em] text-ink-muted"
-          >
+          <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
             The blend
           </p>
           <div
-            class="blend__story-body font-display mt-4 text-2xl leading-[1.45] text-ink"
+            class="blend__story-body font-sans mt-4 text-lg leading-[1.45] text-ink"
           >
             <Content />
           </div>
@@ -112,21 +95,17 @@ const specRows = [
 
         <aside class="grid gap-12">
           <div class="fade-up">
-            <p
-              class="mono text-xs uppercase tracking-[0.16em] text-ink-muted"
-            >
+            <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
               Specifications
             </p>
-            <dl
-              class="mono mt-4 grid gap-0 border-t border-border text-xs"
-            >
+            <dl class="mono mt-4 grid gap-0 border-t border-border text-xs">
               {
                 specRows.map((row) => (
                   <div class="grid grid-cols-[7rem_1fr] gap-4 border-b border-border py-3">
-                    <dt class="uppercase tracking-[0.14em] text-ink-muted">
+                    <dt class="uppercase tracking-[0.14em] text-ink-muted text-xs">
                       {row.label}
                     </dt>
-                    <dd class="m-0 text-ink">{row.value}</dd>
+                    <dd class="m-0 text-base">{row.value}</dd>
                   </div>
                 ))
               }
@@ -134,9 +113,7 @@ const specRows = [
           </div>
 
           <div class="fade-up">
-            <p
-              class="mono text-xs uppercase tracking-[0.16em] text-ink-muted"
-            >
+            <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
               Available as
             </p>
             {

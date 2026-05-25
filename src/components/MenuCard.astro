@@ -23,7 +23,7 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
       <h4 class="display text-2xl italic leading-[1.05]">{d.name}</h4>
       {d.info?.brand && <p class="mono text-xs tracking-[0.08em] text-ink-muted">by {d.info.brand}</p>}
       {d.info?.origin && <p class="mono text-xs uppercase tracking-[0.12em] text-accent">{d.info.origin}</p>}
-      <p class="mono mt-3 text-md lowercase tracking-[0.04em] text-ink-muted" aria-label="Cupping notes">
+      <p class="mono mt-3 text-sm lowercase tracking-[0.04em] text-ink-muted" aria-label="Cupping notes">
         {d.notes.join(' · ')}
       </p>
     </div>
