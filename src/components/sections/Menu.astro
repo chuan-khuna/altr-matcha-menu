@@ -1,14 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 
-const blends = (await getCollection('blends')).sort(
+const matchaDrinks = (await getCollection('matchaDrinks')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-const categories = ['Clear Matcha', 'Latte Matcha', 'Dessert'] as const;
+const categories = ['Clear Matcha', 'Latte Matcha'] as const;
 const grouped = categories.map((cat) => ({
   name: cat,
-  items: blends.filter((b) => b.data.category === cat),
+  items: matchaDrinks.filter((b) => b.data.category === cat),
 }));
 
 const formatPrice = (n: number) => `฿${n}`;
@@ -33,7 +33,7 @@ const formatPrice = (n: number) => `฿${n}`;
         <ul class="menu__grid" role="list">
           {group.items.map((blend) => (
             <li class="card fade-up">
-              <a href={`/blends/${blend.id}`} class="card__link" aria-label={`${blend.data.name} — full blend profile`}>
+              <a href={`/matcha-drinks/${blend.id}`} class="card__link" aria-label={`${blend.data.name} — full blend profile`}>
                 <div class="card__top">
                   <h4 class="card__name">{blend.data.name}</h4>
                   <p class="card__origin mono">

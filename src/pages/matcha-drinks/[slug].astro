@@ -5,17 +5,17 @@ import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 
 export async function getStaticPaths() {
-  const blends = await getCollection('blends');
-  return blends.map((blend) => ({
-    params: { slug: blend.id },
-    props: { blend },
+  const matchaDrinks = await getCollection('matchaDrinks');
+  return matchaDrinks.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
   }));
 }
 
-interface Props { blend: CollectionEntry<'blends'>; }
-const { blend } = Astro.props;
-const { Content } = await render(blend);
-const d = blend.data;
+interface Props { entry: CollectionEntry<'matchaDrinks'>; }
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
 
 const formatPrice = (n: number) => `฿${n}`;
 

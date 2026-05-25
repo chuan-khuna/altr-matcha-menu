@@ -13,10 +13,6 @@ Use `bun` as the package manager (preferred). `npm` and `npx` are acceptable alt
 ```bash
 bun install          # install dependencies
 bun run dev          # dev server at localhost:4321
-bun run build        # production build to ./dist/
-bun run preview      # preview production build
-bunx astro add ...   # add Astro integrations (e.g. tailwind, react)
-bunx astro check     # TypeScript diagnostics
 ```
 
 ## Adding shadcn components
@@ -29,20 +25,39 @@ bunx shadcn@latest add <component>
 
 Components land in `src/components/ui/`. Import them in `.astro` files using the `client:load` (or `client:visible`) directive since they are React components.
 
-## Import alias
+## Conventions
 
-Always use the `@/` alias instead of relative paths. The alias maps to `src/` and is configured in both `tsconfig.json` and `astro.config.mjs`.
+### File & folder naming
 
-```ts
-// ✅ correct
-import { Menu } from "@/components/sections/Menu";
-import { cn } from "@/lib/utils";
+| What | Format | Examples |
+|---|---|---|
+| Astro / React components | `PascalCase.astro` / `.tsx` | `Hero.astro`, `Nav.astro` |
+| Pages | `kebab-case.astro` | `index.astro`, `[slug].astro` |
+| Lib / utility files | `kebab-case.ts` | `utils.ts` |
+| Data / config files | `kebab-case.ts` | `site.ts` |
+| Collection definition files | `kebab-case-singular.ts` | `matcha-drink.ts`, `dessert.ts` |
+| Collection variables / keys | `camelCasePlural` | `matchaDrinks`, `desserts` |
+| Content folders | `kebab-case-plural/` | `matcha-drinks/`, `desserts/` |
 
-// ❌ avoid
-import { Menu } from "../../../components/sections/Menu";
+### CSS
+
+- BEM-like class naming: block `menu`, element `menu__group`, modifier `menu__group--active`.
+- All styling via **Tailwind**. Write scoped `<style>` blocks only when Tailwind cannot cover it (e.g. complex `grid-template`, pseudo-elements).
+- Brand colour tokens live in `tailwind.config.*` — never hardcode hex values in class names.
+- Font CSS variables follow `--font-<kebab-name>` (e.g. `--font-lato`).
+
+### Imports
+
+Always use the `@/` alias (maps to `src/`). No relative paths in any `.astro`, `.tsx`, or `.ts` file.
+
+### Content collections
+
+Definition file is **singular**; variable and content folder are **plural** — all three names are trivially derivable from each other:
+
 ```
-
-This applies to `.astro`, `.tsx`, `.ts` — all source files.
+matcha-drink.ts  →  export const matchaDrinks  →  src/content/matcha-drinks/
+dessert.ts       →  export const desserts      →  src/content/desserts/
+```
 
 ## Architecture
 
@@ -73,6 +88,32 @@ public/                   # static assets served at /
 - shadcn React components live in `src/components/ui/` and need a `client:*` directive when used in `.astro` files.
 - Static content (menu items, opening hours, contact info) lives in `src/data/`.
 
+## Content collections
+
+Structure:
+
+```
+src/
+  collection-definitions/   # one .ts file per collection (singular name)
+    matcha-drink.ts
+    dessert.ts
+  content.config.ts         # imports all definitions, exports { collections }
+  content/
+    matcha-drinks/          # .md files (plural folder)
+    desserts/
+```
+
+`content.config.ts` is kept thin — only imports and re-exports:
+
+```ts
+import { matchaDrinks } from '@/collection-definitions/matcha-drink';
+import { desserts }     from '@/collection-definitions/dessert';
+
+export const collections = { matchaDrinks, desserts };
+```
+
+When adding a new collection: create `src/collection-definitions/<singular>.ts`, add `src/content/<plural>/`, then register in `content.config.ts`.
+
 ## Fonts
 
 **Font loading:** Astro Font API (`astro.config.mjs` → `fonts[]` with `fontProviders.google()`) + `FontLoader.astro` component injected in `BaseLayout.astro` `<head>`. CSS variables follow `--font-<kebab-name>` convention (e.g. `--font-lato`). Do **not** add Google Fonts `@import` to CSS — configure new fonts in `astro.config.mjs` and add a `<Font cssVariable="..." />` entry in `src/components/FontLoader.astro` instead.
@@ -95,8 +136,6 @@ If an animation works in isolation but breaks on the site, first check whether t
 - Use **Tailwind** for all styling. Do not write custom CSS unless Tailwind cannot cover it.
 - Use the Tailwind **theme preset** to define brand colours (greens, creams, browns) in `tailwind.config.*` rather than hardcoding hex values in class names.
 - shadcn/ui component styles can be overridden via `cn()` from `@/lib/utils`.
-
-## References
 
 Design references and inspiration files are stored in `_references/` (gitignored — do not commit). Ignore all files in that folder.
 

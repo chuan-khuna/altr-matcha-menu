@@ -1,18 +1,8 @@
 ---
 name: "Kusa Dessert"
-category: "Dessert"
-order: 4
-origin:
-  region: "Yame"
-  prefecture: "Fukuoka"
-cuppingNotes: ["grassy sweet", "vanilla finish", "low bitter"]
-info:
-  cultivarType: "Special Blend"
-  origin: "Yame, Fukuoka Prefecture"
-  shading: "Tana · 22 days"
-  harvest: "First flush"
-  processing: "Stone-ground tencha, sweet-grade selection"
-drinks:
+order: 1
+notes: ["grassy sweet", "vanilla finish", "low bitter"]
+items:
   - { name: "Matcha Affogato", price: 220 }
   - { name: "Matcha Soft Serve", price: 180 }
   - { name: "Warabi Mochi", price: 160 }
