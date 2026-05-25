@@ -47,7 +47,9 @@ const specRows = [
         <p class="eyebrow">{eyebrow}</p>
         <h1 class="blend__name">{d.name}</h1>
         <p class="blend__origin mono">
-          {d.info?.origin}
+          {d.info?.brand
+            ? `by ${d.info.brand}${d.info.origin ? ` — ${d.info.origin}` : ''}`
+            : d.info?.origin}
         </p>
       </header>
 

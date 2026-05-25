@@ -20,6 +20,7 @@ notes:                # Cupping / tasting descriptors (2–6 short phrases)
 
 info:
   cultivar: string      # Cultivar description
+  brand: string         # (optional) Sourcing brand / supplier credit (e.g. "MTCH")
   origin: string        # (optional) Full origin description
   shading: string       # (optional) Shading method description
   harvest: string       # (optional) Harvest details
@@ -87,3 +88,4 @@ Body text describing the blend — flavour profile, intent, how it was made.
 - `notes` are displayed as flavour tag chips — keep them short (1–3 words each).
 - All prices are in Thai Baht (THB).
 - `harvest` and `processing` under `info` are optional; omit if unknown.
+- `brand` under `info` is optional; when present it renders as `by {brand} — {origin}` in the header credit line.

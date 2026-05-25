@@ -55,7 +55,11 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
                 <div class="blend__meta">
                   <h4 class="blend__name">{blend.data.name}</h4>
                   {blend.data.info?.origin && (
-                    <p class="blend__origin mono">{blend.data.info.origin}</p>
+                    <p class="blend__origin mono">
+                      {blend.data.info.brand
+                        ? `by ${blend.data.info.brand}${blend.data.info.origin ? ` — ${blend.data.info.origin}` : ''}`
+                        : blend.data.info.origin}
+                    </p>
                   )}
                   <ul class="blend__notes" role="list" aria-label="Cupping notes">
                     {blend.data.notes.map((note) => (

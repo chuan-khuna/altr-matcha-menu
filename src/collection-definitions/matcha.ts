@@ -9,6 +9,7 @@ export const matcha = defineCollection({
     notes: z.array(z.string()),
     info: z.object({
       cultivar: z.string(),
+      brand: z.string().optional(),
       origin: z.string().optional(),
       shading: z.string().optional(),
       harvest: z.string().optional(),
