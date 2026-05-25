@@ -5,34 +5,46 @@ import Nav from '@/components/Nav.astro';
 import Footer from '@/components/Footer.astro';
 
 export async function getStaticPaths() {
-  const matchaDrinks = await getCollection('matchaDrinks');
-  return matchaDrinks.map((entry) => ({
-    params: { slug: entry.id },
+  const matchas = await getCollection('matcha');
+  return matchas.map((entry) => ({
+    params: { slug: entry.id.split('/').at(-1) },
     props: { entry },
   }));
 }
 
-interface Props { entry: CollectionEntry<'matchaDrinks'>; }
+interface Props { entry: CollectionEntry<'matcha'>; }
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
 
-const formatPrice = (n: number) => `฿${n}`;
+const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
+
+const categoryLabels: Record<string, string> = {
+  clear: 'Clear Matcha',
+  latte: 'Latte Matcha',
+  powder: 'Powder Matcha',
+};
+
+const menuEntries = (Object.keys(d.menus) as Array<keyof typeof d.menus>)
+  .filter((k) => d.menus[k])
+  .map((k) => ({ label: categoryLabels[k], items: Object.entries(d.menus[k]!) }));
+
+const eyebrow = menuEntries.map((e) => e.label).join(' · ');
 
 const specRows = [
-  { label: 'Cultivar', value: d.info.cultivarType },
-  { label: 'Origin',   value: d.info.origin },
-  { label: 'Shading',  value: d.info.shading },
+  { label: 'Cultivar',   value: d.info.cultivar },
+  { label: 'Origin',     value: d.info.origin },
+  { label: 'Shading',    value: d.info.shading },
   ...(d.info.harvest    ? [{ label: 'Harvest',    value: d.info.harvest    }] : []),
   ...(d.info.processing ? [{ label: 'Processing', value: d.info.processing }] : []),
-];
+].filter((r) => r.value);
 ---
-<Layout title={`${d.name} — ALTR`} description={`${d.name} · ${d.category} · ${d.info?.origin ?? ''}`}>
+<Layout title={`${d.name} — ALTR`} description={`${d.name} · ${eyebrow} · ${d.info?.origin ?? ''}`}>
   <Nav showBack />
   <main class="page-gutter blend">
     <div class="blend__inner">
       <header class="blend__head fade-up">
-        <p class="eyebrow">{d.category}</p>
+        <p class="eyebrow">{eyebrow}</p>
         <h1 class="blend__name">{d.name}</h1>
         <p class="blend__origin mono">
           {d.info?.origin}
@@ -42,7 +54,7 @@ const specRows = [
       <div class="blend__notes fade-up">
         <p class="blend__notes-label mono">Cupping notes</p>
         <ul class="blend__notes-list mono" role="list">
-          {d.cuppingNotes.map((n) => (
+          {d.notes.map((n) => (
             <li>{n}</li>
           ))}
         </ul>
@@ -71,15 +83,20 @@ const specRows = [
 
           <div class="blend__drinks fade-up">
             <p class="blend__side-label mono">Available as</p>
-            <ul class="blend__drinks-list mono" role="list">
-              {d.drinks.map((drink) => (
-                <li>
-                  <span>{drink.name}</span>
-                  <span class="blend__drinks-dots" aria-hidden="true"></span>
-                  <span class="blend__drinks-price">{formatPrice(drink.price)}</span>
-                </li>
-              ))}
-            </ul>
+            {menuEntries.map(({ label, items }) => (
+              <div class="blend__menu-group">
+                <p class="blend__menu-cat mono">{label}</p>
+                <ul class="blend__drinks-list mono" role="list">
+                  {items.map(([name, price]) => (
+                    <li>
+                      <span>{name}</span>
+                      <span class="blend__drinks-dots" aria-hidden="true"></span>
+                      <span class="blend__drinks-price">{formatPrice(price)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </aside>
       </div>
@@ -183,9 +200,17 @@ const specRows = [
     margin: 0;
     color: var(--color-ink);
   }
+  .blend__menu-group { margin-top: var(--space-md); }
+  .blend__menu-cat {
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--space-2);
+  }
   .blend__drinks-list {
     list-style: none;
-    margin: var(--space-md) 0 0;
+    margin: 0;
     padding: 0;
     display: grid;
     gap: var(--space-2);

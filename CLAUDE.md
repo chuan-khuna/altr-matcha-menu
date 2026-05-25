@@ -59,6 +59,12 @@ matcha-drink.ts  →  export const matchaDrinks  →  src/content/matcha-drinks/
 dessert.ts       →  export const desserts      →  src/content/desserts/
 ```
 
+**Exception — uncountable nouns:** if the noun has no natural plural in English (e.g. "matcha"), use the singular for both the variable and the content folder:
+
+```
+matcha.ts  →  export const matcha  →  src/content/matcha/
+```
+
 ## Architecture
 
 ```

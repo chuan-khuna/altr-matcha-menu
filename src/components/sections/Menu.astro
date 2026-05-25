@@ -1,18 +1,29 @@
 ---
 import { getCollection } from 'astro:content';
 
-const matchaDrinks = (await getCollection('matchaDrinks')).sort(
+const matchas = (await getCollection('matcha')).sort(
   (a, b) => a.data.order - b.data.order
 );
 
-const categories = ['Clear Matcha', 'Latte Matcha', 'Powder Matcha'] as const;
-const grouped = categories
+const menuCategories = [
+  { key: 'clear' as const, label: 'Clear Matcha' },
+  { key: 'latte' as const, label: 'Latte Matcha' },
+  { key: 'powder' as const, label: 'Powder Matcha' },
+];
+
+const grouped = menuCategories
   .map((cat) => ({
-    name: cat,
-    items: matchaDrinks.filter((b) => b.data.category === cat),
+    name: cat.label,
+    items: matchas
+      .filter((b) => b.data.menus[cat.key])
+      .map((b) => ({
+        blend: b,
+        menuItems: Object.entries(b.data.menus[cat.key]!),
+      })),
   }))
   .filter((g) => g.items.length > 0);
 
+const getSlug = (id: string) => id.split('/').at(-1)!;
 const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
 ---
 
@@ -34,10 +45,10 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
         </div>
 
         <ul class="menu__list" role="list">
-          {group.items.map((blend) => (
+          {group.items.map(({ blend, menuItems }) => (
             <li class="blend fade-up">
               <a
-                href={`/matcha-drinks/${blend.id}`}
+                href={`/matcha/${getSlug(blend.id)}`}
                 class="blend__link"
                 aria-label={`${blend.data.name} — full blend profile`}
               >
@@ -47,7 +58,7 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
                     <p class="blend__origin mono">{blend.data.info.origin}</p>
                   )}
                   <ul class="blend__notes" role="list" aria-label="Cupping notes">
-                    {blend.data.cuppingNotes.map((note) => (
+                    {blend.data.notes.map((note) => (
                       <li class="blend__note">{note}</li>
                     ))}
                   </ul>
@@ -55,11 +66,11 @@ const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
 
                 <div class="blend__right">
                   <div class="blend__drinks mono">
-                    {blend.data.drinks.map((d) => (
+                    {menuItems.map(([name, price]) => (
                       <div class="blend__row">
-                        <span class="blend__drink">{d.name}</span>
+                        <span class="blend__drink">{name}</span>
                         <span class="blend__dots" aria-hidden="true"></span>
-                        <span class="blend__price">{formatPrice(d.price)}</span>
+                        <span class="blend__price">{formatPrice(price)}</span>
                       </div>
                     ))}
                   </div>

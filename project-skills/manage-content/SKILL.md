@@ -3,7 +3,7 @@ name: manage-content
 description: >
   Reference skill for managing site content and keeping collection format docs
   up to date. Use this skill when the user asks to:
-  - Add or edit a matcha drink or dessert entry
+  - Add or edit a matcha blend or dessert entry
   - Update site data (address, hours, social links, nav items)
   - Update a content collection schema (collection-definitions files)
   - Know the correct frontmatter format for any content type
@@ -30,7 +30,7 @@ This skill has two jobs:
 | What you need | Reference file |
 |---|---|
 | Overview of all collections and data files | [`references/content-architecture.md`](./references/content-architecture.md) |
-| Matcha drink entries (Clear Matcha / Latte Matcha) | [`references/how-to-manage-matcha-drinks.md`](./references/how-to-manage-matcha-drinks.md) |
+| Matcha blend entries | [`references/how-to-manage-matcha.md`](./references/how-to-manage-matcha.md) |
 | Dessert entries | [`references/how-to-manage-desserts.md`](./references/how-to-manage-desserts.md) |
 | Site data — address, hours, social links, nav | [`references/how-to-manage-site-data.md`](./references/how-to-manage-site-data.md) |
 
@@ -43,7 +43,7 @@ reference doc so it reflects the live codebase.
 
 | Source path | Reference doc |
 |---|---|
-| `src/collection-definitions/matcha-drink.ts` | `references/how-to-manage-matcha-drinks.md` |
+| `src/collection-definitions/matcha.ts` | `references/how-to-manage-matcha.md` |
 | `src/collection-definitions/dessert.ts` | `references/how-to-manage-desserts.md` |
 | `src/data/site.ts` | `references/how-to-manage-site-data.md` |
 
