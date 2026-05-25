@@ -1,83 +1,22 @@
 ---
 ---
-<section class="hero page-gutter" aria-label="ALTR Matcha Cafe">
-  <div class="hero__inner">
+<section class="page-gutter pb-[var(--space-3xl)] pt-[calc(var(--nav-h)+var(--space-3xl))]" aria-label="ALTR Matcha Cafe">
+  <div class="mx-auto max-w-[var(--content-max)]">
     <p class="eyebrow fade-up">Specialty matcha · est. 2026</p>
 
-    <h1 class="hero__mark fade-up">
-      <span class="hero__altr">ALTR</span><span class="hero__dot">.</span>
+    <h1 class="display fade-up mt-[var(--space-lg)] flex items-baseline text-[var(--text-display)] italic leading-[0.92] tracking-[-0.02em]">
+      <span class="text-ink">ALTR</span><span class="text-accent">.</span>
     </h1>
 
-    <div class="hero__meta fade-up">
-      <p class="hero__tagline">
+    <div class="fade-up mt-[var(--space-2xl)] grid grid-cols-1 gap-[var(--space-xl)] border-t border-border pt-[var(--space-lg)] min-[800px]:grid-cols-[1fr_auto] min-[800px]:items-end">
+      <p class="display max-w-[36rem] text-[var(--text-xl)] leading-[1.25] text-ink">
         Single-cultivar &amp; carefully blended matchas,<br />
         sourced direct from Japanese farms.
       </p>
-      <div class="hero__pointer mono" aria-hidden="true">
+      <div class="mono flex items-center gap-[var(--space-md)] text-[var(--text-xs)] uppercase tracking-[0.18em] text-ink-muted min-[800px]:justify-end" aria-hidden="true">
         <span>Scroll for the menu</span>
-        <span class="hero__rule"></span>
+        <span class="block h-px max-w-[12rem] flex-1 bg-sand"></span>
       </div>
     </div>
   </div>
 </section>
-
-<style>
-  .hero {
-    padding-top: calc(var(--nav-h) + var(--space-3xl));
-    padding-bottom: var(--space-3xl);
-  }
-  .hero__inner {
-    max-width: var(--content-max);
-    margin: 0 auto;
-  }
-  .hero__mark {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: var(--text-display);
-    line-height: 0.92;
-    letter-spacing: -0.02em;
-    margin-top: var(--space-lg);
-    display: flex;
-    align-items: baseline;
-  }
-  .hero__altr { color: var(--color-ink); }
-  .hero__dot { color: var(--color-accent); }
-  .hero__meta {
-    margin-top: var(--space-2xl);
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
-    border-top: var(--rule-hairline);
-    padding-top: var(--space-lg);
-  }
-  .hero__tagline {
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    line-height: 1.25;
-    max-width: 36rem;
-    color: var(--color-ink);
-  }
-  .hero__pointer {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    font-size: var(--text-xs);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-  }
-  .hero__rule {
-    display: block;
-    height: 1px;
-    flex: 1;
-    background: var(--color-sand);
-    max-width: 12rem;
-  }
-  @media (min-width: 800px) {
-    .hero__meta {
-      grid-template-columns: 1fr auto;
-      align-items: end;
-    }
-    .hero__pointer { justify-content: flex-end; }
-  }
-</style>

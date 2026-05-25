@@ -29,22 +29,15 @@ Components land in `src/components/ui/`. Import them in `.astro` files using the
 
 ### File & folder naming
 
-| What | Format | Examples |
-|---|---|---|
-| Astro / React components | `PascalCase.astro` / `.tsx` | `Hero.astro`, `Nav.astro` |
-| Pages | `kebab-case.astro` | `index.astro`, `[slug].astro` |
-| Lib / utility files | `kebab-case.ts` | `utils.ts` |
-| Data / config files | `kebab-case.ts` | `site.ts` |
-| Collection definition files | `kebab-case-singular.ts` | `matcha-drink.ts`, `dessert.ts` |
-| Collection variables / keys | `camelCasePlural` | `matchaDrinks`, `desserts` |
-| Content folders | `kebab-case-plural/` | `matcha-drinks/`, `desserts/` |
-
-### CSS
-
-- BEM-like class naming: block `menu`, element `menu__group`, modifier `menu__group--active`.
-- All styling via **Tailwind**. Write scoped `<style>` blocks only when Tailwind cannot cover it (e.g. complex `grid-template`, pseudo-elements).
-- Brand colour tokens live in `tailwind.config.*` — never hardcode hex values in class names.
-- Font CSS variables follow `--font-<kebab-name>` (e.g. `--font-lato`).
+| What                        | Format                      | Examples                        |
+| --------------------------- | --------------------------- | ------------------------------- |
+| Astro / React components    | `PascalCase.astro` / `.tsx` | `Hero.astro`, `Nav.astro`       |
+| Pages                       | `kebab-case.astro`          | `index.astro`, `[slug].astro`   |
+| Lib / utility files         | `kebab-case.ts`             | `utils.ts`                      |
+| Data / config files         | `kebab-case.ts`             | `site.ts`                       |
+| Collection definition files | `kebab-case-singular.ts`    | `matcha-drink.ts`, `dessert.ts` |
+| Collection variables / keys | `camelCasePlural`           | `matchaDrinks`, `desserts`      |
+| Content folders             | `kebab-case-plural/`        | `matcha-drinks/`, `desserts/`   |
 
 ### Imports
 
@@ -112,8 +105,8 @@ src/
 `content.config.ts` is kept thin — only imports and re-exports:
 
 ```ts
-import { matchaDrinks } from '@/collection-definitions/matcha-drink';
-import { desserts }     from '@/collection-definitions/dessert';
+import { matchaDrinks } from "@/collection-definitions/matcha-drink";
+import { desserts } from "@/collection-definitions/dessert";
 
 export const collections = { matchaDrinks, desserts };
 ```

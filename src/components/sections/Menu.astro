@@ -27,24 +27,24 @@ const grouped = menuCategories
 const getSlug = (id: string) => id.split('/').at(-1)!;
 ---
 
-<section id="menu" class="menu page-gutter" aria-label="Menu">
-  <div class="menu__inner">
-    <header class="menu__head fade-up">
+<section id="menu" class="page-gutter border-t border-border py-[var(--space-3xl)]" aria-label="Menu">
+  <div class="mx-auto max-w-[var(--content-max)]">
+    <header class="fade-up mb-[var(--space-3xl)] grid max-w-[42rem] gap-[var(--space-sm)]">
       <p class="eyebrow">The menu</p>
-      <h2 class="menu__title">By blend, not by drink.</h2>
-      <p class="menu__lede mono">
+      <h2 class="display text-[clamp(2.5rem,6vw,4.5rem)] italic leading-none tracking-[-0.02em]">By blend, not by drink.</h2>
+      <p class="mono mt-[var(--space-sm)] text-[var(--text-sm)] leading-[1.6] tracking-[0.01em] text-ink-muted">
         Each blend is sourced and ground in-house. Drink preparations follow the leaf.
       </p>
     </header>
 
     {grouped.map((group) => (
-      <div class="menu__group">
-        <div class="menu__group-head fade-up">
-          <h3 class="menu__group-title">{group.name}</h3>
-          <span class="menu__count mono">{String(group.items.length).padStart(2, '0')} blends</span>
+      <div class="mt-[var(--space-3xl)] first:mt-0">
+        <div class="fade-up flex items-baseline justify-between gap-[var(--space-md)] border-b border-foreground pb-[var(--space-md)]">
+          <h3 class="display text-[var(--text-2xl)]">{group.name}</h3>
+          <span class="mono text-[var(--text-xs)] uppercase tracking-[0.18em] text-ink-muted">{String(group.items.length).padStart(2, '0')} blends</span>
         </div>
 
-        <ul class="menu__list" role="list">
+        <ul class="m-0 list-none p-0" role="list">
           {group.items.map(({ blend, menuItems }) => (
             <MenuCard
               blend={blend}
@@ -57,66 +57,3 @@ const getSlug = (id: string) => id.split('/').at(-1)!;
     ))}
   </div>
 </section>
-
-<style>
-  /* ── section ─────────────────────────────── */
-  .menu {
-    padding-block: var(--space-3xl);
-    border-top: var(--rule-hairline);
-  }
-  .menu__inner {
-    max-width: var(--content-max);
-    margin: 0 auto;
-  }
-
-  /* ── header ──────────────────────────────── */
-  .menu__head {
-    display: grid;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-3xl);
-    max-width: 42rem;
-  }
-  .menu__title {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .menu__lede {
-    font-size: var(--text-sm);
-    color: var(--color-ink-muted);
-    margin-top: var(--space-sm);
-    line-height: 1.6;
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
-
-  /* ── group ───────────────────────────────── */
-  .menu__group + .menu__group { margin-top: var(--space-3xl); }
-  .menu__group-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-md);
-    padding-bottom: var(--space-md);
-    border-bottom: var(--rule-ink);
-  }
-  .menu__group-title {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-  }
-  .menu__count {
-    font-size: var(--text-xs);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-  }
-  .menu__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  /* ── responsive ──────────────────────────── */
-</style>

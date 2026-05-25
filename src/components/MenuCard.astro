@@ -13,156 +13,34 @@ const d = blend.data;
 const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
 ---
 
-<li class="blend fade-up">
+<li class="group fade-up border-b border-border">
   <a
     href={href}
-    class="blend__link"
+    class="flex items-start justify-between gap-[var(--space-2xl)] py-[var(--space-xl)] text-inherit hover:text-inherit max-sm:flex-col max-sm:gap-[var(--space-md)]"
     aria-label={`${d.name} — full blend profile`}
   >
-    <div class="blend__meta">
-      <h4 class="blend__name">{d.name}</h4>
-      {d.info?.brand && <p class="blend__brand mono">by {d.info.brand}</p>}
-      {d.info?.origin && <p class="blend__origin mono">{d.info.origin}</p>}
-      <ul class="blend__notes" role="list" aria-label="Cupping notes">
+    <div class="flex min-w-0 flex-1 flex-col gap-[var(--space-2)]">
+      <h4 class="display text-[var(--text-xl)] italic leading-[1.05]">{d.name}</h4>
+      {d.info?.brand && <p class="mono text-[var(--text-xs)] tracking-[0.08em] text-ink-muted">by {d.info.brand}</p>}
+      {d.info?.origin && <p class="mono text-[var(--text-xs)] uppercase tracking-[0.12em] text-accent">{d.info.origin}</p>}
+      <ul class="mt-[var(--space-sm)] flex list-none flex-wrap gap-[var(--space-2)] p-0" role="list" aria-label="Cupping notes">
         {d.notes.map((note) => (
-          <li class="blend__note">{note}</li>
+          <li class="mono bg-[color-mix(in_oklch,var(--primary)_14%,var(--background))] px-[8px] py-[3px] text-[0.68rem] lowercase tracking-[0.06em] text-ink-muted transition-colors duration-150 ease-out group-hover:bg-primary group-hover:text-primary-foreground">{note}</li>
         ))}
       </ul>
     </div>
 
-    <div class="blend__right">
-      <div class="blend__drinks mono">
+    <div class="flex shrink-0 flex-col items-end gap-[var(--space-sm)] max-sm:w-full max-sm:items-start">
+      <div class="mono grid min-w-[14rem] gap-[var(--space-1)] text-[var(--text-sm)] max-sm:w-full max-sm:min-w-0">
         {menuItems.map(([name, price]) => (
-          <div class="blend__row">
-            <span class="blend__drink">{name}</span>
-            <span class="blend__dots" aria-hidden="true"></span>
-            <span class="blend__price">{formatPrice(price)}</span>
+          <div class="flex items-baseline gap-[var(--space-2)]">
+            <span class="text-ink">{name}</span>
+            <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true"></span>
+            <span class="tabular-nums text-ink">{formatPrice(price)}</span>
           </div>
         ))}
       </div>
-      <span class="blend__arrow" aria-hidden="true">→</span>
+      <span class="mono text-[var(--text-sm)] text-ink-muted transition-all duration-150 ease-out group-hover:translate-x-[4px] group-hover:text-accent" aria-hidden="true">→</span>
     </div>
   </a>
 </li>
-
-<style>
-  /* ── horizontal blend row ────────────────── */
-  .blend {
-    border-bottom: var(--rule-hairline);
-  }
-  .blend__link {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: var(--space-2xl);
-    padding-block: var(--space-xl);
-    color: inherit;
-  }
-  .blend__link:hover { color: inherit; }
-
-  /* ── left: name + origin + notes ─────────── */
-  .blend__meta {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-  .blend__name {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: var(--text-xl);
-    line-height: 1.05;
-  }
-  .blend__brand {
-    font-size: var(--text-xs);
-    letter-spacing: 0.08em;
-    color: var(--color-ink-muted);
-  }
-  .blend__origin {
-    font-size: var(--text-xs);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
-
-  /* ── cupping note chips ──────────────────── */
-  .blend__notes {
-    list-style: none;
-    margin: var(--space-sm) 0 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-  .blend__note {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.06em;
-    padding: 3px 8px;
-    background: color-mix(in oklch, var(--primary) 14%, var(--background));
-    color: var(--color-ink-muted);
-    text-transform: lowercase;
-    transition: background var(--dur-fast) var(--ease-out),
-                color var(--dur-fast) var(--ease-out);
-  }
-  .blend:hover .blend__note {
-    background: var(--primary);
-    color: var(--primary-foreground);
-  }
-
-  /* ── right: drinks + arrow ───────────────── */
-  .blend__right {
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: var(--space-sm);
-  }
-  .blend__drinks {
-    display: grid;
-    gap: var(--space-1);
-    font-size: var(--text-sm);
-    font-family: var(--font-mono);
-    min-width: 14rem;
-  }
-  .blend__row {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
-  }
-  .blend__drink { color: var(--color-ink); }
-  .blend__dots {
-    flex: 1;
-    border-bottom: 1px dotted var(--color-sand);
-    transform: translateY(-3px);
-  }
-  .blend__price {
-    color: var(--color-ink);
-    font-variant-numeric: tabular-nums;
-  }
-  .blend__arrow {
-    font-size: var(--text-sm);
-    font-family: var(--font-mono);
-    color: var(--color-ink-muted);
-    transition: transform var(--dur-fast) var(--ease-out),
-                color var(--dur-fast) var(--ease-out);
-  }
-  .blend:hover .blend__arrow {
-    color: var(--color-accent);
-    transform: translateX(4px);
-  }
-
-  /* ── responsive ──────────────────────────── */
-  @media (max-width: 640px) {
-    .blend__link {
-      flex-direction: column;
-      gap: var(--space-md);
-    }
-    .blend__right {
-      align-items: flex-start;
-      width: 100%;
-    }
-    .blend__drinks { min-width: 0; width: 100%; }
-  }
-</style>

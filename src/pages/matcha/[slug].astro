@@ -41,59 +41,59 @@ const specRows = [
 ---
 <Layout title={`${d.name} — ALTR`} description={`${d.name} · ${eyebrow} · ${d.info?.origin ?? ''}`}>
   <Nav showBack />
-  <main class="page-gutter blend">
-    <div class="blend__inner">
-      <header class="blend__head fade-up">
+  <main class="page-gutter pb-[var(--space-3xl)] pt-[calc(var(--nav-h)+var(--space-3xl))]">
+    <div class="mx-auto max-w-[64rem]">
+      <header class="fade-up mb-[var(--space-2xl)]">
         <p class="eyebrow">{eyebrow}</p>
-        <h1 class="blend__name">{d.name}</h1>
-        <p class="blend__origin mono">
+        <h1 class="display mt-[var(--space-md)] text-[clamp(3rem,9vw,6.5rem)] italic leading-[0.98] tracking-[-0.02em]">{d.name}</h1>
+        <p class="mono mt-[var(--space-md)] text-[var(--text-xs)] uppercase tracking-[0.18em] text-accent">
           {d.info?.brand
             ? `by ${d.info.brand}${d.info.origin ? ` — ${d.info.origin}` : ''}`
             : d.info?.origin}
         </p>
       </header>
 
-      <div class="blend__notes fade-up">
-        <p class="blend__notes-label mono">Cupping notes</p>
-        <ul class="blend__notes-list mono" role="list">
+      <div class="fade-up mb-[var(--space-2xl)] grid gap-[var(--space-md)] border-b border-border border-t border-foreground py-[var(--space-lg)]">
+        <p class="mono text-[var(--text-xs)] uppercase tracking-[0.16em] text-ink-muted">Cupping notes</p>
+        <ul class="mono m-0 flex list-none flex-wrap gap-[var(--space-2)] p-0 text-[var(--text-sm)]" role="list">
           {d.notes.map((n) => (
-            <li>{n}</li>
+            <li class="border border-sand px-[10px] py-[4px]">{n}</li>
           ))}
         </ul>
       </div>
 
-      <div class="blend__grid">
-        <article class="blend__story fade-up">
-          <p class="blend__story-label mono">The blend</p>
-          <div class="blend__story-body">
+      <div class="grid grid-cols-1 gap-[var(--space-3xl)] min-[900px]:grid-cols-[1.4fr_1fr]">
+        <article class="fade-up">
+          <p class="mono text-[var(--text-xs)] uppercase tracking-[0.16em] text-ink-muted">The blend</p>
+          <div class="blend__story-body display mt-[var(--space-md)] text-[var(--text-xl)] leading-[1.45] text-ink">
             <Content />
           </div>
         </article>
 
-        <aside class="blend__side">
-          <div class="blend__spec fade-up">
-            <p class="blend__side-label mono">Specifications</p>
-            <dl class="blend__spec-list mono">
+        <aside class="grid gap-[var(--space-2xl)]">
+          <div class="fade-up">
+            <p class="mono text-[var(--text-xs)] uppercase tracking-[0.16em] text-ink-muted">Specifications</p>
+            <dl class="mono mt-[var(--space-md)] grid gap-0 border-t border-border text-[var(--text-xs)]">
               {specRows.map((row) => (
-                <div class="blend__spec-row">
-                  <dt>{row.label}</dt>
-                  <dd>{row.value}</dd>
+                <div class="grid grid-cols-[7rem_1fr] gap-[var(--space-md)] border-b border-border py-[var(--space-sm)]">
+                  <dt class="uppercase tracking-[0.14em] text-ink-muted">{row.label}</dt>
+                  <dd class="m-0 text-ink">{row.value}</dd>
                 </div>
               ))}
             </dl>
           </div>
 
-          <div class="blend__drinks fade-up">
-            <p class="blend__side-label mono">Available as</p>
+          <div class="fade-up">
+            <p class="mono text-[var(--text-xs)] uppercase tracking-[0.16em] text-ink-muted">Available as</p>
             {menuEntries.map(({ label, items }) => (
-              <div class="blend__menu-group">
-                <p class="blend__menu-cat mono">{label}</p>
-                <ul class="blend__drinks-list mono" role="list">
+              <div class="mt-[var(--space-md)] first:mt-0">
+                <p class="mono mb-[var(--space-2)] text-[var(--text-xs)] uppercase tracking-[0.12em] text-accent">{label}</p>
+                <ul class="mono m-0 grid list-none gap-[var(--space-2)] p-0 text-[var(--text-sm)]" role="list">
                   {items.map(([name, price]) => (
-                    <li>
+                    <li class="flex items-baseline gap-[var(--space-2)]">
                       <span>{name}</span>
-                      <span class="blend__drinks-dots" aria-hidden="true"></span>
-                      <span class="blend__drinks-price">{formatPrice(price)}</span>
+                      <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true"></span>
+                      <span class="tabular-nums text-ink">{formatPrice(price)}</span>
                     </li>
                   ))}
                 </ul>
@@ -103,156 +103,14 @@ const specRows = [
         </aside>
       </div>
 
-      <a href="/#menu" class="blend__back mono">← Back to the menu</a>
+      <a href="/#menu" class="mono mt-[var(--space-3xl)] inline-block border-t border-border pt-[var(--space-md)] text-[var(--text-xs)] uppercase tracking-[0.16em] text-ink-muted transition-all duration-150 ease-out hover:-translate-x-[2px] hover:text-accent">← Back to the menu</a>
     </div>
   </main>
   <Footer />
 </Layout>
 
 <style>
-  .blend {
-    padding-top: calc(var(--nav-h) + var(--space-3xl));
-    padding-bottom: var(--space-3xl);
-  }
-  .blend__inner {
-    max-width: 64rem;
-    margin: 0 auto;
-  }
-  .blend__head { margin-bottom: var(--space-2xl); }
-  .blend__name {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: clamp(3rem, 9vw, 6.5rem);
-    line-height: 0.98;
-    letter-spacing: -0.02em;
-    margin-top: var(--space-md);
-  }
-  .blend__origin {
-    font-size: var(--text-xs);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-top: var(--space-md);
-  }
-  .blend__notes {
-    border-top: var(--rule-ink);
-    border-bottom: var(--rule-hairline);
-    padding-block: var(--space-lg);
-    margin-bottom: var(--space-2xl);
-    display: grid;
-    gap: var(--space-md);
-  }
-  .blend__notes-label,
-  .blend__story-label,
-  .blend__side-label {
-    font-size: var(--text-xs);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-  }
-  .blend__notes-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-  }
-  .blend__notes-list li {
-    padding: 4px 10px;
-    border: 1px solid var(--color-sand);
-  }
-  .blend__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-3xl);
-  }
-  .blend__story-body {
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    line-height: 1.45;
-    color: var(--color-ink);
-    margin-top: var(--space-md);
-  }
   .blend__story-body :global(p + p) {
     margin-top: var(--space-md);
-  }
-  .blend__side { display: grid; gap: var(--space-2xl); }
-  .blend__spec-list {
-    margin: var(--space-md) 0 0;
-    display: grid;
-    gap: 0;
-    font-size: var(--text-xs);
-    border-top: var(--rule-hairline);
-  }
-  .blend__spec-row {
-    display: grid;
-    grid-template-columns: 7rem 1fr;
-    gap: var(--space-md);
-    padding-block: var(--space-sm);
-    border-bottom: var(--rule-hairline);
-  }
-  .blend__spec-row dt {
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-  }
-  .blend__spec-row dd {
-    margin: 0;
-    color: var(--color-ink);
-  }
-  .blend__menu-group { margin-top: var(--space-md); }
-  .blend__menu-cat {
-    font-size: var(--text-xs);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: var(--space-2);
-  }
-  .blend__drinks-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-  }
-  .blend__drinks-list li {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
-  }
-  .blend__drinks-dots {
-    flex: 1;
-    border-bottom: 1px dotted var(--color-sand);
-    transform: translateY(-3px);
-  }
-  .blend__drinks-price {
-    color: var(--color-ink);
-    font-variant-numeric: tabular-nums;
-  }
-  .blend__back {
-    display: inline-block;
-    margin-top: var(--space-3xl);
-    padding-top: var(--space-md);
-    border-top: var(--rule-hairline);
-    font-size: var(--text-xs);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    transition: color var(--dur-fast) var(--ease-out),
-                transform var(--dur-fast) var(--ease-out);
-  }
-  .blend__back:hover {
-    color: var(--color-accent);
-    transform: translateX(-2px);
-  }
-
-  @media (min-width: 900px) {
-    .blend__grid {
-      grid-template-columns: 1.4fr 1fr;
-      gap: var(--space-3xl);
-    }
   }
 </style>
