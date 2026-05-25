@@ -7,12 +7,12 @@ interface Props {
 const { showBack = false } = Astro.props;
 ---
 <nav class="page-gutter fixed inset-x-0 top-0 z-50 h-[var(--nav-h)] border-b border-border bg-[color-mix(in_oklch,var(--color-paper)_88%,transparent)] backdrop-blur-[8px] backdrop-saturate-[140%]">
-  <div class="mx-auto flex h-full max-w-[var(--content-max)] items-center justify-between gap-[var(--space-md)]">
-    <a href="/" class="display text-[var(--text-lg)] italic tracking-[0.02em] text-ink hover:text-accent" aria-label="ALTR — home">ALTR</a>
+  <div class="mx-auto flex h-full max-w-[var(--content-max)] items-center justify-between gap-4">
+  <a href="/" class="display text-xl italic tracking-[0.02em] text-ink hover:text-accent" aria-label="ALTR — home">ALTR</a>
     {showBack ? (
-      <a href="/#menu" class="mono text-[var(--text-xs)] uppercase tracking-[0.12em] text-ink-muted">← Back to menu</a>
+    <a href="/#menu" class="mono text-xs uppercase tracking-[0.12em] text-ink-muted">← Back to menu</a>
     ) : (
-      <ul class="mono m-0 flex list-none gap-[var(--space-xl)] p-0 text-[var(--text-xs)] uppercase tracking-[0.16em] text-ink-muted max-[480px]:gap-[var(--space-md)]">
+    <ul class="mono m-0 flex list-none gap-8 p-0 text-xs uppercase tracking-[0.16em] text-ink-muted max-[480px]:gap-4">
         {nav.map((item) => (
           <li><a href={item.href}>{item.label}</a></li>
         ))}

@@ -27,21 +27,21 @@ const grouped = menuCategories
 const getSlug = (id: string) => id.split('/').at(-1)!;
 ---
 
-<section id="menu" class="page-gutter border-t border-border py-[var(--space-3xl)]" aria-label="Menu">
+<section id="menu" class="page-gutter border-t border-border py-20" aria-label="Menu">
   <div class="mx-auto max-w-[var(--content-max)]">
-    <header class="fade-up mb-[var(--space-3xl)] grid max-w-[42rem] gap-[var(--space-sm)]">
+    <header class="fade-up mb-20 grid max-w-[42rem] gap-3">
       <p class="eyebrow">The menu</p>
       <h2 class="display text-[clamp(2.5rem,6vw,4.5rem)] italic leading-none tracking-[-0.02em]">By blend, not by drink.</h2>
-      <p class="mt-[var(--space-sm)] text-[var(--text-sm)] leading-[1.6] tracking-[0.01em] text-ink-muted">
+      <p class="mt-0 text-sm leading-[1.6] tracking-[0.01em] text-ink-muted">
         Each blend is sourced and ground in-house. Drink preparations follow the leaf.
       </p>
     </header>
 
     {grouped.map((group) => (
-      <div class="mt-[var(--space-3xl)] first:mt-0">
-        <div class="fade-up flex items-baseline justify-between gap-[var(--space-md)] border-b border-foreground pb-[var(--space-md)]">
-          <h3 class="display text-[var(--text-2xl)]">{group.name}</h3>
-          <span class="mono text-[var(--text-xs)] uppercase tracking-[0.18em] text-ink-muted">{String(group.items.length).padStart(2, '0')} blends</span>
+      <div class="mt-20 first:mt-0">
+        <div class="fade-up flex items-baseline justify-between gap-4 border-b border-foreground pb-4">
+          <h3 class="display text-[2rem]">{group.name}</h3>
+          <span class="mono text-xs uppercase tracking-[0.18em] text-ink-muted">{String(group.items.length).padStart(2, '0')} blends</span>
         </div>
 
         <ul class="m-0 list-none p-0" role="list">
