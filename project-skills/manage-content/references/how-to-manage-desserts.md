@@ -3,7 +3,7 @@
 Collection key: `desserts`  
 Definition: `src/collection-definitions/dessert.ts`  
 Content folder: `src/content/desserts/`  
-File format: `.md` with YAML frontmatter
+File format: `.md` or `.mdx` with YAML frontmatter
 
 ---
 

@@ -27,7 +27,7 @@ export const address = {
 ```ts
 export const address = {
   line1:    '555 Rasa Tower',
-  line2:    'Phahonyothin',
+  line2:    'Phahonyothin rd, Chatuchak',
   city:     'Bangkok 10900',
   mapsHref: 'https://maps.google.com/?q=ALTR+Matcha+Bangkok',
 } as const;

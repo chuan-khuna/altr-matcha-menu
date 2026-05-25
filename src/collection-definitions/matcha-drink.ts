@@ -2,10 +2,10 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 export const matchaDrinks = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/matcha-drinks' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/matcha-drinks' }),
   schema: z.object({
     name: z.string(),
-    category: z.enum(['Clear Matcha', 'Latte Matcha']),
+    category: z.enum(['Clear Matcha', 'Latte Matcha', 'Power Matcha']),
     order: z.number().default(0),
     origin: z.object({
       region: z.string(),
@@ -13,7 +13,7 @@ export const matchaDrinks = defineCollection({
     }),
     cuppingNotes: z.array(z.string()),
     info: z.object({
-      cultivarType: z.enum(['Single Cultivar', 'Special Blend']),
+      cultivarType: z.enum(['Single Cultivar', 'Blend']),
       origin: z.string(),
       shading: z.string(),
       harvest: z.string().optional(),

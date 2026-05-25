@@ -3,7 +3,8 @@
 Collection key: `matchaDrinks`  
 Definition: `src/collection-definitions/matcha-drink.ts`  
 Content folder: `src/content/matcha-drinks/`  
-File format: `.md` with YAML frontmatter
+Sub-folders: `clear/`, `latte/`, `power/`  
+File format: `.md` or `.mdx` with YAML frontmatter
 
 ---
 
@@ -11,7 +12,7 @@ File format: `.md` with YAML frontmatter
 
 ```yaml
 name: string          # Display name of the blend
-category: string      # "Clear Matcha" | "Latte Matcha"
+category: string      # "Clear Matcha" | "Latte Matcha" | "Power Matcha"
 order: number         # Sort order on the menu (default: 0, lower = first)
 
 origin:
@@ -65,7 +66,8 @@ Body text describing the blend — flavour profile, intent, how it was made.
 
 ## Notes
 
-- `category` controls which menu group the drink appears under.
+- `category` controls which menu group the drink appears under. Valid values: `"Clear Matcha"`, `"Latte Matcha"`, `"Power Matcha"`.
+- Place files in the matching sub-folder (`clear/`, `latte/`, `power/`) to keep the content tree organised — the glob picks up all depths.
 - `order` controls sort order within each category group (ascending).
 - `cuppingNotes` are displayed as flavour tags — keep them short (1–3 words each).
 - All prices are in Thai Baht (THB).
