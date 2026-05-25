@@ -1,0 +1,168 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  blend: CollectionEntry<'matcha'>;
+  menuItems: [string, number][];
+  href: string;
+}
+
+const { blend, menuItems, href } = Astro.props;
+const d = blend.data;
+
+const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
+---
+
+<li class="blend fade-up">
+  <a
+    href={href}
+    class="blend__link"
+    aria-label={`${d.name} — full blend profile`}
+  >
+    <div class="blend__meta">
+      <h4 class="blend__name">{d.name}</h4>
+      {d.info?.brand && <p class="blend__brand mono">by {d.info.brand}</p>}
+      {d.info?.origin && <p class="blend__origin mono">{d.info.origin}</p>}
+      <ul class="blend__notes" role="list" aria-label="Cupping notes">
+        {d.notes.map((note) => (
+          <li class="blend__note">{note}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="blend__right">
+      <div class="blend__drinks mono">
+        {menuItems.map(([name, price]) => (
+          <div class="blend__row">
+            <span class="blend__drink">{name}</span>
+            <span class="blend__dots" aria-hidden="true"></span>
+            <span class="blend__price">{formatPrice(price)}</span>
+          </div>
+        ))}
+      </div>
+      <span class="blend__arrow" aria-hidden="true">→</span>
+    </div>
+  </a>
+</li>
+
+<style>
+  /* ── horizontal blend row ────────────────── */
+  .blend {
+    border-bottom: var(--rule-hairline);
+  }
+  .blend__link {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-2xl);
+    padding-block: var(--space-xl);
+    color: inherit;
+  }
+  .blend__link:hover { color: inherit; }
+
+  /* ── left: name + origin + notes ─────────── */
+  .blend__meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .blend__name {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--text-xl);
+    line-height: 1.05;
+  }
+  .blend__brand {
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    color: var(--color-ink-muted);
+  }
+  .blend__origin {
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  /* ── cupping note chips ──────────────────── */
+  .blend__notes {
+    list-style: none;
+    margin: var(--space-sm) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  .blend__note {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+    background: color-mix(in oklch, var(--primary) 14%, var(--background));
+    color: var(--color-ink-muted);
+    text-transform: lowercase;
+    transition: background var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out);
+  }
+  .blend:hover .blend__note {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  /* ── right: drinks + arrow ───────────────── */
+  .blend__right {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-sm);
+  }
+  .blend__drinks {
+    display: grid;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    min-width: 14rem;
+  }
+  .blend__row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+  .blend__drink { color: var(--color-ink); }
+  .blend__dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--color-sand);
+    transform: translateY(-3px);
+  }
+  .blend__price {
+    color: var(--color-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  .blend__arrow {
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+    color: var(--color-ink-muted);
+    transition: transform var(--dur-fast) var(--ease-out),
+                color var(--dur-fast) var(--ease-out);
+  }
+  .blend:hover .blend__arrow {
+    color: var(--color-accent);
+    transform: translateX(4px);
+  }
+
+  /* ── responsive ──────────────────────────── */
+  @media (max-width: 640px) {
+    .blend__link {
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .blend__right {
+      align-items: flex-start;
+      width: 100%;
+    }
+    .blend__drinks { min-width: 0; width: 100%; }
+  }
+</style>
