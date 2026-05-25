@@ -14,8 +14,8 @@ export const matchaDrinks = defineCollection({
     cuppingNotes: z.array(z.string()),
     info: z.object({
       cultivar: z.string(),
-      origin: z.string(),
-      shading: z.string(),
+      origin: z.string().optional(),
+      shading: z.string().optional(),
       harvest: z.string().optional(),
       processing: z.string().optional(),
     }),

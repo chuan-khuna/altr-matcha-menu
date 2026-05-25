@@ -23,9 +23,9 @@ cuppingNotes:         # Array of tasting descriptors (2–5 short phrases)
   - string
 
 info:
-  cultivar: string      # Cultivar description (e.g. "Single Cultivar · Samidori", "Special Blend")
-  origin: string        # Full origin description
-  shading: string       # Shading method description
+  cultivar: string      # (optional) Cultivar description
+  origin: string        # (optional) Full origin description
+  shading: string       # (optional) Shading method description
   harvest: string       # (optional) Harvest details
   processing: string    # (optional) Processing details
 
