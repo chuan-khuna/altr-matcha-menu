@@ -76,7 +76,7 @@ Renamed for simplicity. Remains top-level — represents the powder's base chara
 
 ### 4. `category` field — dropped
 
-Was `'Clear Matcha' | 'Latte Matcha' | 'Powder Matcha'`. Redundant now that `menus` expresses which styles a blend supports. Dropped entirely.
+Was `'Clear Matcha' | 'Latte Matcha' | 'Powder'`. Redundant now that `menus` expresses which styles a blend supports. Dropped entirely.
 
 ### 5. `info{}` — unchanged
 
