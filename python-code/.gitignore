@@ -1,0 +1,36 @@
+# Virtual environments
+.venv
+.ruff_cache
+
+.vscode
+.DS_Store
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+Untitled.ipynb
+Untitled[a-zA-Z0-9]*.ipynb
+Untitled-*.ipynb
+
+
+# env
+*.env
+!.env.dev
+!.env.example
+
+# db — bind-mount volumes for Docker services (postgres, redis)
+# Each service stores data under db/<service>/<image-version>/
+# so upgrading a service version starts with a clean slate by default.
+*.sqlite3
+db/
+
+# dev tooling artifacts
+*.log
+*.err
+
+# claude
+.claude/settings.local.json
