@@ -17,6 +17,7 @@ menus:
   latte:
     Cold Whisk Latte: 270
     Latte: 220
+    Nitro Cold Whisk Latte: 160
   powder:
     30g Tin Can: 990
 ---

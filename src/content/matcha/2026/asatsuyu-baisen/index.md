@@ -22,6 +22,7 @@ menus:
   latte:
     Cold Whisk Latte: 220
     Latte: 180
+    Nitro Cold Whisk Latte: 150
   powder:
     40g Bag: 1050
 ---
