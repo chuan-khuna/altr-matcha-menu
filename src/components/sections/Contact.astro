@@ -1,46 +1,41 @@
 ---
 import { address, hours, reach } from '@/data/site';
 ---
-<section id="contact" class="page-gutter border-t border-border py-20" aria-label="Visit ALTR">
+<section id="contact" class="page-gutter border-t border-border py-16" aria-label="Visit ALTR">
   <div class="mx-auto max-w-[var(--content-max)]">
-    <header class="fade-up mb-20 max-w-[36rem]">
-      <p class="eyebrow">Visit</p>
-      <h2 class="display mt-3 text-[clamp(2.25rem,5.5vw,4rem)] italic leading-[1.05] tracking-[-0.015em]">Find us, before the leaf turns.</h2>
-    </header>
+    <h2 class="display mb-8 text-[clamp(1.75rem,3.5vw,2.75rem)] italic leading-[1.1] tracking-[-0.015em]">Visit.</h2>
 
-    <div class="grid grid-cols-1 gap-0 border-t border-foreground min-[800px]:grid-cols-[1.2fr_1fr_1fr]">
-      <div class="fade-up grid gap-4 border-b border-border py-8 min-[800px]:border-r min-[800px]:border-border min-[800px]:pr-8">
-        <p class="mono text-xs uppercase tracking-[0.18em] text-accent">Address</p>
-        <address class="display text-2xl not-italic leading-[1.35] text-ink">
+    <div class="grid grid-cols-1 gap-10 font-sans text-sm leading-[1.8] min-[640px]:grid-cols-3 min-[640px]:gap-12">
+      <div>
+        <p class="mono mb-2 text-xs uppercase tracking-[0.16em] text-ink-muted">Address</p>
+        <address class="not-italic text-ink">
           {address.line1}<br />
           {address.line2}<br />
           {address.city}
         </address>
-        <a href={address.mapsHref} class="mono justify-self-start text-xs uppercase tracking-[0.14em] text-ink-muted hover:text-accent" target="_blank" rel="noopener noreferrer">
+        <a href={address.mapsHref} class="mono mt-3 inline-block text-xs uppercase tracking-[0.12em] text-ink-muted hover:text-accent transition-colors duration-150" target="_blank" rel="noopener noreferrer">
           Open in Google Maps →
         </a>
       </div>
 
-      <div class="fade-up grid gap-4 border-b border-border py-8 min-[800px]:border-r min-[800px]:border-border min-[800px]:px-8">
-        <p class="mono text-xs uppercase tracking-[0.18em] text-accent">Hours</p>
-        <table class="mono border-collapse text-sm">
-          <tbody>
-            {hours.map((row) => (
-              <tr>
-                <th scope="row" class="px-0 py-2 pr-6 text-left align-baseline text-xs font-normal uppercase tracking-[0.08em] text-ink-muted">{row.day}</th>
-                <td class="px-0 py-2 text-ink tabular-nums">{row.open}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div>
+        <p class="mono mb-2 text-xs uppercase tracking-[0.16em] text-ink-muted">Hours</p>
+        <ul class="m-0 list-none p-0 text-ink">
+          {hours.map((row) => (
+            <li class="grid grid-cols-[6rem_1fr] gap-2">
+              <span class="text-ink-muted">{row.day}</span>
+              <span>{row.open}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div class="fade-up grid gap-4 border-b border-border py-8 min-[800px]:pl-8">
-        <p class="mono text-xs uppercase tracking-[0.18em] text-accent">Reach</p>
+      <div>
+        <p class="mono mb-2 text-xs uppercase tracking-[0.16em] text-ink-muted">Reach</p>
         <ul class="mono m-0 grid list-none gap-3 p-0 text-sm">
           {reach.map((item) => (
             <li>
-              <a class="border-b border-sand text-ink hover:border-accent hover:text-accent" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+              <a class="border-b border-sand text-ink hover:border-accent hover:text-accent transition-colors duration-150" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
                 {item.display}
               </a>
               <span class="ml-2 text-ink-muted">— {item.label}</span>

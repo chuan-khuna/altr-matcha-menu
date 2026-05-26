@@ -9,17 +9,9 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.google(),
-      name: 'DM Serif Display',
-      cssVariable: '--font-dm-serif-display',
-      weights: [400],
-      styles: ['normal', 'italic'],
-      fallbacks: ['Georgia', 'serif'],
-    },
-    {
-      provider: fontProviders.google(),
-      name: 'DM Serif Text',
-      cssVariable: '--font-dm-serif-text',
-      weights: [400],
+      name: 'Cormorant Garamond',
+      cssVariable: '--font-cormorant-garamond',
+      weights: [300, 400, 500, 600],
       styles: ['normal', 'italic'],
       fallbacks: ['Georgia', 'serif'],
     },

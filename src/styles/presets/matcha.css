@@ -1,7 +1,9 @@
-/* preset: matcha
- * genre: editorial · macrostructure: Catalogue
- * vibe: "minimal, craft-serious, matcha, earthy-warm"
- * display: DM Serif Display · heading: DM Serif Text · sans: Lato
+/* Hallmark · genre: editorial · macrostructure: Long Document (landing) + Specimen (detail)
+ * theme: custom · vibe: "craft-serious, matcha, letter-quiet, earthy-warm"
+ * paper: oklch(97% 0.016 90) · accent: oklch(48% 0.14 130) · theme_axes: light / italic-serif / green
+ * display: Cormorant Garamond 400i · body: Lato 400
+ * nav: N9 edge-aligned · footer: Ft6 letter-close
+ * Pre-emit: P5 H5 E4 S5 R5 V5
  */
 
 @layer base {
@@ -57,8 +59,8 @@
     /* ─── project: typography ─── */
 
     /* font-name variables injected by FontLoader.astro via Astro's Fonts API */
-    --font-display: var(--font-dm-serif-display);
-    --font-heading: var(--font-dm-serif-text);
+    --font-display: var(--font-cormorant-garamond);
+    --font-heading: var(--font-cormorant-garamond);
     --font-sans: var(--font-lato);
     --font-mono: var(--font-lato);
 

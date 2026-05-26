@@ -61,8 +61,8 @@ export default {
         sand: "var(--color-sand)",
       },
       fontFamily: {
-        display: "var(--font-dm-serif-display)",
-        heading: "var(--font-dm-serif-text)",
+        display: "var(--font-cormorant-garamond)",
+        heading: "var(--font-cormorant-garamond)",
         sans: "var(--font-lato)",
         mono: "var(--font-lato)",
       },

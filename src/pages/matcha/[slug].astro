@@ -52,105 +52,75 @@ const specRows = [
   description={`${d.name} · ${eyebrow} · ${d.info?.origin ?? ""}`}
 >
   <Nav showBack />
-  <main class="page-gutter pb-20 pt-[calc(var(--nav-h)+5rem)]">
+  <main class="page-gutter pb-24 pt-[calc(var(--nav-h)+5rem)]">
     <div class="mx-auto max-w-[64rem]">
-      <header class="fade-up mb-12">
-        <p class="eyebrow">{eyebrow}</p>
-        <h1
-          class="display mt-4 text-[clamp(3rem,9vw,6.5rem)] italic leading-[0.98] tracking-[-0.02em]"
-        >
+
+      <!-- Specimen header — huge italic name -->
+      <header class="fade-up mb-16 border-b border-border pb-10">
+        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">{eyebrow}</p>
+        <h1 class="display mt-4 text-[clamp(3.5rem,10vw,7.5rem)] italic leading-[0.96] tracking-[-0.02em]">
           {d.name}
         </h1>
-        <p class="mono mt-4 text-xs uppercase tracking-[0.18em] text-accent">
-          {
-            d.info?.brand
-              ? `by ${d.info.brand}${d.info.origin ? ` — ${d.info.origin}` : ""}`
-              : d.info?.origin
-          }
-        </p>
+        {(d.info?.brand || d.info?.origin) && (
+          <p class="mono mt-5 text-xs uppercase tracking-[0.16em] text-ink-muted">
+            {d.info?.brand ? `by ${d.info.brand}${d.info.origin ? ` — ${d.info.origin}` : ''}` : d.info?.origin}
+          </p>
+        )}
       </header>
 
-      <div
-        class="fade-up mb-12 grid gap-4 border-b border-border border-t border-foreground py-6"
-      >
-        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
-          Cupping notes
-        </p>
-        <p class="mono mt-2 text lowercase tracking-[0.04em] text-ink-muted">
-          {d.notes.join(' · ')}
-        </p>
+      <!-- 01 — Cupping -->
+      <div class="fade-up grid grid-cols-1 gap-2 border-t border-border pt-6 min-[560px]:grid-cols-[8rem_1fr] min-[560px]:gap-10">
+        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted pt-[0.2rem]">01 — Cupping</p>
+        <p class="mono lowercase tracking-[0.04em] text-ink-muted">{d.notes.join(' · ')}</p>
       </div>
 
-      <div class="grid grid-cols-1 gap-20 min-[900px]:grid-cols-[1.4fr_1fr]">
-        <article class="fade-up">
-          <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
-            The blend
-          </p>
-          <div
-            class="blend__story-body font-sans mt-4 text-lg leading-[1.45] text-ink"
-          >
-            <Content />
-          </div>
-        </article>
+      <!-- 02 — The blend -->
+      <div class="fade-up grid grid-cols-1 gap-2 border-t border-border pt-6 mt-8 min-[560px]:grid-cols-[8rem_1fr] min-[560px]:gap-10">
+        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted pt-[0.2rem]">02 — The blend</p>
+        <div class="blend__story-body font-sans text-base leading-[1.7] text-ink">
+          <Content />
+        </div>
+      </div>
 
-        <aside class="grid gap-12">
-          <div class="fade-up">
-            <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
-              Specifications
-            </p>
-            <dl class="mono mt-4 grid gap-0 border-t border-border text-xs">
-              {
-                specRows.map((row) => (
-                  <div class="grid grid-cols-[7rem_1fr] gap-4 border-b border-border py-3">
-                    <dt class="uppercase tracking-[0.14em] text-ink-muted text-xs">
-                      {row.label}
-                    </dt>
-                    <dd class="m-0 text-base">{row.value}</dd>
-                  </div>
-                ))
-              }
-            </dl>
-          </div>
+      <!-- 03 + 04 side-by-side on wider screens -->
+      <div class="mt-8 grid grid-cols-1 gap-8 min-[640px]:grid-cols-2">
+        <!-- 03 — Spec -->
+        <div class="fade-up border-t border-border pt-6">
+          <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted mb-4">03 — Spec</p>
+          <dl class="mono grid gap-0 text-xs">
+            {specRows.map((row) => (
+              <div class="grid grid-cols-[7rem_1fr] gap-4 border-b border-border py-3">
+                <dt class="uppercase tracking-[0.14em] text-ink-muted">{row.label}</dt>
+                <dd class="m-0 text-sm text-ink">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
 
-          <div class="fade-up">
-            <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
-              Available as
-            </p>
-            {
-              menuEntries.map(({ label, items }) => (
-                <div class="mt-4 first:mt-0">
-                  <p class="mono mb-2 text-xs uppercase tracking-[0.12em] text-accent">
-                    {label}
-                  </p>
-                  <ul
-                    class="mono m-0 grid list-none gap-2 p-0 text-sm"
-                    role="list"
-                  >
-                    {items.map(([name, price]) => (
-                      <li class="flex items-baseline gap-2">
-                        <span>{name}</span>
-                        <span
-                          class="flex-1 translate-y-[-3px] border-b border-dotted border-sand"
-                          aria-hidden="true"
-                        />
-                        <span class="tabular-nums text-ink">
-                          {formatPrice(price)}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            }
-          </div>
-        </aside>
+        <!-- 04 — Serve -->
+        <div class="fade-up border-t border-border pt-6">
+          <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted mb-4">04 — Serve</p>
+          {menuEntries.map(({ label, items }) => (
+            <div class="mt-4 first:mt-0">
+              <p class="mono mb-2 text-xs uppercase tracking-[0.12em] text-accent">{label}</p>
+              <ul class="mono m-0 grid list-none gap-2 p-0 text-sm" role="list">
+                {items.map(([name, price]) => (
+                  <li class="flex items-baseline gap-2">
+                    <span>{name}</span>
+                    <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true" />
+                    <span class="tabular-nums text-ink">{formatPrice(price)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </div>
 
       <a
         href="/#menu"
-        class="mono mt-20 inline-block border-t border-border pt-4 text-xs uppercase tracking-[0.16em] text-ink-muted transition-all duration-150 ease-out hover:-translate-x-[2px] hover:text-accent"
-        >← Back to the menu</a
-      >
+        class="mono mt-16 inline-block border-t border-border pt-4 text-xs uppercase tracking-[0.16em] text-ink-muted transition-all duration-150 ease-out hover:-translate-x-[2px] hover:text-accent"
+      >← Back to the menu</a>
     </div>
   </main>
   <Footer />
