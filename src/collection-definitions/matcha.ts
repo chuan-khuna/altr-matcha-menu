@@ -3,7 +3,7 @@ import { glob } from 'astro/loaders';
 
 export const matcha = defineCollection({
   loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/matcha' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     name: z.string(),
     order: z.number().default(0),
     notes: z.array(z.string()),
@@ -20,5 +20,11 @@ export const matcha = defineCollection({
       latte: z.record(z.string(), z.number()).optional(),
       powder: z.record(z.string(), z.number()).optional(),
     }),
+    gallery: z.array(
+      z.object({
+        image: image(),
+        description: z.string().optional(),
+      })
+    ).optional(),
   }),
 });

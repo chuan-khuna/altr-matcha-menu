@@ -27,6 +27,10 @@ info:
   harvest: string       # (optional) Harvest details
   processing: string    # (optional) Processing details
 
+gallery:              # (optional) List of images for this blend
+  - image: string     # Relative path from the blend folder (e.g. ./photo.jpg) — processed by Astro image optimization
+    description: string # (optional) Caption for the image
+
 menus:                # Which styles this blend is available in; omit a key if not offered
   clear:              # (optional) Clear matcha preparations
     "Usucha": number    # Item name → price in THB (0 = TBD)
@@ -74,6 +78,10 @@ menus:
   latte:
     Latte: 180
     Cold Whisk Latte: 190
+gallery:
+  - image: ./photo1.jpg
+    description: "Morning preparation"
+  - image: ./photo2.jpg
 ---
 
 Body text describing the blend — flavour profile, intent, how it was made.
@@ -84,7 +92,7 @@ Body text describing the blend — flavour profile, intent, how it was made.
 ## Notes
 
 - **Year folders:** place each blend as `src/content/matcha/<yyyy>/<slug>/index.md`. The glob loader picks up all depths; the slug is the folder name (the page strips `/index` from `entry.id` before routing).
-- **Assets:** keep flat at `src/content/matcha/<yyyy>/` or `src/content/matcha/assets/` — do **not** nest them inside the blend sub-folder.
+- **Assets:** images referenced in `gallery` should be placed inside the blend sub-folder (e.g. `src/content/matcha/2025/hana-blend/photo.jpg`) and referenced as `./photo.jpg`. Other assets (not in gallery) keep flat at `src/content/matcha/<yyyy>/` or `src/content/matcha/assets/`.
 - **Grouping on the menu page:** derived from which `menus` keys are present. A blend with both `clear` and `latte` appears in both menu groups.
 - `order` controls sort order within each menu group (ascending).
 - `notes` are displayed as flavour tag chips — keep them short (1–3 words each).

@@ -6,11 +6,17 @@ import TasteNotes from "@/components/matcha-info/TasteNotes.astro";
 import Story from "@/components/matcha-info/Story.astro";
 import MatchaInfo from "@/components/matcha-info/MatchaInfo.astro";
 import AvailableMenu from "@/components/matcha-info/AvailableMenu.astro";
+import MatchaGallery from "@/components/matcha-info/MatchaGallery.astro";
 
 export async function getStaticPaths() {
   const matchas = await getCollection("matcha");
   return matchas.map((entry) => ({
-    params: { slug: entry.id.replace(/\/index$/, "").split("/").at(-1) },
+    params: {
+      slug: entry.id
+        .replace(/\/index$/, "")
+        .split("/")
+        .at(-1),
+    },
     props: { entry },
   }));
 }
@@ -62,11 +68,13 @@ const specRows = [
         >
           {d.name}
         </h1>
-        {d.info?.brand && (
-          <p class="mono mt-5 text-xs uppercase tracking-[0.16em] text-ink-muted">
-            by {d.info.brand}
-          </p>
-        )}
+        {
+          d.info?.brand && (
+            <p class="mono mt-5 text-xs uppercase tracking-[0.16em] text-ink-muted">
+              by {d.info.brand}
+            </p>
+          )
+        }
       </header>
 
       <TasteNotes notes={d.notes} />
@@ -77,6 +85,14 @@ const specRows = [
       </div>
 
       <Story Content={Content} />
+
+      {
+        d.gallery && d.gallery.length > 0 && (
+          <div class="mt-16 border-t border-border pt-8">
+            <MatchaGallery items={d.gallery} />
+          </div>
+        )
+      }
 
       <a
         href="/#menu"
