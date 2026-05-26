@@ -3,6 +3,10 @@ import { getCollection, render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Nav from "@/components/Nav.astro";
 import Footer from "@/components/Footer.astro";
+import TasteNotes from "@/components/matcha-info/TasteNotes.astro";
+import Story from "@/components/matcha-info/Story.astro";
+import MatchaInfo from "@/components/matcha-info/MatchaInfo.astro";
+import AvailableMenu from "@/components/matcha-info/AvailableMenu.astro";
 
 export async function getStaticPaths() {
   const matchas = await getCollection("matcha");
@@ -18,8 +22,6 @@ interface Props {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
-
-const formatPrice = (n: number) => (n > 0 ? `฿${n}` : "—");
 
 const categoryLabels: Record<string, string> = {
   clear: "Clear Matcha",
@@ -68,53 +70,14 @@ const specRows = [
         )}
       </header>
 
-      <!-- 01 — Cupping -->
-      <div class="fade-up grid grid-cols-1 gap-2 border-t border-border pt-6 min-[560px]:grid-cols-[8rem_1fr] min-[560px]:gap-10">
-        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted pt-[0.2rem]">01 — Cupping</p>
-        <p class="mono lowercase tracking-[0.04em] text-ink-muted">{d.notes.join(' · ')}</p>
-      </div>
+      <TasteNotes notes={d.notes} />
 
-      <!-- 02 — The blend -->
-      <div class="fade-up grid grid-cols-1 gap-2 border-t border-border pt-6 mt-8 min-[560px]:grid-cols-[8rem_1fr] min-[560px]:gap-10">
-        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted pt-[0.2rem]">02 — The blend</p>
-        <div class="blend__story-body font-sans text-base leading-[1.7] text-ink">
-          <Content />
-        </div>
-      </div>
+      <Story Content={Content} />
 
       <!-- 03 + 04 side-by-side on wider screens -->
       <div class="mt-8 grid grid-cols-1 gap-8 min-[640px]:grid-cols-2">
-        <!-- 03 — Spec -->
-        <div class="fade-up border-t border-border pt-6">
-          <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted mb-4">03 — Spec</p>
-          <dl class="mono grid gap-0 text-xs">
-            {specRows.map((row) => (
-              <div class="grid grid-cols-[7rem_1fr] gap-4 border-b border-border py-3">
-                <dt class="uppercase tracking-[0.14em] text-ink-muted">{row.label}</dt>
-                <dd class="m-0 text-sm text-ink">{row.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-
-        <!-- 04 — Serve -->
-        <div class="fade-up border-t border-border pt-6">
-          <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted mb-4">04 — Serve</p>
-          {menuEntries.map(({ label, items }) => (
-            <div class="mt-4 first:mt-0">
-              <p class="mono mb-2 text-xs uppercase tracking-[0.12em] text-accent">{label}</p>
-              <ul class="mono m-0 grid list-none gap-2 p-0 text-sm" role="list">
-                {items.map(([name, price]) => (
-                  <li class="flex items-baseline gap-2">
-                    <span>{name}</span>
-                    <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true" />
-                    <span class="tabular-nums text-ink">{formatPrice(price)}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <MatchaInfo specRows={specRows} />
+        <AvailableMenu menuEntries={menuEntries} />
       </div>
 
       <a
@@ -125,9 +88,3 @@ const specRows = [
   </main>
   <Footer />
 </Layout>
-
-<style>
-  .blend__story-body :global(p + p) {
-    margin-top: 1rem;
-  }
-</style>

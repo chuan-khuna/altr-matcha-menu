@@ -1,0 +1,32 @@
+---
+interface MenuEntry {
+  label: string;
+  items: [string, number][];
+}
+
+interface Props {
+  menuEntries: MenuEntry[];
+}
+const { menuEntries } = Astro.props;
+
+const formatPrice = (n: number) => (n > 0 ? `฿${n.toLocaleString()}` : "—");
+---
+
+<!-- 04 — Serve -->
+<div class="fade-up border-t border-border pt-6">
+  <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted mb-4">04 — Serve</p>
+  {menuEntries.map(({ label, items }) => (
+    <div class="mt-4 first:mt-0">
+      <p class="mono mb-2 text-xs uppercase tracking-[0.12em] text-accent">{label}</p>
+      <ul class="mono m-0 grid list-none gap-2 p-0 text-sm" role="list">
+        {items.map(([name, price]) => (
+          <li class="flex items-baseline gap-2">
+            <span>{name}</span>
+            <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true" />
+            <span class="tabular-nums text-ink">{formatPrice(price)}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>

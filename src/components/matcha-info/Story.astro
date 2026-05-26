@@ -1,0 +1,22 @@
+---
+import type { ComponentProps } from "astro/types";
+
+interface Props {
+  Content: (_props: ComponentProps<"div">) => any;
+}
+const { Content } = Astro.props;
+---
+
+<!-- 02 — The blend -->
+<div class="fade-up grid grid-cols-1 gap-2 border-t border-border pt-6 mt-8 min-[560px]:grid-cols-[8rem_1fr] min-[560px]:gap-10">
+  <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted pt-[0.2rem]">02 — The blend</p>
+  <div class="blend__story-body font-sans text-base leading-[1.7] text-ink">
+    <Content />
+  </div>
+</div>
+
+<style>
+  .blend__story-body :global(p + p) {
+    margin-top: 1rem;
+  }
+</style>
