@@ -12,7 +12,7 @@ const d = blend.data;
 
 const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
 
-const originLine = [d.info?.origin, d.info?.cultivar].filter(Boolean).join(' · ');
+const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join(' · ');
 ---
 
 <li class="group fade-up border-b border-border">
@@ -21,11 +21,21 @@ const originLine = [d.info?.origin, d.info?.cultivar].filter(Boolean).join(' · 
     class="flex items-start justify-between gap-4 py-8 text-inherit hover:text-inherit sm:gap-12"
     aria-label={`${d.name} — full blend profile`}
   >
-    <div class="flex min-w-0 flex-1 flex-col gap-2">
+    <div class="flex min-w-0 flex-1 flex-col gap-1">
+      <!-- Brand eyebrow: context before the name -->
+      {d.info?.brand && (
+        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">{d.info.brand}</p>
+      )}
+
       <h4 class="display text-2xl italic leading-[1.05] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
-      {d.info?.brand && <p class="mono text-xs tracking-[0.08em] text-ink-muted">by {d.info.brand}</p>}
-      {originLine && <p class="mono text-xs uppercase tracking-[0.12em] text-accent">{originLine}</p>}
-      <p class="mono mt-3 text-sm lowercase tracking-[0.04em] text-ink-muted" aria-label="Cupping notes">
+
+      <!-- Cultivar · Origin -->
+      {cultivarOrigin && (
+        <p class="mono mt-0.5 text-sm uppercase tracking-[0.12em] text-primary">{cultivarOrigin}</p>
+      )}
+
+      <!-- Cupping notes -->
+      <p class="mono mt-3 text-base lowercase tracking-[0.04em] text-ink-muted" aria-label="Cupping notes">
         {d.notes.join(' · ')}
       </p>
 
