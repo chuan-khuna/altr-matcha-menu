@@ -1,3 +1,4 @@
+import argparse
 from dataclasses import dataclass
 from termcolor import colored
 
@@ -175,22 +176,64 @@ def print_blend(blend: str, weight_g: int, price: int, drinks: list[Drink]) -> N
 # ── Entry point ──────────────────────────────────────────────────────────────
 
 
-def main() -> None:
-    blends = [
-        ("Asatsuyu", 40, 1050),
-        ("Asatsuyu Baisen", 40, 1050),
-        ("Gokasho Samidori", 40, 1500),
-        ("OYT Special Blend", 40, 100),
-        ("Star Village", 30, 990),
-        ("Narino", 20, 1900),
-    ]
+DEFAULT_BLENDS: list[tuple[str, int, int]] = [
+    ("Asatsuyu", 40, 1050),
+    ("Asatsuyu Baisen", 40, 1050),
+    ("Gokasho Samidori", 40, 1500),
+    ("OYT Special Blend", 40, 100),
+    ("Star Village", 30, 990),
+    ("Narino", 20, 1900),
+]
 
-    for blend, weight_g, price in blends:
-        ppg = price / weight_g
-        drinks = [
-            Drink(name=name, ingredients=ing, powder_price=ppg) for name, ing in MENU
-        ]
-        print_blend(blend, weight_g, price, drinks)
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Matcha cost & selling price calculator"
+    )
+    parser.add_argument("-n", metavar="BLEND", type=str, help="Blend name")
+    parser.add_argument("-g", metavar="GRAMS", type=int, help="Package weight (g)")
+    parser.add_argument("-p", metavar="PRICE", type=int, help="Package price (THB)")
+    parser.add_argument(
+        "-m",
+        metavar="MULTIPLIER",
+        type=float,
+        help="Profit multiplier (default: 1.5)",
+        default=None,
+    )
+    args = parser.parse_args()
+
+    custom = all([args.n, args.g, args.p])
+    if custom:
+        blends = [(args.n, args.g, args.p)]
+        multiplier = args.m or PROFIT_MULTIPLIER
+        for blend, weight_g, price in blends:
+            ppg = price / weight_g
+            drinks = [
+                Drink(
+                    name=name,
+                    ingredients=ing,
+                    powder_price=ppg,
+                    profit_multiplier=multiplier,
+                )
+                for name, ing in MENU
+            ]
+            print_blend(blend, weight_g, price, drinks)
+    else:
+        if any([args.n, args.g, args.p]):
+            parser.error("Provide all three of -n, -g, and -p together.")
+        multiplier = args.m or PROFIT_MULTIPLIER
+        for blend, weight_g, price in DEFAULT_BLENDS:
+            ppg = price / weight_g
+            drinks = [
+                Drink(
+                    name=name,
+                    ingredients=ing,
+                    powder_price=ppg,
+                    profit_multiplier=multiplier,
+                )
+                for name, ing in MENU
+            ]
+            print_blend(blend, weight_g, price, drinks)
 
 
 if __name__ == "__main__":
