@@ -14,7 +14,6 @@ const formatPrice = (n: number) => (n > 0 ? n.toLocaleString() : "—");
 
 {menuEntries.length > 0 && (
   <div class="fade-up">
-    <p class="mono mb-4 text-xs text-ink-muted" aria-label="Prices in Thai Baht">THB</p>
     {menuEntries.filter(({ items }) => items.length > 0).map(({ label, items }) => (
       <div class="mt-4 first:mt-0">
         <p class="mono mb-2 text-xs uppercase tracking-[0.12em] text-accent">{label}</p>

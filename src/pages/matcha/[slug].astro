@@ -7,6 +7,7 @@ import Story from "@/components/matcha-info/Story.astro";
 import MatchaInfo from "@/components/matcha-info/MatchaInfo.astro";
 import AvailableMenu from "@/components/matcha-info/AvailableMenu.astro";
 import MatchaGallery from "@/components/matcha-info/MatchaGallery.astro";
+import MenuRemark from "@/components/matcha-info/MenuRemark.astro";
 
 export async function getStaticPaths() {
   const matchas = await getCollection("matcha");
@@ -81,7 +82,12 @@ const specRows = [
 
       <div class="mt-12 grid grid-cols-1 gap-8 min-[640px]:grid-cols-2">
         <MatchaInfo specRows={specRows} />
-        <AvailableMenu menuEntries={menuEntries} />
+        <div class="flex flex-col gap-8">
+          <AvailableMenu menuEntries={menuEntries} />
+          {d.menus.latte && Object.keys(d.menus.latte).length > 0 && (
+            <MenuRemark />
+          )}
+        </div>
       </div>
 
       <div class="mt-16 border-t border-border pt-8 grid grid-cols-1 gap-12 min-[800px]:grid-cols-[1fr_20rem] min-[1024px]:grid-cols-[1fr_26rem]">
