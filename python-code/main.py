@@ -7,7 +7,6 @@ from termcolor import colored
 SYRUP_PRICE_PER_GRAM: float = 0.15
 FRESH_MILK_PRICE_PER_ML: float = 0.10
 MINERAL_WATER_PRICE_PER_ML: float = 0.10
-
 PROFIT_MULTIPLIER: float = 1.5
 
 
@@ -22,6 +21,7 @@ class Ingredients:
     water_ml: float = 0.0
     milk_ml: float = 0.0
     syrup_g: float = 0.0
+    fixed_cost: float = 0.0  # e.g. dessert pairing, garnish, packaging
 
 
 @dataclass
@@ -53,6 +53,7 @@ class Drink:
             + self.water_cost()
             + self.milk_cost()
             + self.syrup_cost()
+            + self.ingredients.fixed_cost
         )
 
     def selling_price(self) -> float:
@@ -65,7 +66,7 @@ MENU: list[tuple[str, Ingredients]] = [
     ("Latte", Ingredients(matcha_g=4, milk_ml=150, syrup_g=4)),
     ("Coldwhisk Latte", Ingredients(matcha_g=5, milk_ml=150, syrup_g=4)),
     ("Clear Matcha", Ingredients(matcha_g=3, water_ml=150)),
-    ("Usucha", Ingredients(matcha_g=3, water_ml=60)),
+    ("Usucha", Ingredients(matcha_g=3, water_ml=60, fixed_cost=85)),
 ]
 
 
@@ -124,6 +125,16 @@ def print_blend(blend: str, weight_g: int, price: int, drinks: list[Drink]) -> N
                     "g",
                     f"{SYRUP_PRICE_PER_GRAM:.2f}/g",
                     f"{d.syrup_cost():.2f}",
+                )
+            )
+        if d.ingredients.fixed_cost:
+            rows.append(
+                (
+                    "Fixed",
+                    "",
+                    "",
+                    "",
+                    f"{d.ingredients.fixed_cost:.2f}",
                 )
             )
 
