@@ -1,15 +1,15 @@
 ---
-import { getCollection } from 'astro:content';
-import MenuCard from '@/components/matcha-info/ui/MenuCard.astro';
+import { getCollection } from "astro:content";
+import MenuCard from "@/components/matcha-info/ui/MenuCard.astro";
 
-const matchas = (await getCollection('matcha')).sort(
-  (a, b) => a.data.order - b.data.order
+const matchas = (await getCollection("matcha")).sort(
+  (a, b) => a.data.order - b.data.order,
 );
 
 const menuCategories = [
-  { key: 'clear' as const, label: 'Clear Matcha' },
-  { key: 'latte' as const, label: 'Latte Matcha' },
-  { key: 'powder' as const, label: 'Powder' },
+  { key: "clear" as const, label: "Clear Matcha" },
+  { key: "latte" as const, label: "Latte Matcha" },
+  { key: "powder" as const, label: "Powder" },
 ];
 
 const grouped = menuCategories
@@ -24,33 +24,46 @@ const grouped = menuCategories
   }))
   .filter((g) => g.items.length > 0);
 
-const getSlug = (id: string) => id.split('/').at(-1)!;
+const getSlug = (id: string) => id.split("/").at(-1)!;
 ---
 
-<section id="menu" class="page-gutter border-t border-foreground py-16" aria-label="Menu">
+<section
+  id="menu"
+  class="page-gutter border-t border-foreground py-16"
+  aria-label="Menu"
+>
   <div class="mx-auto max-w-[var(--content-max)]">
     <header class="mb-12 max-w-[42rem]">
-      <h2 class="display text-[clamp(2rem,4vw,3.25rem)] italic leading-[1.1] tracking-[-0.015em]">Three preparations.</h2>
-      <p class="mono mt-3 text-sm leading-[1.6] tracking-[0.01em] text-ink-muted">
-        Each blend is sourced and ground in-house. Drink preparations follow the leaf.
+      <h2
+        class="display text-[clamp(2rem,4vw,3.25rem)] italic leading-[1.1] tracking-[-0.015em]"
+      >
+        Three preparations.
+      </h2>
+      <p
+        class="mono mt-3 text-sm leading-[1.6] tracking-[0.01em] text-ink-muted"
+      >
+        Each blend is sourced and ground in-house. Drink preparations follow the
+        leaf.
       </p>
     </header>
 
-    {grouped.map((group) => (
-      <div class="mt-14 first:mt-0">
-        <div class="border-b border-foreground pb-3">
-          <h3 class="display text-[2rem] italic">{group.name}</h3>
+    {
+      grouped.map((group) => (
+        <div class="mt-14 first:mt-0">
+          <div class="border-b border-foreground pb-3">
+            <h3 class="display text-[2rem] italic">{group.name}</h3>
+          </div>
+          <ul class="m-0 list-none p-0" role="list">
+            {group.items.map(({ blend, menuItems }) => (
+              <MenuCard
+                blend={blend}
+                menuItems={menuItems}
+                href={`/matcha/${getSlug(blend.id)}`}
+              />
+            ))}
+          </ul>
         </div>
-        <ul class="m-0 list-none p-0" role="list">
-          {group.items.map(({ blend, menuItems }) => (
-            <MenuCard
-              blend={blend}
-              menuItems={menuItems}
-              href={`/matcha/${getSlug(blend.id)}`}
-            />
-          ))}
-        </ul>
-      </div>
-    ))}
+      ))
+    }
   </div>
 </section>

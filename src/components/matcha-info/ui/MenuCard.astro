@@ -1,81 +1,22 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import MenuCardLeafFirst from '@/components/matcha-info/ui/MenuCardLeafFirst.astro';
+import MenuCardBrandFirst from '@/components/matcha-info/ui/MenuCardBrandFirst.astro';
+import type { MenuCardProps } from '@/components/matcha-info/ui/types';
 
-interface Props {
-  blend: CollectionEntry<'matcha'>;
-  menuItems: [string, number][];
-  href: string;
-  variant?: 'brand-first' | 'leaf-first';
+interface Props extends MenuCardProps {
+  variant?: 'leaf-first' | 'brand-first';
 }
 
-const { blend, menuItems, href, variant = 'leaf-first' } = Astro.props;
-const d = blend.data;
+const { variant = 'leaf-first', ...rest } = Astro.props;
 
-const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
+const VARIANTS = {
+  'leaf-first': MenuCardLeafFirst,
+  'brand-first': MenuCardBrandFirst,
+} as const;
 
-const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join(' · ');
+const Component = VARIANTS[variant];
 ---
 
-<li class="group fade-up border-b border-border">
-  <a
-    href={href}
-    class="flex items-start justify-between gap-4 py-8 text-inherit hover:text-inherit sm:gap-12"
-    aria-label={`${d.name} — full blend profile`}
-  >
-    <div class="flex min-w-0 flex-1 flex-col gap-1">
-      {variant === 'brand-first' ? (
-        <>
-          {/* A: brand eyebrow → name → cultivar · origin */}
-          {d.info?.brand && (
-            <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">{d.info.brand}</p>
-          )}
-          <h4 class="display text-2xl italic leading-[1.05] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
-          {cultivarOrigin && (
-            <p class="mono mt-0.5 text-sm uppercase tracking-[0.12em] text-primary">{cultivarOrigin}</p>
-          )}
-        </>
-      ) : (
-        <>
-          {/* B: name → cultivar · origin → brand footnote */}
-          <h4 class="display text-2xl italic leading-[1.05] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
-          {cultivarOrigin && (
-            <p class="mono mt-0.5 text-sm uppercase tracking-[0.12em] text-primary">{cultivarOrigin}</p>
-          )}
-          {d.info?.brand && (
-            <p class="mono text-xs tracking-[0.08em] text-ink-muted">by {d.info.brand}</p>
-          )}
-        </>
-      )}
+<Component {...rest} />
 
-      <!-- Cupping notes -->
-      <p class="mono mt-3 text-base lowercase tracking-[0.04em] text-ink-muted" aria-label="Cupping notes">
-        {d.notes.join(' · ')}
-      </p>
-
-      <!-- Price grid: mobile only — dot leaders stay within the content column -->
-      <div class="mono mt-4 grid gap-1 text-sm sm:hidden">
-        {menuItems.map(([name, price]) => (
-          <div class="flex items-baseline gap-2">
-            <span class="text-ink">{name}</span>
-            <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true"></span>
-            <span class="tabular-nums text-ink">{formatPrice(price)}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <div class="flex shrink-0 flex-col items-end gap-3 max-sm:self-center">
-      <!-- Price grid: desktop only -->
-      <div class="mono hidden min-w-[14rem] gap-1 text-sm sm:grid">
-        {menuItems.map(([name, price]) => (
-          <div class="flex items-baseline gap-2">
-            <span class="text-ink">{name}</span>
-            <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true"></span>
-            <span class="tabular-nums text-ink">{formatPrice(price)}</span>
-          </div>
-        ))}
-      </div>
-      <span class="mono text-sm text-ink-muted transition-all duration-150 ease-out group-hover:translate-x-[4px] group-hover:text-accent" aria-hidden="true">→</span>
-    </div>
-  </a>
-</li>
