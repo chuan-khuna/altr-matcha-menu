@@ -17,10 +17,10 @@ info:
   brand: "MTCH"
 menus:
   clear:
-    Usucha: 220
-    Light Brew: 180
+    Usucha: 300
+    Light Brew: 300
   powder:
-    20g Bag: 1650
+    20g Bag: 1900
 gallery:
   - image: ./narino-cultivar.png
     description: "Narino Cultivar · MTCH"

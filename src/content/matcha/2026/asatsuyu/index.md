@@ -19,11 +19,11 @@ info:
   brand: "MTCH"
 menus:
   clear:
-    Usucha: 190
-    Light Brew: 190
+    Usucha: 130
+    Light Brew: 140
   latte:
-    Cold Whisk Latte: 250
-    Coconut EX: 260
+    Cold Whisk Latte: 220
+    Latte: 180
   powder:
     40g Bag: 1050
 ---

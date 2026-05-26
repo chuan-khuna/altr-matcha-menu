@@ -14,10 +14,11 @@ info:
   brand: "MTCH"
 menus:
   clear:
-    Usucha: 220
-    Hard Brew: 180
+    Usucha Set: 220
+    Usucha: 150
+    Hard Brew: 150
   latte:
-    Cold Whisk Latte: 195
+    Cold Whisk Latte: 190
   powder:
     40g Bag: 1100
 ---

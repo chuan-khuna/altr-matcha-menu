@@ -11,6 +11,11 @@ info:
   origin: "Gokasho, Uji"
   brand: "MTCH"
 menus:
+  clear:
+    Usucha: 190
+    Light Brew: 190
+  latte:
+    Cold Whisk Latte: 250
   powder:
     40g Bag: 1500
 ---
