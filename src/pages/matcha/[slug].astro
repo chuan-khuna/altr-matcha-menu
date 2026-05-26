@@ -50,30 +50,23 @@ const specRows = [
 
 <Layout
   title={`${d.name} — ALTR`}
-  description={`${d.name} · ${eyebrow} · ${d.info?.origin ?? ""}`}
+  description={[d.name, eyebrow, d.info?.origin].filter(Boolean).join(" · ")}
 >
   <Nav showBack />
   <main class="page-gutter pb-24 pt-[calc(var(--nav-h)+5rem)]">
     <div class="mx-auto max-w-[64rem]">
       <!-- Specimen header — huge italic name -->
       <header class="fade-up mb-12 border-b border-border pb-6">
-        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">
-          {eyebrow}
-        </p>
         <h1
-          class="display mt-4 text-[clamp(3.5rem,10vw,7.5rem)] italic leading-[0.96] tracking-[-0.02em]"
+          class="display text-[clamp(3.5rem,10vw,7.5rem)] italic leading-[0.96] tracking-[-0.02em]"
         >
           {d.name}
         </h1>
-        {
-          (d.info?.brand || d.info?.origin) && (
-            <p class="mono mt-5 text-xs uppercase tracking-[0.16em] text-ink-muted">
-              {d.info?.brand
-                ? `by ${d.info.brand}${d.info.origin ? ` — ${d.info.origin}` : ""}`
-                : d.info?.origin}
-            </p>
-          )
-        }
+        {d.info?.brand && (
+          <p class="mono mt-5 text-xs uppercase tracking-[0.16em] text-ink-muted">
+            by {d.info.brand}
+          </p>
+        )}
       </header>
 
       <TasteNotes notes={d.notes} />
