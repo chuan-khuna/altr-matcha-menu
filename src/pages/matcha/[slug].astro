@@ -84,15 +84,16 @@ const specRows = [
         <AvailableMenu menuEntries={menuEntries} />
       </div>
 
-      <Story Content={Content} />
-
-      {
-        d.gallery && d.gallery.length > 0 && (
-          <div class="mt-16 border-t border-border pt-8">
-            <MatchaGallery items={d.gallery} />
-          </div>
-        )
-      }
+      <div class="mt-16 border-t border-border pt-8 grid grid-cols-1 gap-12 min-[800px]:grid-cols-[1fr_20rem] min-[1024px]:grid-cols-[1fr_26rem]">
+        <Story Content={Content} />
+        {
+          d.gallery && d.gallery.length > 0 && (
+            <aside class="gallery-aside min-[800px]:sticky min-[800px]:top-[calc(var(--nav-h)+2rem)] min-[800px]:self-start min-[800px]:max-h-[calc(100svh-var(--nav-h)-4rem)] min-[800px]:overflow-y-auto">
+              <MatchaGallery items={d.gallery} />
+            </aside>
+          )
+        }
+      </div>
 
       <a
         href="/#menu"
@@ -102,3 +103,22 @@ const specRows = [
     </div>
   </main>
 </Layout>
+
+<style>
+  .gallery-aside {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .gallery-aside::-webkit-scrollbar {
+    width: 3px;
+  }
+  .gallery-aside::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .gallery-aside::-webkit-scrollbar-thumb {
+    background: var(--border);
+  }
+  .gallery-aside::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
+</style>
