@@ -34,7 +34,7 @@ gallery:
     description: "Photo taken by MTCH"
 ---
 
-Narino holds a rare status among single-cultivar matchas — award-winning and competition-grade, grown exclusively in Oku-no-Yama, Uji, Kyoto, under conditions that cannot be replicated elsewhere. The cultivar is the product of over a decade of careful development, and the right to grow it remains limited to a select group of experienced producers who meet the exacting standards of the region's soil, temperature, wind, and microclimate.
+Narino holds a rare status among single-cultivar matcha — award-winning and competition-grade, grown exclusively in Oku-no-Yama, Uji, Kyoto, under conditions that cannot be replicated elsewhere. The cultivar is the product of over a decade of careful development, and the right to grow it remains limited to a select group of experienced producers who meet the exacting standards of the region's soil, temperature, wind, and microclimate.
 
 Shaded for 35 days or more in a Shizen-Shitate garden, then hand picked at a single harvest, hand sorted, and stone milled to order. Every stage is deliberate.
 
