@@ -5,8 +5,6 @@ interface Props {
 const { notes } = Astro.props;
 ---
 
-<!-- 01 — Cupping -->
-<div class="fade-up grid grid-cols-1 gap-2 border-t border-border pt-6 min-[560px]:grid-cols-[8rem_1fr] min-[560px]:gap-10">
-  <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted pt-[0.2rem]">01 — Cupping</p>
+<div class="fade-up">
   <p class="mono lowercase tracking-[0.04em] text-ink-muted">{notes.join(' · ')}</p>
 </div>

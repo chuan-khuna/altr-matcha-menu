@@ -12,9 +12,7 @@ const { menuEntries } = Astro.props;
 const formatPrice = (n: number) => (n > 0 ? `฿${n.toLocaleString()}` : "—");
 ---
 
-<!-- 04 — Serve -->
-<div class="fade-up border-t border-border pt-6">
-  <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted mb-4">04 — Serve</p>
+<div class="fade-up">
   {menuEntries.map(({ label, items }) => (
     <div class="mt-4 first:mt-0">
       <p class="mono mb-2 text-xs uppercase tracking-[0.12em] text-accent">{label}</p>

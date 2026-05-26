@@ -7,10 +7,8 @@ interface Props {
 const { Content } = Astro.props;
 ---
 
-<!-- 02 — The blend -->
-<div class="fade-up grid grid-cols-1 gap-2 border-t border-border pt-6 mt-8 min-[560px]:grid-cols-[8rem_1fr] min-[560px]:gap-10">
-  <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted pt-[0.2rem]">02 — The blend</p>
-  <div class="blend__story-body font-sans text-base leading-[1.7] text-ink">
+<div class="fade-up mt-16 border-t border-border pt-8">
+  <div class="blend__story-body font-sans text-base leading-[1.7] text-ink max-w-[52ch]">
     <Content />
   </div>
 </div>

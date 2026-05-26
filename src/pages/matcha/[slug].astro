@@ -58,7 +58,7 @@ const specRows = [
     <div class="mx-auto max-w-[64rem]">
 
       <!-- Specimen header — huge italic name -->
-      <header class="fade-up mb-16 border-b border-border pb-10">
+      <header class="fade-up mb-12 border-b border-border pb-6">
         <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">{eyebrow}</p>
         <h1 class="display mt-4 text-[clamp(3.5rem,10vw,7.5rem)] italic leading-[0.96] tracking-[-0.02em]">
           {d.name}
@@ -72,13 +72,12 @@ const specRows = [
 
       <TasteNotes notes={d.notes} />
 
-      <Story Content={Content} />
-
-      <!-- 03 + 04 side-by-side on wider screens -->
-      <div class="mt-8 grid grid-cols-1 gap-8 min-[640px]:grid-cols-2">
+      <div class="mt-12 grid grid-cols-1 gap-8 min-[640px]:grid-cols-2">
         <MatchaInfo specRows={specRows} />
         <AvailableMenu menuEntries={menuEntries} />
       </div>
+
+      <Story Content={Content} />
 
       <a
         href="/#menu"
