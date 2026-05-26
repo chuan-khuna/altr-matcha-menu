@@ -6,7 +6,7 @@ type Props = MenuCardProps;
 const { blend, menuItems, href } = Astro.props;
 const d = blend.data;
 
-const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
+const formatPrice = (n: number) => (n > 0 ? `฿${n.toLocaleString()}` : "—");
 const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join(' · ');
 ---
 
