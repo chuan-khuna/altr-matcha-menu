@@ -3,9 +3,10 @@
 Collection key: `matcha`  
 Definition: `src/collection-definitions/matcha.ts`  
 Content folder: `src/content/matcha/`  
-Sub-folders: `yyyy/` (one per year, e.g. `2025/`)  
-File format: `.md` or `.mdx` with YAML frontmatter  
-Detail page route: `/matcha/<slug>` (slug = filename without extension)
+Sub-folders: `yyyy/<slug>/` (one directory per blend, per year)  
+File format: `index.md` or `index.mdx` inside each blend folder  
+Assets: keep flat at `src/content/matcha/<yyyy>/` or `src/content/matcha/assets/` — **not** inside the blend sub-folder  
+Detail page route: `/matcha/<slug>` (slug = blend folder name)
 
 ---
 
@@ -53,7 +54,7 @@ menus:                # Which styles this blend is available in; omit a key if n
 
 ---
 
-## Example file — `src/content/matcha/2025/hana-blend.mdx`
+## Example file — `src/content/matcha/2025/hana-blend/index.mdx`
 
 ```markdown
 ---
@@ -82,7 +83,8 @@ Body text describing the blend — flavour profile, intent, how it was made.
 
 ## Notes
 
-- **Year folders:** place each blend file under `matchas/<yyyy>/`. The glob loader picks up all depths; the year appears in the entry ID (`2025/hana-blend`) but not in the URL (`/matcha/hana-blend`).
+- **Year folders:** place each blend as `src/content/matcha/<yyyy>/<slug>/index.md`. The glob loader picks up all depths; the slug is the folder name (the page strips `/index` from `entry.id` before routing).
+- **Assets:** keep flat at `src/content/matcha/<yyyy>/` or `src/content/matcha/assets/` — do **not** nest them inside the blend sub-folder.
 - **Grouping on the menu page:** derived from which `menus` keys are present. A blend with both `clear` and `latte` appears in both menu groups.
 - `order` controls sort order within each menu group (ascending).
 - `notes` are displayed as flavour tag chips — keep them short (1–3 words each).

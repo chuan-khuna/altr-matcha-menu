@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 export const matcha = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/matcha' }),
+  loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/matcha' }),
   schema: z.object({
     name: z.string(),
     order: z.number().default(0),

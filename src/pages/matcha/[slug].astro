@@ -2,7 +2,6 @@
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Nav from "@/components/Nav.astro";
-import Footer from "@/components/Footer.astro";
 import TasteNotes from "@/components/matcha-info/TasteNotes.astro";
 import Story from "@/components/matcha-info/Story.astro";
 import MatchaInfo from "@/components/matcha-info/MatchaInfo.astro";
@@ -11,7 +10,7 @@ import AvailableMenu from "@/components/matcha-info/AvailableMenu.astro";
 export async function getStaticPaths() {
   const matchas = await getCollection("matcha");
   return matchas.map((entry) => ({
-    params: { slug: entry.id.split("/").at(-1) },
+    params: { slug: entry.id.replace(/\/index$/, "").split("/").at(-1) },
     props: { entry },
   }));
 }
