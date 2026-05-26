@@ -67,7 +67,8 @@ MENU: list[tuple[str, Ingredients]] = [
     ("Latte", Ingredients(matcha_g=4, milk_ml=150, syrup_g=4)),
     ("Coldwhisk Latte", Ingredients(matcha_g=5, milk_ml=150, syrup_g=4)),
     ("Clear Matcha", Ingredients(matcha_g=3, water_ml=150)),
-    ("Usucha", Ingredients(matcha_g=3, water_ml=60, fixed_cost=85)),
+    ("Usucha", Ingredients(matcha_g=3, water_ml=60)),
+    ("Usucha Set", Ingredients(matcha_g=3, water_ml=60, fixed_cost=50)),
 ]
 
 
