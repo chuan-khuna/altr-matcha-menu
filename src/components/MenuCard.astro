@@ -11,25 +11,39 @@ const { blend, menuItems, href } = Astro.props;
 const d = blend.data;
 
 const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
+
+const originLine = [d.info?.origin, d.info?.cultivar].filter(Boolean).join(' · ');
 ---
 
 <li class="group fade-up border-b border-border">
   <a
     href={href}
-    class="flex items-start justify-between gap-12 py-8 text-inherit hover:text-inherit max-sm:flex-col max-sm:gap-4"
+    class="flex items-start justify-between gap-4 py-8 text-inherit hover:text-inherit sm:gap-12"
     aria-label={`${d.name} — full blend profile`}
   >
     <div class="flex min-w-0 flex-1 flex-col gap-2">
-      <h4 class="display text-2xl italic leading-[1.05]">{d.name}</h4>
+      <h4 class="display text-2xl italic leading-[1.05] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
       {d.info?.brand && <p class="mono text-xs tracking-[0.08em] text-ink-muted">by {d.info.brand}</p>}
-      {d.info?.origin && <p class="mono text-xs uppercase tracking-[0.12em] text-accent">{d.info.origin}</p>}
+      {originLine && <p class="mono text-xs uppercase tracking-[0.12em] text-accent">{originLine}</p>}
       <p class="mono mt-3 text-sm lowercase tracking-[0.04em] text-ink-muted" aria-label="Cupping notes">
         {d.notes.join(' · ')}
       </p>
+
+      <!-- Price grid: mobile only — dot leaders stay within the content column -->
+      <div class="mono mt-4 grid gap-1 text-sm sm:hidden">
+        {menuItems.map(([name, price]) => (
+          <div class="flex items-baseline gap-2">
+            <span class="text-ink">{name}</span>
+            <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true"></span>
+            <span class="tabular-nums text-ink">{formatPrice(price)}</span>
+          </div>
+        ))}
+      </div>
     </div>
 
-    <div class="flex shrink-0 flex-col items-end gap-3 max-sm:w-full max-sm:items-start">
-      <div class="mono grid min-w-[14rem] gap-1 text-sm max-sm:w-full max-sm:min-w-0">
+    <div class="flex shrink-0 flex-col items-end gap-3 max-sm:self-center">
+      <!-- Price grid: desktop only -->
+      <div class="mono hidden min-w-[14rem] gap-1 text-sm sm:grid">
         {menuItems.map(([name, price]) => (
           <div class="flex items-baseline gap-2">
             <span class="text-ink">{name}</span>

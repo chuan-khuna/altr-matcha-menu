@@ -9,7 +9,7 @@ const matchas = (await getCollection('matcha')).sort(
 const menuCategories = [
   { key: 'clear' as const, label: 'Clear Matcha' },
   { key: 'latte' as const, label: 'Latte Matcha' },
-  { key: 'powder' as const, label: 'Powder Matcha' },
+  { key: 'powder' as const, label: 'Powder' },
 ];
 
 const grouped = menuCategories
@@ -30,7 +30,7 @@ const getSlug = (id: string) => id.split('/').at(-1)!;
 <section id="menu" class="page-gutter border-t border-foreground py-16" aria-label="Menu">
   <div class="mx-auto max-w-[var(--content-max)]">
     <header class="mb-12 max-w-[42rem]">
-      <h2 class="display text-[clamp(1.75rem,3.5vw,2.75rem)] italic leading-[1.1] tracking-[-0.015em]">By blend, not by drink.</h2>
+      <h2 class="display text-[clamp(1.75rem,3.5vw,2.75rem)] italic leading-[1.1] tracking-[-0.015em]">Three preparations.</h2>
       <p class="mono mt-3 text-sm leading-[1.6] tracking-[0.01em] text-ink-muted">
         Each blend is sourced and ground in-house. Drink preparations follow the leaf.
       </p>
