@@ -5,9 +5,10 @@ interface Props {
   blend: CollectionEntry<'matcha'>;
   menuItems: [string, number][];
   href: string;
+  variant?: 'brand-first' | 'leaf-first';
 }
 
-const { blend, menuItems, href } = Astro.props;
+const { blend, menuItems, href, variant = 'leaf-first' } = Astro.props;
 const d = blend.data;
 
 const formatPrice = (n: number) => (n > 0 ? `฿${n}` : '—');
@@ -22,16 +23,28 @@ const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join('
     aria-label={`${d.name} — full blend profile`}
   >
     <div class="flex min-w-0 flex-1 flex-col gap-1">
-      <!-- Brand eyebrow: context before the name -->
-      {d.info?.brand && (
-        <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">{d.info.brand}</p>
-      )}
-
-      <h4 class="display text-2xl italic leading-[1.05] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
-
-      <!-- Cultivar · Origin -->
-      {cultivarOrigin && (
-        <p class="mono mt-0.5 text-sm uppercase tracking-[0.12em] text-primary">{cultivarOrigin}</p>
+      {variant === 'brand-first' ? (
+        <>
+          {/* A: brand eyebrow → name → cultivar · origin */}
+          {d.info?.brand && (
+            <p class="mono text-xs uppercase tracking-[0.16em] text-ink-muted">{d.info.brand}</p>
+          )}
+          <h4 class="display text-2xl italic leading-[1.05] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
+          {cultivarOrigin && (
+            <p class="mono mt-0.5 text-sm uppercase tracking-[0.12em] text-primary">{cultivarOrigin}</p>
+          )}
+        </>
+      ) : (
+        <>
+          {/* B: name → cultivar · origin → brand footnote */}
+          <h4 class="display text-2xl italic leading-[1.05] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
+          {cultivarOrigin && (
+            <p class="mono mt-0.5 text-sm uppercase tracking-[0.12em] text-primary">{cultivarOrigin}</p>
+          )}
+          {d.info?.brand && (
+            <p class="mono text-xs tracking-[0.08em] text-ink-muted">by {d.info.brand}</p>
+          )}
+        </>
       )}
 
       <!-- Cupping notes -->
