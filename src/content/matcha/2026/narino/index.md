@@ -1,5 +1,5 @@
 ---
-name: "Narino (成里乃)"
+name: "Narino"
 order: 3
 notes:
   - "deep umami"
@@ -22,12 +22,13 @@ menus:
   powder:
     20g Bag: 1650
 gallery:
+  - image: ./narino-cultivar.png
   - image: ./narino-tin.png
     description: "Narino tin · MTCH"
-  - image: ./narino-cultivar.png
-    description: "成里乃 cultivar label"
   - image: ./narino-usucha.png
     description: "Usucha"
+  - image: ./narino-farm.jpg
+  - image: ./narino-farm-2.jpg
 ---
 
 Narino holds a rare status among single-cultivar matchas — award-winning and competition-grade, grown exclusively in Oku-no-Yama, Uji, Kyoto, under conditions that cannot be replicated elsewhere. The cultivar is the product of over a decade of careful development, and the right to grow it remains limited to a select group of experienced producers who meet the exacting standards of the region's soil, temperature, wind, and microclimate.
