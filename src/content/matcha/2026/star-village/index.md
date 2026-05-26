@@ -7,7 +7,7 @@ notes:
   - "hazelnut"
   - "creamy"
 info:
-  cultivar: "Blended"
+  cultivar: "Yabukita · Okumidori · Okuyuaka"
   brand: "One to Ten"
   origin: "Yame"
   processing: "Hand-Picked · Stone-Milled"
