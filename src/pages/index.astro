@@ -8,8 +8,9 @@ import About from '@/components/sections/About.astro';
 import Contact from '@/components/sections/Contact.astro';
 ---
 <Layout>
+  <a href="#main-content" class="skip-link">Skip to content</a>
   <Nav />
-  <main>
+  <main id="main-content" tabindex="-1">
     <Hero />
     <Menu />
     <About />
@@ -17,3 +18,23 @@ import Contact from '@/components/sections/Contact.astro';
   </main>
   <Footer />
 </Layout>
+
+<style>
+  .skip-link {
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    z-index: 9999;
+    padding: 0.5rem 1rem;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    transform: translateY(-100%);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+</style>
