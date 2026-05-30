@@ -2,7 +2,6 @@
   "name": "altr-matcha",
   "compatibility_date": "2026-05-30",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-  "main": "@astrojs/cloudflare/entrypoints/server",
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"

@@ -29,6 +29,7 @@ const { items } = Astro.props;
               src={item.image}
               alt={item.description ?? ""}
               class="h-full w-full object-contain"
+              quality={90}
             />
           </figure>
         ))}
