@@ -4,7 +4,7 @@
   "name": "altr-matcha-menu",
   // "main": "@astrojs/cloudflare/entrypoints/server",
   "assets": {
-    "directory": "./dist",
+    "directory": "./dist/client/",
   },
   "observability": {
     "enabled": true,
