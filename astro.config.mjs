@@ -1,11 +1,11 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
-import { fileURLToPath } from "node:url";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind({ applyBaseStyles: false })],
+  integrations: [],
   fonts: [
     {
       provider: fontProviders.google(),
@@ -25,10 +25,12 @@ export default defineConfig({
     },
   ],
   vite: {
+    plugins: [tailwindcss()],
     resolve: {
       alias: {
-        "@": fileURLToPath(new URL("./src", import.meta.url)),
+        "@": "/src",
       },
     },
   },
+  adapter: cloudflare({ imageService: "compile", prerenderEnvironment: "node" }),
 });
