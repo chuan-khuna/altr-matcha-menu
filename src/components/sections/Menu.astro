@@ -1,206 +1,69 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
+import MenuCard from "@/components/matcha-info/ui/MenuCard.astro";
 
-const blends = (await getCollection('blends')).sort(
-  (a, b) => a.data.order - b.data.order
+const matchas = (await getCollection("matcha")).sort(
+  (a, b) => a.data.order - b.data.order,
 );
 
-const categories = ['Clear Matcha', 'Latte Matcha', 'Dessert'] as const;
-const grouped = categories.map((cat) => ({
-  name: cat,
-  items: blends.filter((b) => b.data.category === cat),
-}));
+const menuCategories = [
+  { key: "clear" as const, label: "Clear Matcha" },
+  { key: "latte" as const, label: "Latte Matcha" },
+  { key: "powder" as const, label: "Powder" },
+];
 
-const formatPrice = (n: number) => `฿${n}`;
+const grouped = menuCategories
+  .map((cat) => ({
+    name: cat.label,
+    items: matchas
+      .filter((b) => b.data.menus[cat.key])
+      .map((b) => ({
+        blend: b,
+        menuItems: Object.entries(b.data.menus[cat.key]!),
+      })),
+  }))
+  .filter((g) => g.items.length > 0);
+
+const getSlug = (id: string) => id.split("/").at(-1)!;
 ---
-<section id="menu" class="menu page-gutter" aria-label="Menu">
-  <div class="menu__inner">
-    <header class="menu__head fade-up">
-      <p class="eyebrow">The menu</p>
-      <h2 class="menu__title">By blend, not by drink.</h2>
-      <p class="menu__lede mono">
-        Each blend is sourced and ground in-house. Drink preparations follow the leaf.
+
+<section
+  id="menu"
+  class="page-gutter border-t border-border py-16"
+  aria-label="Menu"
+>
+  <div class="mx-auto max-w-[var(--content-max)]">
+    <header class="mb-12 max-w-[42rem]">
+      <h2
+        class="display text-[clamp(2rem,4vw,3.25rem)] italic leading-[1.1] tracking-[-0.015em]"
+      >
+        Three preparations.
+      </h2>
+      <p
+        class="mono mt-3 text-sm leading-[1.6] tracking-[0.01em] text-ink-muted"
+      >
+        Each blend is sourced and ground in-house. Drink preparations follow the
+        leaf.
       </p>
     </header>
 
-    {grouped.map((group) => (
-      <div class="menu__group">
-        <div class="menu__group-head fade-up">
-          <h3 class="menu__group-title">{group.name}</h3>
-          <span class="menu__count mono">{String(group.items.length).padStart(2, '0')} blends</span>
+    {
+      grouped.map((group) => (
+        <div class="mt-16 first:mt-0">
+          <div class="border-b  border-border pb-3">
+            <h3 class="display text-[2rem] italic">{group.name}</h3>
+          </div>
+          <ul class="m-0 list-none p-0" role="list">
+            {group.items.map(({ blend, menuItems }) => (
+              <MenuCard
+                blend={blend}
+                menuItems={menuItems}
+                href={`/matcha/${getSlug(blend.id)}`}
+              />
+            ))}
+          </ul>
         </div>
-
-        <ul class="menu__grid" role="list">
-          {group.items.map((blend) => (
-            <li class="card fade-up">
-              <a href={`/blends/${blend.id}`} class="card__link" aria-label={`${blend.data.name} — full blend profile`}>
-                <div class="card__top">
-                  <h4 class="card__name">{blend.data.name}</h4>
-                  <p class="card__origin mono">
-                    {blend.data.origin.region}, {blend.data.origin.prefecture}
-                  </p>
-                </div>
-
-                <ul class="card__notes mono" role="list">
-                  {blend.data.cuppingNotes.map((note) => (
-                    <li>{note}</li>
-                  ))}
-                </ul>
-
-                <div class="card__drinks mono">
-                  {blend.data.drinks.map((d) => (
-                    <div class="card__row">
-                      <span class="card__drink">{d.name}</span>
-                      <span class="card__dots" aria-hidden="true"></span>
-                      <span class="card__price">{formatPrice(d.price)}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <span class="card__cta mono">Read the blend →</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))}
+      ))
+    }
   </div>
 </section>
-
-<style>
-  .menu {
-    padding-block: var(--space-3xl);
-    border-top: var(--rule-hairline);
-  }
-  .menu__inner {
-    max-width: var(--content-max);
-    margin: 0 auto;
-  }
-  .menu__head {
-    display: grid;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-3xl);
-    max-width: 42rem;
-  }
-  .menu__title {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-  .menu__lede {
-    font-size: var(--text-sm);
-    color: var(--color-ink-muted);
-    margin-top: var(--space-sm);
-    line-height: 1.6;
-    text-transform: none;
-    letter-spacing: 0.01em;
-  }
-  .menu__group + .menu__group { margin-top: var(--space-3xl); }
-  .menu__group-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-md);
-    padding-bottom: var(--space-md);
-    border-bottom: var(--rule-ink);
-    margin-bottom: var(--space-xl);
-  }
-  .menu__group-title {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-  }
-  .menu__count {
-    font-size: var(--text-xs);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-  }
-  .menu__grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
-    gap: 0;
-    border-top: var(--rule-hairline);
-    border-left: var(--rule-hairline);
-  }
-  .card {
-    border-right: var(--rule-hairline);
-    border-bottom: var(--rule-hairline);
-    background: var(--color-paper);
-    transition: background var(--dur-base) var(--ease-out);
-  }
-  .card:hover { background: var(--color-paper-2); }
-  .card__link {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-    padding: var(--space-xl);
-    height: 100%;
-    color: inherit;
-  }
-  .card__link:hover { color: inherit; }
-  .card__name {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: var(--text-2xl);
-    line-height: 1.05;
-  }
-  .card__origin {
-    font-size: var(--text-xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-top: var(--space-2);
-  }
-  .card__notes {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    font-size: var(--text-xs);
-    color: var(--color-ink-muted);
-  }
-  .card__notes li {
-    padding: 2px 8px;
-    border: 1px solid var(--color-sand);
-  }
-  .card__drinks {
-    display: grid;
-    gap: var(--space-2);
-    font-size: var(--text-sm);
-    margin-top: auto;
-  }
-  .card__row {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-2);
-  }
-  .card__drink { color: var(--color-ink); }
-  .card__dots {
-    flex: 1;
-    border-bottom: 1px dotted var(--color-sand);
-    transform: translateY(-3px);
-  }
-  .card__price {
-    color: var(--color-ink);
-    font-variant-numeric: tabular-nums;
-  }
-  .card__cta {
-    font-size: var(--text-xs);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    transition: color var(--dur-fast) var(--ease-out),
-                transform var(--dur-fast) var(--ease-out);
-  }
-  .card:hover .card__cta {
-    color: var(--color-accent);
-    transform: translateX(2px);
-  }
-</style>

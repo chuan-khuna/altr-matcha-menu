@@ -9,19 +9,19 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.google(),
-      name: 'DM Serif Display',
-      cssVariable: '--font-dm-serif-display',
-      weights: [400],
+      name: 'Cormorant Garamond',
+      cssVariable: '--font-cormorant-garamond',
+      weights: [300, 400, 500, 600],
       styles: ['normal', 'italic'],
-      fallbacks: ['serif'],
+      fallbacks: ['Georgia', 'serif'],
     },
     {
       provider: fontProviders.google(),
-      name: 'IBM Plex Mono',
-      cssVariable: '--font-ibm-plex-mono',
-      weights: [400, 500, 600],
-      styles: ['normal'],
-      fallbacks: ['monospace'],
+      name: 'Lato',
+      cssVariable: '--font-lato',
+      weights: [400, 700],
+      styles: ['normal', 'italic'],
+      fallbacks: ['system-ui', 'sans-serif'],
     },
   ],
   vite: {

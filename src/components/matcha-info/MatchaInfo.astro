@@ -1,0 +1,30 @@
+---
+interface SpecRow {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  specRows: SpecRow[];
+}
+const { specRows } = Astro.props;
+---
+
+{
+  specRows.length > 0 && (
+    <div class="fade-up">
+      <dl class="mono text-xs">
+        {specRows.map((row) => (
+          <div class="grid grid-cols-[8rem_1fr] items-baseline gap-6 py-4">
+            <dt class="uppercase tracking-[0.14em] text-ink-muted">
+              {row.label}
+            </dt>
+            <dd class="m-0 min-w-0 break-words text-sm text-ink">
+              {row.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  )
+}

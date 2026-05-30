@@ -1,0 +1,62 @@
+---
+const levels = [
+  { label: "0%",   grams: "—" },
+  { label: "25%",  grams: "2 g" },
+  { label: "50%",  grams: "4 g", recommended: true },
+  { label: "75%",  grams: "6 g" },
+  { label: "100%", grams: "8 g" },
+];
+---
+
+<div class="fade-up space-y-5">
+
+  <!-- Sweetness — horizontal row -->
+  <div>
+    <p class="mono mb-2 text-xs uppercase tracking-[0.14em] text-ink-muted">
+      Sweetness
+    </p>
+    <table class="mono w-full border-collapse text-xs">
+      <tbody>
+        <!-- percentage row -->
+        <tr>
+          {levels.map(({ label, recommended }) => (
+            <td
+              class:list={[
+                "border border-sand/60 px-2 py-[5px] text-center tabular-nums",
+                recommended
+                  ? "border-accent/40 bg-accent/8 text-accent"
+                  : "text-ink-muted",
+              ]}
+            >
+              {label}
+            </td>
+          ))}
+        </tr>
+        <!-- grams row -->
+        <tr>
+          {levels.map(({ grams, recommended }) => (
+            <td
+              class:list={[
+                "border border-t-0 border-sand/60 px-2 py-[4px] text-center tabular-nums text-[10px]",
+                recommended
+                  ? "border-accent/40 bg-accent/5 text-accent/70"
+                  : "text-ink-muted/60",
+              ]}
+            >
+              {grams}
+            </td>
+          ))}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Nitro milk note -->
+  <div class="border-t border-border pt-4">
+    <p class="mono mb-[5px] text-xs uppercase tracking-[0.14em] text-ink-muted">
+      Nitro Cold Whisk Latte
+    </p>
+    <p class="mono text-xs text-ink-muted">~75 ml milk per serve</p>
+  </div>
+
+</div>

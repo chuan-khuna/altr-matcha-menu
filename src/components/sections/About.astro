@@ -1,87 +1,22 @@
 ---
 ---
-<section id="about" class="about page-gutter" aria-label="About ALTR">
-  <div class="about__inner">
-    <div class="about__col-l fade-up">
-      <p class="eyebrow">About</p>
-      <p class="about__index mono">§ 02</p>
-    </div>
-
-    <div class="about__col-r">
-      <h2 class="about__title fade-up">
-        A specialty matcha cafe. Single-cultivar, carefully blended, served with precision.
-      </h2>
-      <div class="about__body fade-up">
-        <p>
-          ALTR opened with a narrow mandate — to source matcha directly from the people
-          who grow it, and to serve it the way the leaf asks to be served. We don't
-          chase volume. We list a small number of blends, change them with the harvest,
-          and ground every tin the morning we pour it.
-        </p>
-        <p>
-          The cupping notes on this menu are honest. The prices reflect the work in the
-          field, not the work in the cafe. If you are new to matcha, we are happy to
-          walk you through the menu. If you are not, you already know what to order.
-        </p>
-      </div>
+<section id="about" class="page-gutter border-t border-border py-16" aria-label="About ALTR">
+  <div class="mx-auto max-w-[var(--content-max)]">
+    <h2 class="display mb-6 text-[clamp(2rem,4vw,3.25rem)] italic leading-[1.1] tracking-[-0.015em]">
+      About ALTR.
+    </h2>
+    <div class="grid gap-5 font-sans text-base leading-[1.75] text-ink max-w-[58ch]">
+      <p>
+        ALTR opened with a narrow mandate — to source matcha directly from the people
+        who grow it, and to serve it the way the leaf asks to be served. We don't
+        chase volume. We list a small number of blends, change them with the harvest,
+        and ground every tin the morning we pour it.
+      </p>
+      <p>
+        The cupping notes on this menu are honest. The prices reflect the work in the
+        field, not the work in the cafe. If you are new to matcha, we are happy to
+        walk you through the menu. If you are not, you already know what to order.
+      </p>
     </div>
   </div>
 </section>
-
-<style>
-  .about {
-    padding-block: var(--space-3xl);
-    border-top: var(--rule-hairline);
-  }
-  .about__inner {
-    max-width: var(--content-max);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
-  }
-  .about__col-l {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-md);
-  }
-  .about__index {
-    font-size: var(--text-xs);
-    letter-spacing: 0.14em;
-    color: var(--color-ink-muted);
-  }
-  .about__title {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: clamp(2rem, 5vw, 3.75rem);
-    line-height: 1.08;
-    letter-spacing: -0.015em;
-    max-width: 32ch;
-  }
-  .about__body {
-    margin-top: var(--space-xl);
-    display: grid;
-    gap: var(--space-md);
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    line-height: 1.7;
-    color: var(--color-ink);
-    max-width: 38rem;
-  }
-  @media (min-width: 900px) {
-    .about__inner {
-      grid-template-columns: 12rem 1fr;
-      gap: var(--space-3xl);
-    }
-    .about__col-l {
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      gap: var(--space-md);
-      position: sticky;
-      top: calc(var(--nav-h) + var(--space-lg));
-      align-self: start;
-    }
-  }
-</style>

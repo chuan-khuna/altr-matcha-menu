@@ -1,0 +1,62 @@
+---
+import type { MenuCardProps } from '@/components/matcha-info/ui/types';
+
+type Props = MenuCardProps;
+
+const { blend, menuItems, href } = Astro.props;
+const d = blend.data;
+
+const formatPrice = (n: number) => (n > 0 ? `฿${n.toLocaleString()}` : "—");
+const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join(' · ');
+---
+
+<li class="group fade-up border-b border-border">
+  <a
+    href={href}
+    class="flex items-start justify-between gap-4 py-8 text-inherit hover:text-inherit sm:gap-12"
+    aria-label={`${d.name}, full blend profile`}
+  >
+    <div class="flex min-w-0 flex-1 flex-col gap-1">
+      <h4 class="display text-2xl italic leading-[1.05] group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
+      {cultivarOrigin && (
+        <p class="mono mt-0.5 text-sm uppercase tracking-[0.12em] text-primary">{cultivarOrigin}</p>
+      )}
+      {d.info?.brand && (
+        <p class="mono text-xs tracking-[0.08em] text-ink-muted">by {d.info.brand}</p>
+      )}
+
+      {d.notes.length > 0 && (
+        <p class="mono mt-3 text-base lowercase tracking-[0.04em] text-ink-muted" aria-label="Cupping notes">
+          {d.notes.join(' · ')}
+        </p>
+      )}
+
+      {menuItems.length > 0 && (
+        <div class="mono mt-4 grid gap-1 text-sm sm:hidden">
+          {menuItems.map(([name, price]) => (
+            <div class="flex items-baseline gap-2">
+              <span class="min-w-0 text-ink">{name}</span>
+              <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true" />
+              <span class="tabular-nums text-ink">{formatPrice(price)}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div class="flex shrink-0 flex-col items-end gap-3 max-sm:self-center">
+      {menuItems.length > 0 && (
+        <div class="mono hidden min-w-[14rem] gap-1 text-sm sm:grid">
+          {menuItems.map(([name, price]) => (
+            <div class="flex items-baseline gap-2">
+              <span class="min-w-0 text-ink">{name}</span>
+              <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true" />
+              <span class="tabular-nums text-ink">{formatPrice(price)}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      <span class="mono text-sm text-ink-muted transition-all duration-150 ease-out group-hover:translate-x-[4px] group-hover:text-accent" aria-hidden="true">→</span>
+    </div>
+  </a>
+</li>

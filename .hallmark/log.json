@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-05-26",
+    "macrostructure": "Long Document + Specimen",
+    "theme": "custom",
+    "theme_axes": "light / italic-serif / green",
+    "vibe": "craft-serious, matcha, letter-quiet, earthy-warm",
+    "nav": "N9",
+    "footer": "Ft6",
+    "enrichment": "none",
+    "scope": "app",
+    "brief": "ALTR redesign — Cormorant Garamond · Long Document landing + Specimen detail"
+  },
+  {
     "date": "2026-05-24",
     "macrostructure": "Catalogue",
     "theme": "custom",

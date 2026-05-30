@@ -1,49 +1,44 @@
 ---
 import { address, hours, reach } from '@/data/site';
 ---
-<section id="contact" class="contact page-gutter" aria-label="Visit ALTR">
-  <div class="contact__inner">
-    <header class="contact__head fade-up">
-      <p class="eyebrow">Visit</p>
-      <h2 class="contact__title">Find us, before the leaf turns.</h2>
-    </header>
+<section id="contact" class="page-gutter border-t border-border py-16" aria-label="Visit ALTR">
+  <div class="mx-auto max-w-[var(--content-max)]">
+    <h2 class="display mb-8 text-[clamp(2rem,4vw,3.25rem)] italic leading-[1.1] tracking-[-0.015em]">Visit.</h2>
 
-    <div class="contact__grid">
-      <div class="contact__block fade-up">
-        <p class="contact__label mono">Address</p>
-        <address class="contact__address">
+    <div class="grid grid-cols-1 gap-10 font-sans text-base leading-[1.8] min-[640px]:grid-cols-3 min-[640px]:gap-12">
+      <div>
+        <p class="mono mb-2 text-xs uppercase tracking-[0.16em] text-ink-muted">Address</p>
+        <address class="not-italic text-ink">
           {address.line1}<br />
           {address.line2}<br />
           {address.city}
         </address>
-        <a href={address.mapsHref} class="contact__link mono" target="_blank" rel="noopener noreferrer">
+        <a href={address.mapsHref} class="mono mt-3 inline-block text-xs uppercase tracking-[0.12em] text-ink-muted hover:text-accent transition-colors duration-150" target="_blank" rel="noopener noreferrer">
           Open in Google Maps →
         </a>
       </div>
 
-      <div class="contact__block fade-up">
-        <p class="contact__label mono">Hours</p>
-        <table class="contact__hours mono">
-          <tbody>
-            {hours.map((row) => (
-              <tr>
-                <th scope="row">{row.day}</th>
-                <td>{row.open}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div>
+        <p class="mono mb-2 text-xs uppercase tracking-[0.16em] text-ink-muted">Hours</p>
+        <ul class="m-0 list-none p-0 text-ink">
+          {hours.map((row) => (
+            <li class="grid grid-cols-[6rem_1fr] gap-2">
+              <span class="text-ink-muted">{row.day}</span>
+              <span>{row.open}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div class="contact__block fade-up">
-        <p class="contact__label mono">Reach</p>
-        <ul class="contact__reach mono">
+      <div>
+        <p class="mono mb-2 text-xs uppercase tracking-[0.16em] text-ink-muted">Reach</p>
+        <ul class="mono m-0 grid list-none gap-3 p-0 text-sm">
           {reach.map((item) => (
             <li>
-              <a href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+              <a class="border-b border-sand text-ink hover:border-accent hover:text-accent transition-colors duration-150" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
                 {item.display}
               </a>
-              <span class="contact__reach-meta">— {item.label}</span>
+              <span class="ml-2 text-ink-muted">— {item.label}</span>
             </li>
           ))}
         </ul>
@@ -51,111 +46,3 @@ import { address, hours, reach } from '@/data/site';
     </div>
   </div>
 </section>
-
-<style>
-  .contact {
-    padding-block: var(--space-3xl);
-    border-top: var(--rule-hairline);
-  }
-  .contact__inner {
-    max-width: var(--content-max);
-    margin: 0 auto;
-  }
-  .contact__head {
-    margin-bottom: var(--space-3xl);
-    max-width: 36rem;
-  }
-  .contact__title {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: clamp(2.25rem, 5.5vw, 4rem);
-    line-height: 1.05;
-    letter-spacing: -0.015em;
-    margin-top: var(--space-sm);
-  }
-  .contact__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    border-top: var(--rule-ink);
-  }
-  .contact__block {
-    padding: var(--space-xl) 0;
-    border-bottom: var(--rule-hairline);
-    display: grid;
-    gap: var(--space-md);
-  }
-  .contact__label {
-    font-size: var(--text-xs);
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-  }
-  .contact__address {
-    font-family: var(--font-display);
-    font-style: normal;
-    font-size: var(--text-xl);
-    line-height: 1.35;
-    color: var(--color-ink);
-  }
-  .contact__link {
-    font-size: var(--text-xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-ink-muted);
-    transition: color var(--dur-fast) var(--ease-out);
-    justify-self: start;
-  }
-  .contact__link:hover { color: var(--color-accent); }
-  .contact__hours {
-    border-collapse: collapse;
-    font-size: var(--text-sm);
-  }
-  .contact__hours th {
-    text-align: left;
-    font-weight: 400;
-    padding: var(--space-2) var(--space-lg) var(--space-2) 0;
-    color: var(--color-ink-muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-size: var(--text-xs);
-    vertical-align: baseline;
-  }
-  .contact__hours td {
-    padding: var(--space-2) 0;
-    color: var(--color-ink);
-    font-variant-numeric: tabular-nums;
-  }
-  .contact__reach {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    gap: var(--space-sm);
-    font-size: var(--text-sm);
-  }
-  .contact__reach a {
-    color: var(--color-ink);
-    border-bottom: 1px solid var(--color-sand);
-  }
-  .contact__reach a:hover {
-    color: var(--color-accent);
-    border-color: var(--color-accent);
-  }
-  .contact__reach-meta {
-    color: var(--color-ink-muted);
-    margin-left: var(--space-2);
-  }
-
-  @media (min-width: 800px) {
-    .contact__grid {
-      grid-template-columns: 1.2fr 1fr 1fr;
-    }
-    .contact__block {
-      padding: var(--space-xl);
-      border-right: var(--rule-hairline);
-    }
-    .contact__block:first-child { padding-left: 0; }
-    .contact__block:last-child  { border-right: none; padding-right: 0; }
-  }
-</style>

@@ -1,0 +1,10 @@
+---
+interface Props {
+  notes: string[];
+}
+const { notes } = Astro.props;
+---
+
+<div class="fade-up">
+  <p class="mono lowercase tracking-[0.04em] text-ink-muted">{notes.join(' · ')}</p>
+</div>
