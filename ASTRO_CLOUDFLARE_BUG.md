@@ -2,6 +2,8 @@
 
 Document: https://docs.astro.build/en/guides/integrations-guide/cloudflare/
 
+https://docs.astro.build/en/guides/deploy/cloudflare/
+
 ## Problem
 
 Cloudflare Pages build fails at the "generating optimized images" step. The build completes static route generation successfully, then crashes when trying to read image files that were supposed to have been copied to `dist/_astro/`.
