@@ -2,14 +2,9 @@
 import { defineConfig, fontProviders } from "astro/config";
 import { fileURLToPath } from "node:url";
 import tailwind from "@astrojs/tailwind";
-import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: cloudflare({
-    imageService: "cloudflare-binding",
-    prerenderEnvironment: "node",
-  }),
   integrations: [tailwind({ applyBaseStyles: false })],
   fonts: [
     {
