@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "debug-mantra": {
+      "source": "thananon/9arm-skills",
+      "sourceType": "github",
+      "computedHash": "7c519ffda61c6a44db8ef12f6a9ed06de920b9b4faa2e7b47b0032b9c78056e3"
+    },
     "doc-coauthoring": {
       "source": "anthropics/skills",
       "sourceType": "github",

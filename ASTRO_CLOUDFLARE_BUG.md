@@ -10,7 +10,7 @@ Cloudflare Pages build fails at the "generating optimized images" step. The buil
 
 This happens on commit `f2d8336`. The Cloudflare adapter was present and active at that commit.
 
-## Current state of the project (local)
+## Current state of the project (local, cloudflare build passes, but I want to add the "adapters")
 
 The adapter is **currently commented out** in `astro.config.mjs` as a workaround — the build passes locally and on Cloudflare with static output, but loses server-side capabilities. The goal is to re-enable the adapter correctly.
 
@@ -146,6 +146,8 @@ Before implementing, state your hypothesis here. Then:
 ---
 
 ## Report
+
+You can use `debug-mantra` skill to find the bug.
 
 Write the completed report to `.docs/cloudflare-build-report/2026-05-30-HHMM-<short-title>.md` using this format:
 
