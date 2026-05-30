@@ -5,7 +5,7 @@
     "": {
       "name": "altr-matcha",
       "dependencies": {
-        "@astrojs/cloudflare": "^13.6.0",
+        "@astrojs/cloudflare": "^13.5.1",
         "astro": "^6.3.7",
       },
       "devDependencies": {
