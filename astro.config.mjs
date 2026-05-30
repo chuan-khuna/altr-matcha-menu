@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 // https://astro.build/config
 export default defineConfig({
   integrations: [],
+
   fonts: [
     {
       provider: fontProviders.google(),
@@ -24,6 +25,7 @@ export default defineConfig({
       fallbacks: ["system-ui", "sans-serif"],
     },
   ],
+
   vite: {
     plugins: [tailwindcss()],
     resolve: {
@@ -32,8 +34,5 @@ export default defineConfig({
       },
     },
   },
-  // adapter: cloudflare({
-  //   imageService: "passthrough",
-  //   prerenderEnvironment: "node",
-  // }),
+  adapter: cloudflare({}),
 });

@@ -9,15 +9,20 @@
     "dev": "astro dev",
     "build": "CI=true astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "generate-types": "wrangler types"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.5.1",
+    "@astrojs/cloudflare": "^13.6.0",
     "astro": "^6.3.7",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "wrangler": "^4.95.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.0",
     "tailwindcss": "^4.3.0"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }

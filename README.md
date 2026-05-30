@@ -46,6 +46,15 @@ All commands are run from the project root. Use `bun` (preferred) or `npm`.
 
 > npm equivalents: replace `bun` with `npm` and `bunx` with `npx`.
 
+## Testing the Cloudflare build
+
+Build the site and serve it locally through the Cloudflare Workers runtime (Wrangler) to verify the deploy before pushing:
+
+```bash
+bun astro build      # build to ./dist/
+bun wrangler dev     # serve dist/ via the local Workers runtime
+```
+
 ## Adding shadcn Components
 
 ```bash
