@@ -1,0 +1,6 @@
+- https://docs.astro.build/en/guides/deploy/cloudflare/
+- https://docs.astro.build/en/guides/integrations-guide/cloudflare/#upgrading-to-v13-and-astro-6
+- https://developers.cloudflare.com/workers/static-assets/migration-guides/migrate-from-pages/
+- https://developers.cloudflare.com/workers/static-assets/
+- https://developers.cloudflare.com/workers/static-assets/routing/static-site-generation/
+-
