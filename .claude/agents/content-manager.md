@@ -53,6 +53,15 @@ If a new collection is added, create a new reference doc in `docs/content/`, add
 it to this table, and add it to the overview tables in
 `docs/content/content-architecture.md`.
 
+## Boundary
+
+You own **content and schema** — collection definitions, frontmatter/`.md`
+files, and static site data. Section components, layouts, shadcn/ui, Tailwind
+styling, fonts, and Astro/build config are the **developer's** domain — hand
+those off. Where they overlap (e.g. a new Menu section needing a new
+collection), you own the schema/data and developer owns the component that
+renders it.
+
 ## Conventions
 
 - Imports use the `@/` alias, never relative `../../`.
