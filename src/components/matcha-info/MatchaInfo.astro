@@ -15,8 +15,8 @@ const { specRows } = Astro.props;
     <div class="fade-up">
       <dl class="mono text-xs">
         {specRows.map((row) => (
-          <div class="grid grid-cols-[8rem_1fr] items-baseline gap-6 py-4">
-            <dt class="uppercase tracking-[0.14em] text-ink-muted">
+          <div class="label-grid items-baseline gap-6 py-4">
+            <dt class="uppercase tracking-widest text-ink-muted">
               {row.label}
             </dt>
             <dd class="m-0 min-w-0 break-words text-sm text-ink">

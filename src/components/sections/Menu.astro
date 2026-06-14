@@ -32,15 +32,15 @@ const getSlug = (id: string) => id.split("/").at(-1)!;
   class="page-gutter border-t border-border py-16"
   aria-label="Menu"
 >
-  <div class="mx-auto max-w-[var(--content-max)]">
-    <header class="mb-12 max-w-[42rem]">
+  <div class="mx-auto max-w-[var(--content-max)] field-grid">
+    <header class="col-span-12 mb-12 min-[800px]:col-span-8">
       <h2
-        class="display text-[clamp(2rem,4vw,3.25rem)] italic leading-[1.1] tracking-[-0.015em]"
+        class="display text-display-s italic leading-tight tracking-snug"
       >
         Three preparations.
       </h2>
       <p
-        class="mono mt-3 text-sm leading-[1.6] tracking-[0.01em] text-ink-muted"
+        class="mono mt-2 text-sm leading-normal tracking-normal text-ink-muted"
       >
         Each blend is sourced and ground in-house. Drink preparations follow the
         leaf.
@@ -49,9 +49,9 @@ const getSlug = (id: string) => id.split("/").at(-1)!;
 
     {
       grouped.map((group) => (
-        <div class="mt-16 first:mt-0">
-          <div class="border-b  border-border pb-3">
-            <h3 class="display text-[2rem] italic">{group.name}</h3>
+        <div class="col-span-12 mt-16 first:mt-0">
+          <div class="border-b border-border pb-4">
+            <h3 class="display text-xl italic">{group.name}</h3>
           </div>
           <ul class="m-0 list-none p-0" role="list">
             {group.items.map(({ blend, menuItems }) => (

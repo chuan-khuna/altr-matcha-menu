@@ -16,7 +16,7 @@ const formatPrice = (n: number) => (n > 0 ? n.toLocaleString() : "—");
   <div class="fade-up">
     {menuEntries.filter(({ items }) => items.length > 0).map(({ label, items }) => (
       <div class="mt-4 first:mt-0">
-        <p class="mono mb-2 text-xs uppercase tracking-[0.12em] text-accent">{label}</p>
+        <p class="mono mb-2 text-xs uppercase tracking-wider text-accent">{label}</p>
         <ul class="mono m-0 grid list-none gap-2 p-0 text-sm" role="list">
           {items.map(([name, price]) => (
             <li class="flex items-baseline gap-2">

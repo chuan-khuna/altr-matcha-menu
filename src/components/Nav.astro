@@ -8,11 +8,11 @@ const { showBack = false } = Astro.props;
 ---
 <nav class="page-gutter fixed inset-x-0 top-0 z-50 h-[var(--nav-h)] bg-[color-mix(in_oklch,var(--color-paper)_88%,transparent)] backdrop-blur-[8px] backdrop-saturate-[140%]">
   <div class="mx-auto flex h-full max-w-[var(--content-max)] items-center justify-between">
-    <a href="/" class="display text-xl italic tracking-[0.02em] text-ink hover:text-accent" aria-label="ALTR — home">ALTR</a>
+    <a href="/" class="display text-xl italic tracking-normal text-ink hover:text-accent" aria-label="ALTR — home">ALTR</a>
     {showBack ? (
-      <a href="/#menu" class="mono text-xs uppercase tracking-[0.12em] text-ink-muted hover:text-accent transition-colors duration-150">← Back to menu</a>
+      <a href="/#menu" class="mono text-xs uppercase tracking-wider text-ink-muted hover:text-accent transition-colors duration-150">← Back to menu</a>
     ) : (
-      <ul class="mono m-0 flex list-none gap-8 p-0 text-xs uppercase tracking-[0.16em] text-ink-muted max-[480px]:gap-5">
+      <ul class="mono m-0 flex list-none gap-8 p-0 text-xs uppercase tracking-widest text-ink-muted max-[480px]:gap-4">
         {nav.map((item) => (
           <li><a href={item.href} class="hover:text-ink transition-colors duration-150">{item.label}</a></li>
         ))}

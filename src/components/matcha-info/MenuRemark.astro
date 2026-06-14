@@ -8,11 +8,11 @@ const levels = [
 ];
 ---
 
-<div class="fade-up space-y-5">
+<div class="fade-up space-y-4">
 
   <!-- Sweetness — horizontal row -->
   <div>
-    <p class="mono mb-2 text-xs uppercase tracking-[0.14em] text-ink-muted">
+    <p class="mono mb-2 text-xs uppercase tracking-widest text-ink-muted">
       Sweetness
     </p>
     <table class="mono w-full border-collapse text-xs">
@@ -22,7 +22,7 @@ const levels = [
           {levels.map(({ label, recommended }) => (
             <td
               class:list={[
-                "border border-sand/60 px-2 py-[5px] text-center tabular-nums",
+                "border border-sand/60 px-2 py-1 text-center tabular-nums",
                 recommended
                   ? "border-accent/40 bg-accent/8 text-accent"
                   : "text-ink-muted",
@@ -37,7 +37,7 @@ const levels = [
           {levels.map(({ grams, recommended }) => (
             <td
               class:list={[
-                "border border-t-0 border-sand/60 px-2 py-[4px] text-center tabular-nums text-[10px]",
+                "border border-t-0 border-sand/60 px-2 py-1 text-center tabular-nums text-2xs",
                 recommended
                   ? "border-accent/40 bg-accent/5 text-accent/70"
                   : "text-ink-muted/60",
@@ -53,7 +53,7 @@ const levels = [
 
   <!-- Nitro milk note -->
   <div class="border-t border-border pt-4">
-    <p class="mono mb-[5px] text-xs uppercase tracking-[0.14em] text-ink-muted">
+    <p class="mono mb-1 text-xs uppercase tracking-widest text-ink-muted">
       Nitro Cold Whisk Latte
     </p>
     <p class="mono text-xs text-ink-muted">~75 ml milk per serve</p>
