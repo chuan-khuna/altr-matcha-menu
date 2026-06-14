@@ -4,7 +4,7 @@ Landing page for **ALTR's Matcha Cafe** — a single-page site with sections: He
 
 **Visual direction:** Warm & earthy — greens, creams, browns.
 
-**Stack:** Astro 6, Tailwind CSS, shadcn/ui, TypeScript (strict).
+**Stack:** Astro 6, Tailwind CSS v4 (CSS-first, no `tailwind.config.*`), shadcn/ui, TypeScript (strict).
 
 ## Commands
 
@@ -113,7 +113,7 @@ export const collections = { matchaDrinks, desserts };
 
 When adding a new collection: create `src/collection-definitions/<singular>.ts`, add `src/content/<plural>/`, then register in `content.config.ts`.
 
-**Documentation rule:** Whenever you change `src/collection-definitions/**` or `src/data/**`, update the matching reference doc in `project-skills/manage-content/references/`. A task is not complete until the skill is in sync.
+**Documentation rule:** Whenever you change `src/collection-definitions/**` or `src/data/**`, update the matching reference doc in `docs/content/`. A task is not complete until the docs are in sync. Content work can be delegated to the **`content-manager`** subagent (`.claude/agents/content-manager.md`), which owns these collections and the schema-sync rule.
 
 ## Fonts
 
@@ -135,7 +135,8 @@ If an animation works in isolation but breaks on the site, first check whether t
 ## Styling
 
 - Use **Tailwind** for all styling. Do not write custom CSS unless Tailwind cannot cover it.
-- Use the Tailwind **theme preset** to define brand colours (greens, creams, browns) in `tailwind.config.*` rather than hardcoding hex values in class names.
+- This is **Tailwind v4** — there is no `tailwind.config.*`. Configuration is CSS-first: `src/styles/globals.css` imports Tailwind (`@import "tailwindcss"`) and defines theme tokens via `@theme inline { … }`.
+- Define brand colours (greens, creams, browns) as CSS variables in the preset `src/styles/presets/matcha.css`, exposed to Tailwind through `@theme inline` in `globals.css`, rather than hardcoding hex values in class names.
 - shadcn/ui component styles can be overridden via `cn()` from `@/lib/utils`.
 
 Design references and inspiration files are stored in `_references/` (gitignored — do not commit). Ignore all files in that folder.

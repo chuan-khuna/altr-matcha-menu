@@ -43,5 +43,5 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 1. Create `src/collection-definitions/<singular>.ts`
 2. Create `src/content/<plural>/` folder and add `.md` files
 3. Register in `src/content.config.ts`
-4. Create `project-skills/manage-content/references/how-to-manage-<plural>.md`
-5. Add the new row to the schema sync table in `project-skills/manage-content/SKILL.md`
+4. Create `docs/content/how-to-manage-<plural>.md`
+5. Add the new row to the schema-sync table in `.claude/agents/content-manager.md`, and add the collection to the overview tables above
