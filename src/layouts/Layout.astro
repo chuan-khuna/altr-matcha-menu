@@ -48,5 +48,40 @@ const {
         els.forEach((el) => io.observe(el));
       })();
     </script>
+
+    <script is:inline>
+      /* Brockmann optical alignment — put display INK (not its box) on the
+         column line. Large/italic glyphs carry a side-bearing, so a headline
+         whose box is on the line still reads as misaligned. Measure the
+         actually-loaded font's actualBoundingBoxLeft and nudge marginLeft.
+         Runs after fonts load and on resize (fluid clamp type changes size). */
+      (() => {
+        const SEL = '[data-optical]';
+        const cvs = document.createElement('canvas');
+        const ctx = cvs.getContext('2d');
+        const apply = () => {
+          if (!ctx) return;
+          document.querySelectorAll(SEL).forEach((el) => {
+            el.style.marginLeft = '0px';
+            const cs = getComputedStyle(el);
+            let ch = (el.textContent || '').trim().charAt(0);
+            if (!ch) return;
+            if (cs.textTransform === 'uppercase') ch = ch.toUpperCase();
+            ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+            ctx.textAlign = 'left';
+            const abl = ctx.measureText(ch).actualBoundingBoxLeft;
+            if (isFinite(abl)) el.style.marginLeft = abl.toFixed(2) + 'px';
+          });
+        };
+        const run = () => requestAnimationFrame(apply);
+        run();
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+        let t;
+        window.addEventListener('resize', () => {
+          clearTimeout(t);
+          t = setTimeout(run, 150);
+        });
+      })();
+    </script>
   </body>
 </html>

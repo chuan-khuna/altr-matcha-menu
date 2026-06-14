@@ -20,7 +20,7 @@ const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join('
       {d.info?.brand && (
         <p class="mono text-xs uppercase tracking-widest text-ink-muted">{d.info.brand}</p>
       )}
-      <h4 class="display text-lg italic leading-tight group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
+      <h4 data-optical class="display text-lg italic leading-tight group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
       {cultivarOrigin && (
         <p class="mono mt-1 text-sm uppercase tracking-wider text-primary">{cultivarOrigin}</p>
       )}

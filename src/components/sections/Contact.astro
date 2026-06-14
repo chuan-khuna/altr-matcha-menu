@@ -2,11 +2,10 @@
 import { address, hours, reach } from '@/data/site';
 ---
 <section id="contact" class="page-gutter border-t border-border py-16" aria-label="Visit ALTR">
-  <div class="mx-auto max-w-[var(--content-max)]">
-    <h2 class="display mb-8 text-display-s italic leading-tight tracking-snug">Visit.</h2>
+  <div class="mx-auto max-w-[var(--content-max)] field-grid">
+    <h2 data-optical class="col-span-12 display mb-8 text-display-s italic leading-tight tracking-snug">Visit.</h2>
 
-    <div class="grid grid-cols-1 gap-10 font-sans text-base leading-relaxed min-[640px]:grid-cols-3 min-[640px]:gap-12">
-      <div>
+    <div class="col-span-12 min-[640px]:col-span-4 font-sans text-base leading-relaxed">
         <p class="mono mb-2 text-xs uppercase tracking-widest text-ink-muted">Address</p>
         <address class="not-italic text-ink">
           {address.line1}<br />
@@ -18,7 +17,7 @@ import { address, hours, reach } from '@/data/site';
         </a>
       </div>
 
-      <div>
+      <div class="col-span-12 min-[640px]:col-span-4 font-sans text-base leading-relaxed">
         <p class="mono mb-2 text-xs uppercase tracking-widest text-ink-muted">Hours</p>
         <ul class="m-0 list-none p-0 text-ink">
           {hours.map((row) => (
@@ -30,7 +29,7 @@ import { address, hours, reach } from '@/data/site';
         </ul>
       </div>
 
-      <div>
+      <div class="col-span-12 min-[640px]:col-span-4 font-sans text-base leading-relaxed">
         <p class="mono mb-2 text-xs uppercase tracking-widest text-ink-muted">Reach</p>
         <ul class="mono m-0 grid list-none gap-2 p-0 text-sm">
           {reach.map((item) => (
@@ -43,6 +42,5 @@ import { address, hours, reach } from '@/data/site';
           ))}
         </ul>
       </div>
-    </div>
   </div>
 </section>

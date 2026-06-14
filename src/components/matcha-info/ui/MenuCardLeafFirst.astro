@@ -17,7 +17,7 @@ const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join('
     aria-label={`${d.name}, full blend profile`}
   >
     <div class="flex min-w-0 flex-1 flex-col gap-1">
-      <h4 class="display text-lg italic leading-tight group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
+      <h4 data-optical class="display text-lg italic leading-tight group-hover:underline group-hover:decoration-1 group-hover:underline-offset-2">{d.name}</h4>
       {cultivarOrigin && (
         <p class="mono mt-1 text-sm uppercase tracking-wider text-primary">{cultivarOrigin}</p>
       )}
