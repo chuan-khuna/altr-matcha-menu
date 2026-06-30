@@ -1,62 +1,80 @@
 ---
 const levels = [
-  { label: "0%",   grams: "—" },
-  { label: "25%",  grams: "2 g" },
-  { label: "50%",  grams: "4 g", recommended: true },
-  { label: "75%",  grams: "6 g" },
+  { label: "0%", grams: "—" },
+  { label: "25%", grams: "2 g" },
+  { label: "50%", grams: "4 g", recommended: true },
+  { label: "75%", grams: "6 g" },
   { label: "100%", grams: "8 g" },
 ];
 ---
 
-<div class="fade-up space-y-4">
+<div class="fade-up">
+  <p class="mono mb-3 text-xs uppercase tracking-widest text-ink-muted">
+    Sweetness
+  </p>
 
-  <!-- Sweetness — horizontal row -->
-  <div>
-    <p class="mono mb-2 text-xs uppercase tracking-widest text-ink-muted">
-      Sweetness
-    </p>
-    <table class="mono w-full border-collapse text-xs">
-      <tbody>
-        <!-- percentage row -->
-        <tr>
-          {levels.map(({ label, recommended }) => (
-            <td
+  <figure class="m-0">
+    <!-- percentage scale -->
+    <div class="mono grid grid-cols-5 text-xs tabular-nums">
+      {
+        levels.map(({ label, recommended }) => (
+          <span
+            class:list={[
+              "text-center",
+              recommended ? "text-accent" : "text-ink-muted",
+            ]}
+          >
+            {label}
+          </span>
+        ))
+      }
+    </div>
+
+    <!-- measured axis — hairline baseline with grid-aligned ticks.
+         Ticks sit at the centre of each of 5 columns (10% · 30% · 50% · 70% · 90%);
+         the rule spans from the first tick to the last (inset half a column). -->
+    <div class="relative my-1 grid grid-cols-5">
+      <span
+        class="pointer-events-none absolute top-1/2 left-[10%] right-[10%] border-t border-sand/70"
+        aria-hidden="true"
+      ></span>
+      {
+        levels.map(({ recommended }) => (
+          <span class="flex justify-center" aria-hidden="true">
+            <span
               class:list={[
-                "border border-sand/60 px-2 py-1 text-center tabular-nums",
-                recommended
-                  ? "border-accent/40 bg-accent/8 text-accent"
-                  : "text-ink-muted",
+                recommended ? "h-3 w-0.5 bg-accent" : "h-2 w-px bg-sand/70",
               ]}
-            >
-              {label}
-            </td>
-          ))}
-        </tr>
-        <!-- grams row -->
-        <tr>
-          {levels.map(({ grams, recommended }) => (
-            <td
-              class:list={[
-                "border border-t-0 border-sand/60 px-2 py-1 text-center tabular-nums text-2xs",
-                recommended
-                  ? "border-accent/40 bg-accent/5 text-accent/70"
-                  : "text-ink-muted/60",
-              ]}
-            >
-              {grams}
-            </td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
-  </div>
+            />
+          </span>
+        ))
+      }
+    </div>
 
-  <!-- Nitro milk note -->
-  <div class="border-t border-border pt-4">
-    <p class="mono mb-1 text-xs uppercase tracking-widest text-ink-muted">
-      Nitro Cold Whisk Latte
-    </p>
-    <p class="mono text-xs text-ink-muted">~75 ml milk per serve</p>
-  </div>
+    <!-- gram equivalents -->
+    <div class="mono grid grid-cols-5 text-2xs tabular-nums">
+      {
+        levels.map(({ grams, recommended }) => (
+          <span
+            class:list={[
+              "text-center",
+              recommended ? "text-accent/80" : "text-ink-muted/60",
+            ]}
+          >
+            {grams}
+          </span>
+        ))
+      }
+    </div>
 
+    <figcaption class="mono mt-2 grid grid-cols-5 text-2xs uppercase tracking-wider">
+      {
+        levels.map(({ recommended }) => (
+          <span class="whitespace-nowrap text-center text-accent/80">
+            {recommended ? "recommended" : ""}
+          </span>
+        ))
+      }
+    </figcaption>
+  </figure>
 </div>
