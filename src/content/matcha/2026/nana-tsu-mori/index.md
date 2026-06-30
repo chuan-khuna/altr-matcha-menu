@@ -21,8 +21,8 @@ menus:
   latte:
     Cold Whisk Latte: 250
     Latte: 200
-  powder:
-    40g Bag: 1200
+  # powder:
+  #   40g Bag: 1200
 ---
 
 Nana-Tsu-Mori (七ツ森) — Seven Forests — takes its name from the terrain surrounding the garden: riverbanks, mountain foothills, and the edge of old wooded groves. The tea is hand-picked, hand-sorted, and stone-milled by an award-winning producer with deep roots in the Uji tradition.

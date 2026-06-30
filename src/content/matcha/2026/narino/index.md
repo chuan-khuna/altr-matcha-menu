@@ -19,8 +19,8 @@ menus:
   clear:
     Usucha: 300
     Light Brew: 300
-  powder:
-    20g Bag: 1900
+  # powder:
+  #   20g Bag: 1900
 gallery:
   - image: ./narino-cultivar.png
     description: "Narino Cultivar · MTCH"
