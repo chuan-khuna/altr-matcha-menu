@@ -4,7 +4,7 @@ Landing page for **ALTR's Matcha Cafe** — a single-page site with sections: He
 
 **Visual direction:** Warm & earthy — greens, creams, browns.
 
-**Stack:** Astro 6, Tailwind CSS v4 (CSS-first, no `tailwind.config.*`), shadcn/ui, TypeScript (strict).
+**Stack:** Astro 7, Tailwind CSS v4 (CSS-first, no `tailwind.config.*`), shadcn/ui, TypeScript (strict).
 
 ## Commands
 

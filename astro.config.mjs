@@ -7,6 +7,11 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   integrations: [],
 
+  // Astro 7 changed the default from `true` to `'jsx'`, which strips
+  // whitespace between adjacent inline elements (React/JSX rules).
+  // Pin to `true` to preserve the v6 rendered output for this design-led page.
+  compressHTML: true,
+
   fonts: [
     {
       provider: fontProviders.google(),
