@@ -24,8 +24,8 @@ menus:
   latte:
     Cold Whisk Latte: 220
     Latte: 180
-  # powder:
-  #   40g Bag: 1050
+  powder:
+    40g Bag: 1050
 ---
 
 Asatsuyu — nicknamed "Natural Gyokuro" — is a Kyoto-lineage cultivar grown in the volcanic soils of Kirishima, Kagoshima. Organically farmed on mineral-rich white volcanic earth that drains cleanly and holds the mountain cold, shaded for 21 days under silver reflective fabric that keeps temperature steady and coaxes the amino acids forward before a single harvest and stone milling.

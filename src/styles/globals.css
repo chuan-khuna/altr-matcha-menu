@@ -42,6 +42,11 @@
   --color-ink: var(--foreground);
   --color-ink-muted: var(--muted-foreground);
   --color-sand: var(--accent);
+  /* Boundaries that have to be seen, and the accent at text contrast.
+     See presets/matcha.css for the ratios. */
+  --color-rule: var(--rule);
+  --color-underline: var(--underline);
+  --color-accent-ink: var(--accent-ink);
 
   /* ── typography ──
      Modular ramp, leading + tracking scales are the single source in
@@ -102,6 +107,13 @@
     font-kerning: normal;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+  /* In-page jumps — the menu category index, the nav, the skip link — travel
+     rather than cut, so you can see where you landed. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
   body {
     margin: 0;

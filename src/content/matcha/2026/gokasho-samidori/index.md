@@ -16,8 +16,8 @@ menus:
     Light Brew: 190
   latte:
     Cold Whisk Latte: 250
-  # powder:
-  #   40g Bag: 1500
+  powder:
+    40g Bag: 1500
 ---
 
 A limited-edition powder set built around a single Samidori cultivar from Gokasho, Uji — produced by an award-winning grower and ground to competition-grade quality. Each set arrives in a four-colour printed box with a special sticker set and coaster.

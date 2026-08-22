@@ -1,0 +1,106 @@
+---
+/**
+ * The menu's running order, as a row of links that pins under the site nav.
+ *
+ * It is an index, not a second navigation bar: it says which part of the record
+ * you are reading and lets you jump to another. The active mark is driven by
+ * scroll position rather than the URL, so it keeps up whether you got there by
+ * clicking or by scrolling.
+ *
+ * Sections are matched by the `href` fragment, so every item's target must
+ * carry the matching `id` and enough `scroll-margin-top` to clear the site nav
+ * plus this bar.
+ */
+interface Props {
+  items: { href: string; label: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav
+  data-menu-nav
+  aria-label="Menu categories"
+  class="sticky top-[var(--nav-h)] z-30 mb-12 h-[var(--menu-nav-h)] border-b border-rule bg-paper"
+>
+  {/* Scrolls sideways rather than wrapping — a second row would change the
+      bar's height and unpin everything measured off --menu-nav-h. */}
+  <ul
+    data-menu-nav-rail
+    class="mono m-0 flex h-full list-none items-stretch gap-8 overflow-x-auto p-0 text-xs uppercase tracking-widest text-ink-muted [scrollbar-width:none] max-[480px]:gap-5 [&::-webkit-scrollbar]:hidden"
+    role="list"
+  >
+    {
+      items.map((item) => (
+        /* -mb-px sets the active rule on the bar's own hairline instead of
+           stacking a second line under it. */
+        <li class="-mb-px flex shrink-0">
+          <a
+            href={item.href}
+            data-menu-nav-link
+            class="flex items-center border-b border-transparent whitespace-nowrap transition-colors duration-150 hover:text-ink aria-[current=location]:border-ink aria-[current=location]:text-ink"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  const nav = document.querySelector<HTMLElement>("[data-menu-nav]");
+  const rail = nav?.querySelector<HTMLElement>("[data-menu-nav-rail]");
+
+  const entries = Array.from(
+    nav?.querySelectorAll<HTMLAnchorElement>("[data-menu-nav-link]") ?? []
+  ).flatMap((link) => {
+    const section = document.getElementById(
+      decodeURIComponent(link.getAttribute("href")?.slice(1) ?? "")
+    );
+    return section ? [{ link, section }] : [];
+  });
+
+  if (nav && rail && entries.length > 0) {
+    let active: (typeof entries)[number] | null = null;
+
+    /* Keep the marked item reachable when the row is wider than the screen. */
+    const revealInRail = (link: HTMLAnchorElement) => {
+      if (rail.scrollWidth <= rail.clientWidth) return;
+      const target =
+        link.offsetLeft - (rail.clientWidth - link.offsetWidth) / 2;
+      rail.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
+    };
+
+    const mark = (next: (typeof entries)[number]) => {
+      if (next === active) return;
+      active?.link.removeAttribute("aria-current");
+      next.link.setAttribute("aria-current", "location");
+      active = next;
+      revealInRail(next.link);
+    };
+
+    /* The category you are reading is the last one whose top has passed under
+       the bar — measured live, because the pinned heights are CSS-driven. */
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const line = nav.getBoundingClientRect().bottom + 1;
+      let current = entries[0];
+      for (const entry of entries) {
+        if (entry.section.getBoundingClientRect().top <= line) current = entry;
+      }
+      mark(current);
+    };
+
+    const schedule = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(update);
+    };
+
+    addEventListener("scroll", schedule, { passive: true });
+    addEventListener("resize", schedule);
+    update();
+  }
+</script>

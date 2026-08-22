@@ -1,12 +1,17 @@
 ---
 import { nav } from '@/data/site';
+import Announcement from '@/components/Announcement.astro';
 
 interface Props {
   showBack?: boolean;
 }
 const { showBack = false } = Astro.props;
 ---
-<nav class="page-gutter fixed inset-x-0 top-0 z-50 h-[var(--nav-h)] bg-[color-mix(in_oklch,var(--color-paper)_88%,transparent)] backdrop-blur-[8px] backdrop-saturate-[140%]">
+{/* Nav row and announcement strip share one fixed block, and --nav-h is the
+    height of both together — so everything that clears or pins under the nav
+    clears the strip too, with no second offset to keep in step. */}
+<div class="fixed inset-x-0 top-0 z-50 h-[var(--nav-h)]">
+<nav class="page-gutter h-[var(--nav-row-h)] bg-[color-mix(in_oklch,var(--color-paper)_88%,transparent)] backdrop-blur-[8px] backdrop-saturate-[140%]">
   <div class="mx-auto flex h-full max-w-[var(--content-max)] items-center justify-between">
     <a href="/" data-optical class="display text-xl italic tracking-normal text-ink hover:text-accent" aria-label="ALTR — home">ALTR</a>
     {showBack ? (
@@ -20,3 +25,5 @@ const { showBack = false } = Astro.props;
     )}
   </div>
 </nav>
+  <Announcement />
+</div>

@@ -1,0 +1,82 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  name: string;
+  /** Variant label → price, in written order. */
+  prices: [string, number][];
+  description?: string;
+  notes?: string[];
+  /** Optional photograph. Present → the row leads with a thumbnail. */
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+
+const { name, prices, description, notes, image, imageAlt = "" } = Astro.props;
+
+const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
+
+/* One way to buy it — the label is the dessert's name, so printing it again
+   beside the figure says nothing. Several, and every label has to show. */
+const single = prices.length === 1;
+---
+
+<li
+  class="fade-up grid grid-cols-[minmax(0,1fr)_var(--menu-price-col)] items-start gap-x-4 py-4 min-[46rem]:grid-cols-[minmax(0,1fr)_minmax(0,var(--menu-prices-block))] min-[46rem]:gap-x-8"
+>
+  <div class="flex min-w-0 items-start gap-4">
+    {
+      image && (
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={112}
+          densities={[1, 2]}
+          loading="lazy"
+          decoding="async"
+          class="aspect-square w-[var(--menu-item-img)] shrink-0 bg-paper-2 object-cover min-[46rem]:w-[var(--menu-item-img-lg)]"
+        />
+      )
+    }
+    <div class="min-w-0">
+      <span class="mono block text-md leading-tight tracking-snug text-ink">{name}</span>
+      {
+        description && (
+          <p class="mono mt-2 max-w-[54ch] text-sm leading-snug text-ink-muted">
+            {description}
+          </p>
+        )
+      }
+      {
+        notes && notes.length > 0 && (
+          <p
+            class="mono mt-2 max-w-[54ch] text-sm leading-snug text-ink-muted"
+            aria-label="Tasting notes"
+          >
+            {notes.join(" · ")}
+          </p>
+        )
+      }
+    </div>
+  </div>
+
+  <!-- Right-aligned in the same block width as the matcha price column, so every
+       figure on the page lands on one vertical. A dessert sold several ways gets
+       the same label / numeral pairs a blend's price block uses. -->
+  {
+    single ? (
+      <p class="mono pt-0.5 text-right text-sm tabular-nums text-ink">
+        {formatPrice(prices[0][1])}
+      </p>
+    ) : (
+      <dl class="mono grid grid-cols-[minmax(0,1fr)_var(--menu-price-col)] content-start gap-x-4 gap-y-1 pt-0.5 text-sm">
+        {prices.map(([label, price]) => (
+          <Fragment>
+            <dt class="min-w-0 text-ink-muted">{label}</dt>
+            <dd class="text-right tabular-nums text-ink">{formatPrice(price)}</dd>
+          </Fragment>
+        ))}
+      </dl>
+    )
+  }
+</li>

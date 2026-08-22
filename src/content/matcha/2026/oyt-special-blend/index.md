@@ -19,8 +19,8 @@ menus:
     Hard Brew: 150
   latte:
     Cold Whisk Latte: 190
-  # powder:
-  #   40g Bag: 1100
+  powder:
+    40g Bag: 1100
 ---
 
 O-Y-T™ is our pride — a matcha five years in the making, developed in close collaboration with the producer at Hoshinomura, one of Yame's most respected tencha-growing villages. The name spells out its cultivars: Okumidori, Yabukita, and Tsuyuhikari, shaded for 14 to 21 days before harvest. The proportions shift slightly each season to maintain the taste, colour, and quality we hold to.

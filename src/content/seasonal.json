@@ -1,0 +1,18 @@
+[
+  {
+    "slug": "2026-sakura",
+    "title": "Sakura",
+    "year_month": "2026-03",
+    "display": "Spring 2026",
+    "description": "Blossom season — salted petals, sparkling, and the leaf underneath.",
+    "live": true
+  },
+  {
+    "slug": "2025-christmas",
+    "title": "Christmas",
+    "year_month": "2025-12",
+    "display": "December 2025",
+    "description": "Red fruit and the leaf, poured at the counter.",
+    "live": false
+  }
+]

@@ -1,0 +1,30 @@
+---
+import { getLiveSeasons, seasonLayout } from "@/lib/seasonal";
+
+/* Only seasons flagged `live` in seasonal.json, newest first. Every other
+   season stays reachable from the archive in the footer. */
+const live = await getLiveSeasons();
+---
+
+{
+  live.length > 0 && (
+    <section
+      id="seasonal"
+      class="page-gutter pt-[calc(var(--nav-h)+3rem)] pb-20"
+      aria-label="Seasonal menu"
+    >
+      <div class="mx-auto max-w-[var(--content-max)]">
+        {/* The same measure the standing menu is set on, so a season and the
+            menu under it share one left edge and one right edge. What happens
+            inside is the season component's own business. */}
+        <div class="flex max-w-[var(--menu-measure)] flex-col gap-24">
+          {live.map((season) => {
+            /* Non-null: getLiveSeasons() drops any row without a component. */
+            const SeasonMenu = seasonLayout(season.data.slug)!;
+            return <SeasonMenu season={season} headingLevel="h2" />;
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}

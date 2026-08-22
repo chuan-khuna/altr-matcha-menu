@@ -1,0 +1,101 @@
+---
+import { Image } from "astro:assets";
+import type { SeasonLayoutProps } from "@/lib/seasonal";
+import SeasonHead from "@/components/seasonal/ui/SeasonHead.astro";
+import cover from "@/components/seasonal/2025-christmas/cover.jpg";
+
+type Props = SeasonLayoutProps;
+const { season, headingLevel = "h2" } = Astro.props;
+
+/* December 2025 — one photograph and two drinks, so this season is set as a
+   column rather than as the banner-and-tiles Spring 2026 uses. The cover is a
+   pour caught mid-air: letterboxing it would cut either the katakuchi or the
+   cups, so it keeps its own frame and takes a column beside the list instead.
+   That is what a component per season buys — the layout follows the pictures
+   that exist, not a shape every season has to fit.
+ *
+ * Prices are placeholders. */
+const items = [
+  {
+    name: "MTCH™ Ichigo Latte",
+    price: 200,
+    description: "Strawberry compote, milk, usucha poured last",
+    notes: ["strawberry", "condensed milk", "cocoa"],
+  },
+  {
+    name: "MTCH™ Strawberry Honey Lemon",
+    price: 210,
+    description: "Sparkling honey lemon with whole strawberries, usucha on top",
+    notes: ["honey", "lemon peel", "strawberry"],
+  },
+];
+
+const formatPrice = (n: number) => n.toLocaleString("en-US");
+
+/* Rendered width of the cover column (26rem), so Astro emits a sized image
+   rather than the full-resolution original. */
+const COVER_IMAGE_PX = 416;
+---
+
+<article aria-labelledby={`seasonal-${season.data.slug}-label`}>
+  <SeasonHead
+    season={season}
+    headingLevel={headingLevel}
+    linked={headingLevel !== "h1"}
+  />
+
+  <div
+    class="mt-8 grid gap-y-10 min-[46rem]:grid-cols-[26rem_minmax(0,1fr)] min-[46rem]:items-start min-[46rem]:gap-x-12"
+  >
+    {/* Kept whole — no crop, no frame, no radius, on the paper. */}
+    <Image
+      src={cover}
+      alt="Usucha poured from a glass katakuchi into an ichigo latte and a strawberry honey lemon, red baubles alongside"
+      width={COVER_IMAGE_PX}
+      densities={[1, 2]}
+      loading="lazy"
+      decoding="async"
+      class="fade-up w-full bg-paper-2"
+    />
+
+    <div class="min-w-0">
+      <p class="fade-up max-w-[52ch] font-sans text-base leading-relaxed text-ink">
+        The winter pair, built to be looked at before it is stirred: a red base,
+        a white or clear middle, and a band of usucha poured over the top at the
+        counter.
+      </p>
+
+      {/* Two drinks and no photographs of their own, so they are set as type —
+          the name at the size a category head takes, the figure right against
+          the column edge. */}
+      <ul class="m-0 mt-10 list-none divide-y divide-rule border-t border-rule p-0" role="list">
+        {
+          items.map((item) => (
+            <li class="fade-up flex min-w-0 items-baseline justify-between gap-x-6 py-5">
+              <div class="min-w-0">
+                <p
+                  data-optical
+                  class="display text-lg italic leading-tight tracking-snug text-ink"
+                >
+                  {item.name}
+                </p>
+                <p class="mono mt-2 max-w-[40ch] text-sm leading-snug text-ink-muted">
+                  {item.description}
+                </p>
+                <p
+                  class="mono mt-2 max-w-[40ch] text-sm leading-snug text-ink-muted"
+                  aria-label="Tasting notes"
+                >
+                  {item.notes.join(" · ")}
+                </p>
+              </div>
+              <p class="mono shrink-0 text-right text-sm tabular-nums text-ink">
+                {formatPrice(item.price)}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</article>

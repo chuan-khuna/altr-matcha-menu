@@ -1,0 +1,17 @@
+---
+import { announcement } from "@/data/site";
+---
+
+{/* Sand band under the nav, inside the same fixed block — so it is always in
+    view without a sticky of its own, and its height is already counted in
+    --nav-h. One line at a fixed height: the long sentence from 40rem up, the
+    short one below it, rather than a wrap that would outgrow --announce-h. */}
+<aside
+  class="page-gutter flex h-[var(--announce-h)] items-center border-b border-border bg-sand"
+  aria-label="Site notice"
+>
+  <p class="mono mx-auto w-full max-w-[var(--content-max)] truncate text-center text-[0.6875rem] tracking-wide text-ink">
+    <span class="max-[40rem]:hidden">{announcement.long}</span>
+    <span class="min-[40rem]:hidden">{announcement.short}</span>
+  </p>
+</aside>

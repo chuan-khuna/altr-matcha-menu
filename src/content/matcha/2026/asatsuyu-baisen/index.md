@@ -23,8 +23,8 @@ menus:
     Cold Whisk Latte: 220
     Latte: 180
     Nitro Cold Whisk Latte: 150
-  # powder:
-  #   40g Bag: 1050
+  powder:
+    40g Bag: 1050
 ---
 
 An Asatsuyu cultivar matcha from Kirishima, Kagoshima — organically grown and shaded under silver reflective fabric for 21 days, just like our standard offerings. What sets it apart is an additional post-shade heat treatment applied before grinding: a controlled Baisen process that drives off residual moisture and draws out the aromatic compounds, creating a more pronounced and layered roasted character while preserving the cultivar's natural freshness and umami.

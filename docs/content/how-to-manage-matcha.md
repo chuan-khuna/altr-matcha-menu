@@ -39,18 +39,18 @@ menus:                # Which styles this blend is available in; omit a key if n
   latte:              # (optional) Latte preparations
     "Latte": number
     "Cold Whisk Latte": number
-  powder:             # (optional) Retail powder
+  powder:             # (optional) Retail powder, priced per unit rather than per serving
     "40g Bag": number
-    "40g Tin Can": number
+    "30g Tin Can": number
 ```
 
 **Known item names per category:**
 
 | Category | Canonical item names |
 |---|---|
-| `clear` | Usucha, Light Brew, Koicha |
-| `latte` | Latte, Cold Whisk Latte |
-| `powder` | 40g Bag, 40g Tin Can |
+| `clear` | Usucha, Usucha Set, Light Brew, Hard Brew, Koicha |
+| `latte` | Latte, Cold Whisk Latte, Nitro Cold Whisk Latte |
+| `powder` | 20g Bag, 40g Bag, 30g Tin Can, 40g Tin Can |
 
 - Keys are display names (string) → price in THB (number). Use `0` if price is TBD.
 - Milk variants (Soy, Oat) are **not** in the schema — handled at order time.

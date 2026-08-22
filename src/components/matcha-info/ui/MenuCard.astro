@@ -1,16 +1,17 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import MenuCardSpecSheet from '@/components/matcha-info/ui/MenuCardSpecSheet.astro';
 import MenuCardLeafFirst from '@/components/matcha-info/ui/MenuCardLeafFirst.astro';
 import MenuCardBrandFirst from '@/components/matcha-info/ui/MenuCardBrandFirst.astro';
 import type { MenuCardProps } from '@/components/matcha-info/ui/types';
 
 interface Props extends MenuCardProps {
-  variant?: 'leaf-first' | 'brand-first';
+  variant?: 'spec-sheet' | 'leaf-first' | 'brand-first';
 }
 
-const { variant = 'leaf-first', ...rest } = Astro.props;
+const { variant = 'spec-sheet', ...rest } = Astro.props;
 
 const VARIANTS = {
+  'spec-sheet': MenuCardSpecSheet,
   'leaf-first': MenuCardLeafFirst,
   'brand-first': MenuCardBrandFirst,
 } as const;
@@ -19,4 +20,3 @@ const Component = VARIANTS[variant];
 ---
 
 <Component {...rest} />
-

@@ -39,6 +39,14 @@
     --ring: oklch(48% 0.14 130);
     --radius: 0rem;
 
+    /* `--rule` is the menu separator. It is deliberately BELOW the 3:1 boundary
+       floor: it divides records that are already separated by whitespace and
+       rhythm, so it is decoration, not an affordance. `--underline` marks things
+       you can click and keeps its contrast. */
+    --rule: oklch(74% 0.045 112); /* menu separators   · 2.10:1 on paper */
+    --underline: oklch(56% 0.045 112); /* link underlines   · 3.4:1  */
+    --accent-ink: oklch(42% 0.13 130); /* accent as TEXT    · 5.6:1 (--primary is 4.47:1) */
+
     /* chart palette — matcha-adjacent hues */
     --chart-1: oklch(48% 0.14 130);
     --chart-2: oklch(62% 0.11 140);
@@ -115,12 +123,44 @@
 
     --page-gutter: clamp(1rem, 5vw, 4rem);
     --content-max: 80rem;
-    --nav-h: 3.5rem;
+    /* Everything on the page offsets off --nav-h, so it holds the height of the
+       whole fixed block: the nav row plus the announcement strip beneath it.
+       Change either row and the menu index, the pinned category heads and the
+       photo rail all move with it. */
+    --nav-row-h: 3.5rem;
+    --announce-h: 1.75rem;
+    --nav-h: calc(var(--nav-row-h) + var(--announce-h));
 
     /* ─── project: column field grid (Brockmann) ─── */
     --grid-cols: 12;
     --grid-gutter: clamp(1rem, 2.5vw, 2rem);
     --label-col: 8rem; /* definition-list / contact label column */
+
+    /* ─── project: menu spec-sheet ─── */
+    /* The menu is a tabular record, so its columns are fixed rather than fluid:
+       every price figure on the page lands on the same vertical. */
+    --menu-measure: 62rem; /* readable width of the whole menu block */
+    --menu-price-col: 3.5rem; /* the numerals                          */
+    --menu-prices-block: 16.5rem; /* label + numerals, constant            */
+    --menu-cat-img: min(100%, 20rem); /* category gallery · narrow       */
+    --menu-cat-img-lg: 17rem; /* category gallery · >=62rem            */
+
+    /* Height of the pinned category index. Fixed rather than derived: the bar
+       is one line of micro-type. Everything that pins or lands under it is
+       offset by this number. */
+    --menu-nav-h: 2.75rem;
+
+    /* Height of a pinned category head, derived from the type scale rather than
+       measured: top padding + label line + gap + gloss line + bottom padding +
+       the ink rule. The head pins under the index bar and the photo rail pins
+       under both, so the three never overlap. Holds as long as label and gloss
+       are one line each — at the 62rem measure they are. */
+    --menu-head-h: calc(
+      var(--space-2) + var(--text-lg) * var(--leading-tight) + var(--space-1) + var(--text-md) *
+        var(--leading-snug) + var(--space-2) + 1px
+    );
+    --menu-item-img: 5.5rem; /* item thumbnail · narrow               */
+    --menu-item-img-lg: 7rem; /* item thumbnail · >=46rem              */
 
     /* ─── project: motion ─── */
 
@@ -144,7 +184,10 @@
     --color-ink: var(--foreground);
     --color-ink-muted: var(--muted-foreground);
     --color-accent: var(--primary);
+    --color-accent-ink: var(--accent-ink);
     --color-sand: var(--accent);
+    --color-rule: var(--rule);
+    --color-underline: var(--underline);
     --color-focus: var(--ring);
   }
 
@@ -176,6 +219,10 @@
     --border: oklch(23% 0.025 120);
     --input: oklch(23% 0.025 120);
     --ring: oklch(65% 0.15 128);
+
+    --rule: oklch(33% 0.035 122); /* 1.66:1 — tracks the light-mode step down */
+    --underline: oklch(48% 0.04 122);
+    --accent-ink: oklch(72% 0.14 128);
 
     --chart-1: oklch(65% 0.15 128);
     --chart-2: oklch(68% 0.1 142);
