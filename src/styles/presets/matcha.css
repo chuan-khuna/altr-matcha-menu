@@ -123,7 +123,13 @@
 
     --page-gutter: clamp(1rem, 5vw, 4rem);
     --content-max: 80rem;
-    --nav-h: 3.5rem;
+    /* Everything on the page offsets off --nav-h, so it holds the height of the
+       whole fixed block: the nav row plus the announcement strip beneath it.
+       Change either row and the menu index, the pinned category heads and the
+       photo rail all move with it. */
+    --nav-row-h: 3.5rem;
+    --announce-h: 1.75rem;
+    --nav-h: calc(var(--nav-row-h) + var(--announce-h));
 
     /* ─── project: column field grid (Brockmann) ─── */
     --grid-cols: 12;

@@ -1,8 +1,17 @@
+/**
+ * Standing notice in the strip under the nav. `short` is what a narrow screen
+ * gets — both are set on one line at a fixed height, so keep them to one.
+ */
+export const announcement = {
+  long: "Mock-up only — every photograph here is a placeholder downloaded from public sources.",
+  short: "Mock-up — photographs are placeholders.",
+} as const;
+
 export const address = {
-  line1: "555 Rasa Tower",
-  line2: "Phahonyothin rd, Chatuchak",
-  city: "Bangkok 10900",
-  mapsHref: "https://maps.google.com/?q=ALTR+Matcha+Bangkok",
+  line1: "1234 Placeholder Building",
+  line2: "Sample Road, Example District",
+  city: "Bangkok 10000",
+  mapsHref: "https://maps.google.com/?q=ALTR+Matcha",
 } as const;
 
 export const hours: { day: string; open: string }[] = [

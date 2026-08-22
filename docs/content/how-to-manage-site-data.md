@@ -26,12 +26,44 @@ export const address = {
 **Example:**
 ```ts
 export const address = {
-  line1:    '555 Rasa Tower',
-  line2:    'Phahonyothin rd, Chatuchak',
-  city:     'Bangkok 10900',
-  mapsHref: 'https://maps.google.com/?q=ALTR+Matcha+Bangkok',
+  line1:    '1234 Placeholder Building',
+  line2:    'Sample Road, Example District',
+  city:     'Bangkok 10000',
+  mapsHref: 'https://maps.google.com/?q=ALTR+Matcha',
 } as const;
 ```
+
+---
+
+### `announcement`
+
+Standing notice in the sand strip under the nav, rendered by
+`src/components/Announcement.astro`.
+
+```ts
+export const announcement = {
+  long:  string,   // shown from 40rem up
+  short: string,   // shown below 40rem
+} as const;
+```
+
+The strip is a **fixed height** (`--announce-h`) inside the same fixed block as
+the nav, and the text is set `nowrap`. Keep both strings to one line — `long`
+under roughly 95 characters, `short` under about 45 — or the end will be clipped
+with an ellipsis rather than wrapping.
+
+**Example:**
+```ts
+export const announcement = {
+  long:  'Mock-up only — every photograph here is a placeholder downloaded from public sources.',
+  short: 'Mock-up — photographs are placeholders.',
+} as const;
+```
+
+To retire the notice, remove `<Announcement />` from `src/components/Nav.astro`
+and set `--announce-h: 0rem` in `src/styles/presets/matcha.css` — every offset on
+the site is computed from `--nav-h`, which is the two rows added together, so
+nothing else needs touching.
 
 ---
 
@@ -109,3 +141,5 @@ export const nav = [
 - Prices are not stored here; they live in content collection frontmatter.
 - To add a new social platform, append a new object to `reach`.
 - To add a new nav item, append a new object to `nav` (order reflects render order).
+- `announcement` is site-wide — it shows on the matcha blend pages too, not just
+  the landing page.
