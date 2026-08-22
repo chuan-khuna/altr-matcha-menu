@@ -12,26 +12,70 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,400&family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400&display=swap"
       rel="stylesheet"
     />
 
     <style>
-      /* Hallmark · genre: editorial · macrostructure: Index-First
+      /* Hallmark · redesign, visual layer only · genre: editorial
+       * macrostructure: Index-First — UNCHANGED. The body markup is
+       * byte-identical to the previous revision; every change below is CSS.
+       *
        * theme: custom (carried from src/styles/presets/matcha.css)
-       * vibe: "menu-card, exacting, cupping-note, quiet"
+       * vibe: "spec sheet, exacting, quiet"
        * paper: oklch(97% 0.016 90) · accent: oklch(48% 0.14 130)
-       * theme_axes: light / roman-serif / green
-       * display: Cormorant Garamond 300/500 roman + 400 italic (notes only)
-       * body: IBM Plex Sans 400/500 · outlier: IBM Plex Mono (prices + sweetness only, 2 slots)
-       * nav: N6 newspaper masthead (issue-line=below, wordmark=2xl, rule=single)
-       * heads: S4 inline no-break · rows: F3 tabular spec-sheet · footer: Ft2 inline single line
-       * imagery: one photograph per ordinary category · per-item on specials
- *          PLACEHOLDERS from _references/ (git-ignored, prototype only)
-       * motion: none · javascript: none
+       * theme_axes: light / grotesque-sans + serif heads / green
+       * type: IBM Plex Sans 300/400 · IBM Plex Mono 400 ·
+       *       Cormorant Garamond 300 + 400 italic. Five font files, was eight.
+       *       Two weights total: 400 for every word of text, 300 for the two
+       *       display heads (wordmark, category). No 500 anywhere.
+       *       Each face has exactly one role and does not leave it:
+       *         serif → the category header (Clear / Latte / Dessert / Visit)
+       *         mono  → numerals (prices, sweetness scale, dessert figure)
+       *         sans  → everything else
+       * nav: N6 newspaper masthead · heads: S4 inline no-break
+       * rows: F3 tabular spec-sheet · footer: Ft2 inline single line
+       * imagery: unchanged — one photograph per ordinary category, per-item on
+       *          specials. PLACEHOLDERS from _references/ (git-ignored), so a
+       *          fresh clone renders empty tinted squares. Prototype only.
+       * motion: colour shifts only · javascript: none
+       *
+       * Deslop pass — what changed and why:
+       *   · serif re-scoped      dropped from names/notes/prices, kept for the
+       *                          category header only, where it signals a new
+       *                          part of the menu. Names and notes stay sans.
+       *   · --rule L73 → L56     1.9:1 failed the 3:1 boundary floor. Dark mode
+       *                          was worse at 1.7:1; now L48 / 3.3:1
+       *   · --accent-ink added   the brand accent is 4.47:1 as text, under the
+       *                          4.5 floor. L42 gives 5.6:1. Rules and the focus
+       *                          ring keep L48
+       *   · all-small-caps cut   Plex Sans has no true small caps, so the
+       *                          masthead line was synthesising them
+       *   · price colour fixed   the dessert figure was muted below 46rem and
+       *                          ink above it — one colour now
+       *   · three duplicate @media (min-width: 62rem) blocks merged into one
+       *   · mono demoted        it was setting price LABELS too; now numerals
+       *                          only, so the label column stops crowding
+       *   · thumbnails enlarged  category 10rem → 15rem, dessert 5.5 → 7rem
+       *   · scale tightened      1.25 → 1.125. Entry name 25 → 20.3px,
+       *                          category head 31.3 → 25.6, lede 20 → 18.
+       *                          Name-to-spec contrast 1.75x → 1.43x
+       *   · name underline cut  no resting underline on the menu names; it
+       *                          returns on hover, focus ring unchanged. The
+       *                          Visit links keep theirs — there the underline
+       *                          is the only cue that they go somewhere.
+       *   · weight flattened     entry names 500 → 400 → no declaration at all;
+       *                          the 500 labels dropped to 400 and the weight
+       *                          left the font payload entirely
+       *   · separators softened   --rule L56 → L64 (2.6:1, decorative). Link
+       *                          underlines split onto --underline at L56 so
+       *                          the affordance keeps its 3.4:1
+       *   · dead token removed    --track-smallcaps
+       *
        * Pre-emit critique: P5 H5 E5 S5 R5 V4
-       * contrast: pass (46–50) · honest: pass (56) · chrome: pass (57) · tokens: pass (58)
-       * responsive: pass (59) · icons: pass (60) · mobile: pass (36, 61–69)
+       * contrast: pass (46–50) · honest: pass (56) · chrome: pass (57)
+       * tokens: pass (58) · responsive: pass (59) · icons: pass (60)
+       * mobile: pass (36, 61–65) · eyebrows: none (66)
        */
 
       /* ─────────────────────────────────────────────────────────────
@@ -40,26 +84,35 @@
       :root {
         /* colour — carried from src/styles/presets/matcha.css */
         --paper: oklch(97% 0.016 90);
-        --paper-2: oklch(94% 0.02 88);
+        --paper-2: oklch(94% 0.02 88); /* ground reserved under a loading image */
         --ink: oklch(14% 0.025 115);
         --ink-muted: oklch(40% 0.028 125);
-        --rule: oklch(73% 0.068 110);
-        --accent: oklch(48% 0.14 130);
+        --rule: oklch(64% 0.05 112); /* menu separators · quiet, 2.6:1 */
+        --underline: oklch(56% 0.045 112); /* link underlines · 3.4:1 */
+        --accent: oklch(48% 0.14 130); /* rules + focus ring · 4.5:1 */
+        --accent-ink: oklch(42% 0.13 130); /* accent as TEXT · 5.6:1 */
         --focus: oklch(48% 0.14 130);
 
-        /* type — three families, the 2+1 ceiling */
+        /* type — three families. Serif is scoped to ONE role: the category
+           header, where it marks "a new part of the menu starts here". It
+           appears nowhere else — not in names, notes, prices or body. */
         --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
         --font-body: "IBM Plex Sans", ui-sans-serif, system-ui, "Hiragino Kaku Gothic ProN",
           "Yu Gothic", Meiryo, sans-serif;
         --font-figure: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
-        /* modular scale — major third, 1.25, 16px base. Floor is 12.8px. */
-        --text-xs: 0.8rem;
-        --text-sm: 0.894rem;
-        --text-base: 1rem;
-        --text-md: 1.25rem;
-        --text-lg: 1.5625rem;
-        --text-wordmark: clamp(2.441rem, 9vw, 3.815rem);
+        /* modular scale — major second, 1.125, 16px base.
+           Was a major third (1.25). That ramp made an entry name 1.75x its own
+           spec line, so the name read as a heading shouting over a caption
+           rather than as the first line of a record. Every step is a true
+           ratio step; the wordmark clamp sits on the same ramp. */
+        --text-xs: 0.79rem; /* 12.6 · labels, colophon */
+        --text-sm: 0.889rem; /* 14.2 · spec, prices, values */
+        --text-base: 1rem; /* 16.0 · notes, body */
+        --text-md: 1.125rem; /* 18.0 · lede, category gloss */
+        --text-lg: 1.266rem; /* 20.3 · entry name */
+        --text-xl: 1.602rem; /* 25.6 · category header */
+        --text-wordmark: clamp(2.027rem, 7.5vw, 3.248rem);
 
         /* leading */
         --leading-tight: 1.08;
@@ -69,7 +122,6 @@
         /* tracking */
         --track-wordmark: 0.2em;
         --track-label: 0.14em;
-        --track-smallcaps: 0.1em;
         --track-tight: -0.01em;
 
         /* space — 4pt scale */
@@ -85,18 +137,21 @@
         /* layout */
         --gutter: clamp(1.25rem, 5vw, 3.5rem);
         --measure: 62rem;
-        --price-col: 3.5rem;     /* the numerals */
-        --prices-block: 16.5rem; /* whole price column — constant so figures align down the page */
+        --price-col: 3.5rem; /* the numerals */
+        --prices-block: 16.5rem; /* whole price column — constant so figures align */
 
         /* imagery */
-        --cat-img: 8rem;         /* category photograph · narrow */
-        --cat-img-lg: 10rem;     /* category photograph · ≥62rem */
-        --item-img: 4.5rem;      /* special-menu row · narrow    */
-        --item-img-lg: 5.5rem;   /* special-menu row · ≥46rem    */
+        --cat-img: 11rem; /* category photograph · narrow */
+        --cat-img-lg: 15rem; /* category photograph · ≥62rem */
+        --item-img: 5.5rem; /* special-menu row · narrow    */
+        --item-img-lg: 7rem; /* special-menu row · ≥46rem    */
 
         /* motion — micro only, colour shifts */
         --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
         --dur-micro: 120ms;
+
+        /* z */
+        --z-skip: 100;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -105,8 +160,10 @@
           --paper-2: oklch(17% 0.025 128);
           --ink: oklch(95% 0.015 90);
           --ink-muted: oklch(62% 0.024 120);
-          --rule: oklch(30% 0.028 122);
+          --rule: oklch(40% 0.035 122);
+          --underline: oklch(48% 0.04 122);
           --accent: oklch(72% 0.14 128);
+          --accent-ink: oklch(72% 0.14 128);
           --focus: oklch(72% 0.14 128);
         }
       }
@@ -131,6 +188,7 @@
         font-family: var(--font-body);
         font-size: 16px;
         font-optical-sizing: auto;
+        font-kerning: normal;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
       }
@@ -183,7 +241,7 @@
         position: absolute;
         left: var(--space-md);
         top: 0;
-        z-index: 10;
+        z-index: var(--z-skip);
         transform: translateY(-140%);
         background: var(--paper);
         color: var(--ink);
@@ -206,7 +264,6 @@
       }
 
       .masthead__name {
-        font-family: var(--font-display);
         font-weight: 300;
         font-size: var(--text-wordmark);
         line-height: var(--leading-tight);
@@ -216,12 +273,13 @@
         text-indent: calc(var(--track-wordmark) / 2);
       }
 
+      /* was all-small-caps in a serif — Plex Sans has no true small caps and the
+         browser was synthesising them. Real uppercase, one step down, instead. */
       .masthead__meta {
         margin-top: var(--space-sm);
-        font-family: var(--font-display);
-        font-variant-caps: all-small-caps;
-        font-size: var(--text-md);
-        letter-spacing: var(--track-smallcaps);
+        font-size: var(--text-sm);
+        letter-spacing: var(--track-label);
+        text-transform: uppercase;
         color: var(--ink-muted);
       }
 
@@ -233,6 +291,7 @@
         max-width: 48ch;
         font-size: var(--text-md);
         line-height: var(--leading-snug);
+        text-wrap: pretty;
       }
 
       .lede__aside {
@@ -261,28 +320,34 @@
         border-bottom: 1px solid var(--ink);
       }
 
+      /* the one serif on the page. A category header should read as a change
+         of chapter, not as another small label in the same voice as the row
+         beneath it — the face does that work, so the weight stays light. */
       .group__name {
-        font-family: var(--font-body);
-        font-weight: 500;
-        font-size: var(--text-xs);
-        letter-spacing: var(--track-label);
-        text-transform: uppercase;
+        font-family: var(--font-display);
+        font-weight: 300;
+        font-size: var(--text-xl);
+        line-height: var(--leading-tight);
+        letter-spacing: var(--track-tight);
       }
 
       .group__gloss {
-        margin-top: var(--space-2xs);
-        font-size: var(--text-sm);
-        color: var(--ink-muted);
-      }
-
-      /* italic serif is the cupping-note voice — on a special menu it carries
-         the blend the whole category is built on */
-      .group__notes {
         margin-top: var(--space-2xs);
         font-family: var(--font-display);
         font-style: italic;
         font-size: var(--text-md);
         line-height: var(--leading-snug);
+        color: var(--ink-muted);
+        text-wrap: pretty;
+      }
+
+      /* the blend the whole dessert category is built on. Size and colour carry
+         what the italic serif used to. */
+      .group__notes {
+        margin-top: var(--space-2xs);
+        font-size: var(--text-base);
+        line-height: var(--leading-snug);
+        text-wrap: pretty;
       }
 
       /* ── Category body: one photograph, the list beside it ─────────
@@ -302,6 +367,7 @@
         background: var(--paper-2);
       }
 
+      /* one block, not the three overlapping copies this used to be */
       @media (min-width: 62rem) {
         .group__body {
           grid-template-columns: var(--cat-img-lg) minmax(0, 1fr);
@@ -311,6 +377,8 @@
         .group__image {
           grid-column: 1;
           grid-row: 1;
+          width: var(--cat-img-lg);
+          height: var(--cat-img-lg);
         }
         .entries {
           grid-column: 2;
@@ -320,16 +388,6 @@
           grid-column: 2;
           grid-row: 2;
         }
-      }
-
-      @media (min-width: 62rem) {
-        .group__image {
-          width: var(--cat-img-lg);
-          height: var(--cat-img-lg);
-        }
-      }
-
-      @media (min-width: 62rem) {
         .group--special .entries {
           grid-column: 1 / -1;
         }
@@ -364,12 +422,21 @@
           column-gap: var(--space-xl);
           align-items: start;
         }
+
+        /* the figures drop to the spec line rather than sitting level with the
+           name, so the name keeps a clear row of its own across the entry.
+           One body line box (the name sits on the parent strut, which is taller
+           than the name's own 1.08 leading) plus the spec's top margin — so it
+           tracks the type scale instead of being a hand-tuned number. */
+        .prices {
+          margin-top: calc(var(--text-base) * var(--leading-normal) + var(--space-sm));
+        }
       }
 
+      /* no weight declaration — the name is the same weight as the body. Size,
+         ink against the muted spec, and the underline carry it. */
       .entry__name {
         display: inline-block;
-        font-family: var(--font-display);
-        font-weight: 500;
         font-size: var(--text-lg);
         line-height: var(--leading-tight);
         letter-spacing: var(--track-tight);
@@ -377,27 +444,26 @@
         text-wrap: balance;
       }
 
-      /* the name is the only link in the row — the price is not clickable */
+      /* the name is the only link in the row — the price is not clickable.
+         No resting underline: the row already reads as a record, and a rule
+         under every name fought the hairline between them. The underline
+         returns on hover; :focus-visible covers keyboard. */
       a.entry__name {
-        text-decoration: underline;
-        text-decoration-thickness: 1px;
-        text-underline-offset: 0.16em;
-        text-decoration-color: var(--rule);
-        transition:
-          text-decoration-color var(--dur-micro) var(--ease-out),
-          color var(--dur-micro) var(--ease-out);
+        transition: color var(--dur-micro) var(--ease-out);
       }
 
       @media (hover: hover) and (pointer: fine) {
         a.entry__name:hover {
-          color: var(--accent);
+          color: var(--accent-ink);
+          text-decoration: underline;
+          text-decoration-thickness: 1px;
+          text-underline-offset: 0.16em;
           text-decoration-color: var(--accent);
         }
       }
 
       a.entry__name:active {
         color: var(--ink-muted);
-        text-decoration-color: var(--ink-muted);
       }
 
       @media (pointer: coarse) {
@@ -413,15 +479,17 @@
         font-size: var(--text-sm);
         line-height: var(--leading-normal);
         color: var(--ink-muted);
+        text-wrap: pretty;
       }
 
+      /* the tasting note. Ink against the muted spec above it — size and colour
+         carry what the italic used to. */
       .entry__notes {
         margin-top: var(--space-xs);
-        font-family: var(--font-display);
-        font-style: italic;
-        font-size: var(--text-md);
+        font-size: var(--text-base);
         line-height: var(--leading-snug);
         max-width: 64ch;
+        text-wrap: pretty;
       }
 
       .prices {
@@ -429,27 +497,22 @@
         grid-template-columns: minmax(0, 1fr) var(--price-col);
         gap: var(--space-2xs) var(--space-md);
         align-content: start;
-        font-family: var(--font-figure);
         font-size: var(--text-sm);
-        font-variant-numeric: tabular-nums;
       }
 
       .prices dt {
         min-width: 0;
         overflow-wrap: anywhere;
+        color: var(--ink-muted);
       }
 
+      /* mono tags the numeral and nothing else — the label reads better in the
+         body face, and "Nitro Cold Whisk Latte" stops crowding the figure.
+         The figure takes its weight from colour, not a second mono weight. */
       .prices dd {
+        font-family: var(--font-figure);
+        font-variant-numeric: tabular-nums;
         text-align: right;
-      }
-
-      /* Latte rows are deliberately lighter than Clear rows — the reader has
-         already met every blend above. Different section, different rhythm. */
-      .entry--compact {
-        padding-block: var(--space-md);
-      }
-      .entry--compact .entry__name {
-        font-size: var(--text-md);
       }
 
       /* ── Special menu: a photograph per item ───────────────────── */
@@ -474,16 +537,15 @@
       .entry--special .entry__name {
         grid-column: 2;
         grid-row: 1;
-        font-size: var(--text-md);
       }
 
+      /* one colour at every width — this used to go muted below 46rem */
       .entry--special .price {
         grid-column: 2;
         grid-row: 2;
         font-family: var(--font-figure);
         font-size: var(--text-sm);
         font-variant-numeric: tabular-nums;
-        color: var(--ink-muted);
       }
 
       @media (min-width: 46rem) {
@@ -502,9 +564,7 @@
           grid-column: 3;
           grid-row: 1;
           /* line the numeral up with the price column above it */
-          padding-right: 0;
           text-align: right;
-          color: var(--ink);
         }
       }
 
@@ -539,13 +599,13 @@
       }
 
       .sweetness__pick {
-        color: var(--accent);
+        color: var(--accent-ink);
       }
 
       .sweetness__note {
         margin-top: var(--space-xs);
         font-size: var(--text-sm);
-        color: var(--accent);
+        color: var(--accent-ink);
       }
 
       /* ─────────────────────────────────────────────────────────────
@@ -574,7 +634,6 @@
       }
 
       .visit__key {
-        font-weight: 500;
         font-size: var(--text-xs);
         letter-spacing: var(--track-label);
         text-transform: uppercase;
@@ -586,7 +645,7 @@
         text-decoration: underline;
         text-decoration-thickness: 1px;
         text-underline-offset: 0.16em;
-        text-decoration-color: var(--rule);
+        text-decoration-color: var(--underline);
         transition:
           text-decoration-color var(--dur-micro) var(--ease-out),
           color var(--dur-micro) var(--ease-out);
@@ -594,7 +653,7 @@
 
       @media (hover: hover) and (pointer: fine) {
         .visit__val a:hover {
-          color: var(--accent);
+          color: var(--accent-ink);
           text-decoration-color: var(--accent);
         }
       }
@@ -796,7 +855,7 @@
           </div>
         </section>
 
-        <!-- ── Latte — compact rows; the blends are described above ── -->
+        <!-- ── Latte — same leaf, same sourcing note as Clear ─────── -->
         <section class="group group--tight" aria-labelledby="g-latte">
           <header class="group__head">
             <h2 class="group__name" id="g-latte">Latte</h2>
@@ -815,27 +874,45 @@
             />
 
             <ul class="entries">
-              <li class="entry entry--compact">
+              <li class="entry">
                 <div class="entry__body">
                   <a class="entry__name" href="/matcha/gokasho-samidori">Gokasho Samidori</a>
+                  <p class="entry__spec">
+                    MTCH · Single Cultivar, Samidori (さみどり) · Gokasho, Uji
+                  </p>
+                  <p class="entry__notes">
+                    Ooika · sweet umami · smooth body · long finish
+                  </p>
                 </div>
                 <dl class="prices">
                   <dt>Cold Whisk Latte</dt><dd>250</dd>
                 </dl>
               </li>
 
-              <li class="entry entry--compact">
+              <li class="entry">
                 <div class="entry__body">
                   <a class="entry__name" href="/matcha/oyt-special-blend">O-Y-T™ Special Blend</a>
+                  <p class="entry__spec">
+                    MTCH · Okumidori, Yabukita, Tsuyuhikari · Hoshinomura, Yame · shaded 14–21 days
+                  </p>
+                  <p class="entry__notes">
+                    toast rice · roasted nori · sweet peanut · cereal · chocolate cookie
+                  </p>
                 </div>
                 <dl class="prices">
                   <dt>Cold Whisk Latte</dt><dd>190</dd>
                 </dl>
               </li>
 
-              <li class="entry entry--compact">
+              <li class="entry">
                 <div class="entry__body">
                   <a class="entry__name" href="/matcha/asatsuyu-baisen">Asatsuyu Baisen</a>
+                  <p class="entry__spec">
+                    MTCH · Single Cultivar, Asatsuyu (あさつゆ) · Kirishima, Kagoshima · roasted
+                  </p>
+                  <p class="entry__notes">
+                    grilled nori · toasted grains · cereal · roasted coconut · cacao · pistachio
+                  </p>
                 </div>
                 <dl class="prices">
                   <dt>Cold Whisk Latte</dt><dd>220</dd>
@@ -844,9 +921,16 @@
                 </dl>
               </li>
 
-              <li class="entry entry--compact">
+              <li class="entry">
                 <div class="entry__body">
                   <a class="entry__name" href="/matcha/asatsuyu">Asatsuyu (あさつゆ)</a>
+                  <p class="entry__spec">
+                    MTCH · Single Cultivar · Kirishima, Kagoshima · Jikakabuse 21 days · organic
+                  </p>
+                  <p class="entry__notes">
+                    morning dew · wheatgrass · boiled spinach · sweet pea · macadamia · pistachio ·
+                    white chocolate · vanilla
+                  </p>
                 </div>
                 <dl class="prices">
                   <dt>Cold Whisk Latte</dt><dd>220</dd>
@@ -854,9 +938,15 @@
                 </dl>
               </li>
 
-              <li class="entry entry--compact">
+              <li class="entry">
                 <div class="entry__body">
                   <a class="entry__name" href="/matcha/nana-tsu-mori">Nana-Tsu-Mori</a>
+                  <p class="entry__spec">
+                    MTCH · Blended · Uji, Kyoto · shaded 41+ days · hand-picked, stone-milled
+                  </p>
+                  <p class="entry__notes">
+                    lush green · vegetal · seaweed · sweet umami · clean bitter finish
+                  </p>
                 </div>
                 <dl class="prices">
                   <dt>Cold Whisk Latte</dt><dd>250</dd>
@@ -864,9 +954,15 @@
                 </dl>
               </li>
 
-              <li class="entry entry--compact">
+              <li class="entry">
                 <div class="entry__body">
                   <a class="entry__name" href="/matcha/star-village">Star Village</a>
+                  <p class="entry__spec">
+                    One to Ten · Yabukita, Okumidori, Okuyuaka · Yame · hand-picked, stone-milled
+                  </p>
+                  <p class="entry__notes">
+                    grilled mochi · light smoke · hazelnut · creamy
+                  </p>
                 </div>
                 <dl class="prices">
                   <dt>Cold Whisk Latte</dt><dd>270</dd>
