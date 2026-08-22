@@ -47,14 +47,14 @@
     "sweetnessScale": false
   },
   {
-    "id": "teawear",
-    "label": "Teawear",
+    "id": "teaware",
+    "label": "Teaware",
     "gloss": "The bowls and whisks we use at the counter.",
     "order": 5,
-    "source": "teawear",
+    "source": "teaware",
     "layout": "grid",
     "gallery": [
-      { "image": "./menu-categories/teawear.jpg", "description": "Katakuchi bowl, matte black" }
+      { "image": "./menu-categories/teaware.jpg", "description": "Katakuchi bowl, matte black" }
     ],
     "sweetnessScale": false
   }

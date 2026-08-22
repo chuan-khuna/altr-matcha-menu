@@ -22,7 +22,7 @@ own** — each category names the collection its entries come from.
   "label": "Clear",         // serif head for the category
   "gloss": "No milk...",    // (optional) italic line under the head
   "order": 1,               // ascending; controls the running order
-  "source": "matcha",       // matcha | desserts | teawear
+  "source": "matcha",       // matcha | desserts | teaware
   "layout": "list",         // list | grid  (default: list)
   "gallery": [              // (optional) one or more photographs
     { "image": "./menu-categories/clear.jpg", "description": "caption" }
@@ -43,7 +43,7 @@ arrows included. A single image renders as a still frame with no controls.
 | ---------- | -------------------------------------------------------------------------- |
 | `matcha`   | The `matcha` collection, keyed by the category's own `id` into each blend's `menus`. |
 | `desserts` | The `desserts` collection — one entry per dessert, each with its own price(s) and photograph. |
-| `teawear`  | The `teawear` collection — one entry per piece, each with its own price(s) and photograph. |
+| `teaware`  | The `teaware` collection — one entry per piece, each with its own price(s) and photograph. |
 
 ### `layout` — how the entries are set
 
@@ -55,10 +55,10 @@ arrows included. A single image renders as a still frame with no controls.
 `list` is the default and the only layout a **`matcha`** source uses: a blend's
 photographs belong to the blend page, not to a priced row, so `layout` is ignored
 on `clear`, `latte` and `powder`. `grid` is for a source whose entries each carry
-their own photograph — `desserts` and `teawear` — which is why `dessert` and
-`teawear` are the two categories set to `grid`.
+their own photograph — `desserts` and `teaware` — which is why `dessert` and
+`teaware` are the two categories set to `grid`.
 
-`desserts` and `teawear` are flattened to the same shape before rendering
+`desserts` and `teaware` are flattened to the same shape before rendering
 (`MenuItem` in `Menu.astro`), so both layouts and both components serve either
 source without a branch of their own.
 
@@ -80,7 +80,7 @@ keeps `powder` off the page while its prices are commented out of the blends.
 
 > **Placeholders in the tree:** `clear.jpg` and `latte.jpg` are stand-ins and
 > should be replaced with real photography. `dessert.jpg`, `powder.jpg` and
-> `teawear.jpg` are real.
+> `teaware.jpg` are real.
 
 ---
 
@@ -89,9 +89,9 @@ keeps `powder` off the page while its prices are commented out of the blends.
 - **`powder`** — uncomment the `powder:` block in the blends that should sell it
   (`src/content/matcha/<year>/<slug>/index.md`). See
   [how-to-manage-matcha.md](./how-to-manage-matcha.md).
-- **`teawear`** — live. Add a folder under `src/content/teawear/` with an
+- **`teaware`** — live. Add a folder under `src/content/teaware/` with an
   `index.md` and a photograph; see
-  [how-to-manage-teawear.md](./how-to-manage-teawear.md).
+  [how-to-manage-teaware.md](./how-to-manage-teaware.md).
 
 ---
 

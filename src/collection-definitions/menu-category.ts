@@ -24,10 +24,10 @@ export const menuCategories = defineCollection({
        *  - `matcha`   — the `matcha` collection, keyed by this category's `id`
        *                 (`clear` | `latte` | `powder`) into each blend's `menus`.
        *  - `desserts` — the `desserts` collection.
-       *  - `teawear`  — reserved. No collection exists yet, so the category is
+       *  - `teaware`  — reserved. No collection exists yet, so the category is
        *                 configured but not rendered.
        */
-      source: z.enum(['matcha', 'desserts', 'teawear']).default('matcha'),
+      source: z.enum(['matcha', 'desserts', 'teaware']).default('matcha'),
       /**
        * How this category's entries are set.
        *  - `list` — rows of name / price down the measure. The default, and the
