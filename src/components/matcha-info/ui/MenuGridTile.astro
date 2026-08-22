@@ -57,7 +57,10 @@ const Frame = href ? "a" : "div";
           densities={[1, 2]}
           loading="lazy"
           decoding="async"
-          class="aspect-square w-full bg-paper-2 object-cover transition-opacity duration-150 ease-out group-hover:opacity-90"
+          class:list={[
+            "aspect-square w-full bg-paper-2 object-cover",
+            href && "transition-opacity duration-150 ease-out group-hover:opacity-90",
+          ]}
         />
       ) : (
         /* Held open so a dessert without a photograph keeps the grid's rhythm
@@ -66,8 +69,14 @@ const Frame = href ? "a" : "div";
       )
     }
 
+    {/* The hover states only exist on a tile that goes somewhere — a dessert
+        has no page behind it, and lighting up under the cursor would promise
+        one. */}
     <p
-      class="mono mt-3 text-base leading-tight tracking-snug text-ink transition-colors duration-150 ease-out group-hover:text-accent"
+      class:list={[
+        "mono mt-3 text-base leading-tight tracking-snug text-ink",
+        href && "transition-colors duration-150 ease-out group-hover:text-accent",
+      ]}
     >
       {name}
     </p>

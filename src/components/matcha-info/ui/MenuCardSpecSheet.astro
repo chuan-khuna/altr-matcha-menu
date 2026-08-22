@@ -16,16 +16,21 @@ const spec = [d.info?.brand, d.info?.cultivar, d.info?.origin, d.info?.shading]
   .join(" · ");
 ---
 
+{/* `group relative` is what makes the whole entry the target: the name's link
+    lays a pseudo-element over the row (see below), and every hover state in
+    here answers to the group rather than to the element under the cursor. */}
 <li
-  class="fade-up grid grid-cols-[minmax(0,1fr)] gap-y-4 py-6 min-[46rem]:grid-cols-[minmax(0,1fr)_minmax(0,var(--menu-prices-block))] min-[46rem]:items-start min-[46rem]:gap-x-8"
+  class="group fade-up relative grid grid-cols-[minmax(0,1fr)] gap-y-4 py-6 min-[46rem]:grid-cols-[minmax(0,1fr)_minmax(0,var(--menu-prices-block))] min-[46rem]:items-start min-[46rem]:gap-x-8"
 >
   <div class="min-w-0">
-    <!-- The name is the only link in the row — the price is not clickable. No
-         resting underline: the row already reads as a record, and a rule under
-         every name fights the hairline between them. -->
+    <!-- One link, stretched over the whole entry by an empty `after` laid on
+         the row — so the prices and the notes are clickable too, while the
+         accessible name stays the blend and the row keeps a single tab stop.
+         No resting underline: the row already reads as a record, and a rule
+         under every name fights the hairline between them. -->
     <a
       href={href}
-      class="mono inline-block text-md leading-tight tracking-snug text-ink underline-offset-[0.16em] hover:text-accent-ink hover:underline hover:decoration-accent hover:decoration-1 [@media(pointer:coarse)]:py-2"
+      class="mono inline-block text-md leading-tight tracking-snug text-ink underline-offset-[0.16em] after:absolute after:inset-0 after:content-[''] group-hover:text-accent-ink group-hover:underline group-hover:decoration-accent group-hover:decoration-1 [@media(pointer:coarse)]:py-2"
       aria-label={`${d.name} — sourcing note`}>{d.name}</a
     >
 
