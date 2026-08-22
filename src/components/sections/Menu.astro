@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import MenuCard from "@/components/matcha-info/ui/MenuCard.astro";
 import MenuSpecialRow from "@/components/matcha-info/ui/MenuSpecialRow.astro";
+import MenuGridTile from "@/components/matcha-info/ui/MenuGridTile.astro";
 import MenuRemark from "@/components/matcha-info/MenuRemark.astro";
 import MatchaGallery from "@/components/matcha-info/MatchaGallery.astro";
 import MenuCategoryNav from "@/components/matcha-info/MenuCategoryNav.astro";
@@ -18,7 +19,8 @@ const byOrder = (a: { data: { order: number } }, b: { data: { order: number } })
 
 const categories = (await getCollection("menuCategories")).sort(byOrder);
 const matchas = (await getCollection("matcha")).sort(byOrder);
-const dessertGroups = (await getCollection("desserts")).sort(byOrder);
+const desserts = (await getCollection("desserts")).sort(byOrder);
+const teawear = (await getCollection("teawear")).sort(byOrder);
 
 const getSlug = (id: string) => id.split("/").at(-1)!;
 
@@ -33,10 +35,29 @@ type MenuGroup =
       }[];
     }
   | {
-      kind: "desserts";
+      kind: "items";
       category: CollectionEntry<"menuCategories">;
-      dessertGroups: CollectionEntry<"desserts">[];
+      items: MenuItem[];
     };
+
+/* A dessert or a piece of teawear, flattened to what the menu renders. The two
+   collections carry the same fields, so one arm of the union and one pair of
+   components cover both. */
+type MenuItem = {
+  name: string;
+  prices: [string, number][];
+  description?: string;
+  notes?: string[];
+  image?: ImageMetadata;
+  imageAlt?: string;
+};
+
+const toMenuItem = (
+  entry: CollectionEntry<"desserts"> | CollectionEntry<"teawear">
+): MenuItem => ({
+  ...entry.data,
+  prices: Object.entries(entry.data.prices),
+});
 
 /* A category with nothing to price is not rendered — that covers `powder` while
    its prices are commented out of the blends, and `teawear`, which is configured
@@ -54,11 +75,12 @@ const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
     return blends.length > 0 ? [{ kind: "matcha", category, blends }] : [];
   }
 
-  if (category.data.source === "desserts") {
-    const withItems = dessertGroups.filter((g) => g.data.items.length > 0);
-    return withItems.length > 0
-      ? [{ kind: "desserts", category, dessertGroups: withItems }]
-      : [];
+  if (category.data.source === "desserts" || category.data.source === "teawear") {
+    const entries = category.data.source === "desserts" ? desserts : teawear;
+    const items = entries
+      .filter((e) => Object.keys(e.data.prices).length > 0)
+      .map(toMenuItem);
+    return items.length > 0 ? [{ kind: "items", category, items }] : [];
   }
 
   return [];
@@ -90,7 +112,7 @@ const RAIL_IMAGE_PX = 272;
 
       {
         groups.map((group) => {
-          const { label, gloss, gallery, sweetnessScale } = group.category.data;
+          const { label, gloss, gallery, sweetnessScale, layout } = group.category.data;
           const id = sectionId(group.category);
           const headId = `${id}-label`;
           const hasGallery = !!gallery && gallery.length > 0;
@@ -150,33 +172,25 @@ const RAIL_IMAGE_PX = 272;
                         <MenuCard blend={blend} menuItems={menuItems} href={href} />
                       ))}
                     </ul>
+                  ) : layout === "grid" ? (
+                    /* Tiles, for a category whose entries each carry their own
+                       photograph. Two across on a phone; three from 46rem, which
+                       is also where the entries column stops sharing the measure
+                       with the category rail. */
+                    <ul
+                      class="m-0 grid list-none grid-cols-2 gap-x-6 gap-y-10 p-0 min-[46rem]:grid-cols-3"
+                      role="list"
+                    >
+                      {group.items.map((item) => (
+                        <MenuGridTile {...item} />
+                      ))}
+                    </ul>
                   ) : (
-                    group.dessertGroups.map((dessert) => (
-                      <div class="[&+div]:mt-10">
-                        {/* The blend the whole category is built on. Named only
-                            when there is more than one — with a single blend the
-                            category head has already said it. */}
-                        {group.dessertGroups.length > 1 && (
-                          <p class="mono text-sm text-ink-muted">{dessert.data.name}</p>
-                        )}
-                        {dessert.data.notes && dessert.data.notes.length > 0 && (
-                          <p class="mono text-base leading-snug text-ink">
-                            {dessert.data.notes.join(" · ")}
-                          </p>
-                        )}
-                        <ul class="m-0 mt-4 list-none divide-y divide-rule p-0" role="list">
-                          {dessert.data.items.map((item) => (
-                            <MenuSpecialRow
-                              name={item.name}
-                              price={item.price}
-                              description={item.description}
-                              image={item.image}
-                              imageAlt={item.imageAlt}
-                            />
-                          ))}
-                        </ul>
-                      </div>
-                    ))
+                    <ul class="m-0 list-none divide-y divide-rule p-0" role="list">
+                      {group.items.map((item) => (
+                        <MenuSpecialRow {...item} />
+                      ))}
+                    </ul>
                   )}
 
                   {sweetnessScale && (

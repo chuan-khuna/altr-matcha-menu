@@ -29,6 +29,15 @@ export const menuCategories = defineCollection({
        */
       source: z.enum(['matcha', 'desserts', 'teawear']).default('matcha'),
       /**
+       * How this category's entries are set.
+       *  - `list` — rows of name / price down the measure. The default, and the
+       *             only layout a `matcha` source uses: a blend's photographs
+       *             belong to the blend, not to a priced row.
+       *  - `grid` — image tiles, for a source whose entries each carry their own
+       *             photograph. Today that is `desserts`.
+       */
+      layout: z.enum(['list', 'grid']).default('list'),
+      /**
        * Category photographs. Same shape as a matcha blend's `gallery`, and
        * rendered by the same component, so a category with more than one image
        * gets the crossfading gallery from the blend pages.

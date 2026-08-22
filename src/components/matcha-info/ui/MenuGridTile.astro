@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  name: string;
+  /** Variant label → price, in written order. */
+  prices: [string, number][];
+  description?: string;
+  notes?: string[];
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+
+const { name, prices, description, notes, image, imageAlt = "" } = Astro.props;
+
+const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
+
+/* Widest a tile gets: the entries column at the 62rem measure, three across.
+   Astro emits at this width rather than at the source resolution. */
+const TILE_IMAGE_PX = 240;
+
+/* One way to buy it — the label is the dessert's name, so printing it again
+   under the figure says nothing. Several, and every label has to show. */
+const single = prices.length === 1;
+---
+
+<li class="fade-up min-w-0">
+  {
+    image ? (
+      <Image
+        src={image}
+        alt={imageAlt}
+        width={TILE_IMAGE_PX}
+        densities={[1, 2]}
+        loading="lazy"
+        decoding="async"
+        class="aspect-square w-full bg-paper-2 object-cover"
+      />
+    ) : (
+      /* Held open so a dessert without a photograph keeps the grid's rhythm
+         instead of riding up level with its neighbours' captions. */
+      <div class="aspect-square w-full bg-paper-2" aria-hidden="true" />
+    )
+  }
+
+  <p class="mono mt-3 text-base leading-tight tracking-snug text-ink">{name}</p>
+
+  {
+    single ? (
+      <p class="mono mt-1 text-sm tabular-nums text-ink">{formatPrice(prices[0][1])}</p>
+    ) : (
+      /* One row per price — label left, figure right against the tile edge, so a
+         dessert sold three ways reads as a short column instead of a wrapped
+         line. */
+      <dl class="mono mt-1 grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-0.5 text-sm">
+        {prices.map(([label, price]) => (
+          <Fragment>
+            <dt class="min-w-0 text-ink-muted">{label}</dt>
+            <dd class="text-right tabular-nums text-ink">{formatPrice(price)}</dd>
+          </Fragment>
+        ))}
+      </dl>
+    )
+  }
+
+  {
+    description && (
+      <p class="mono mt-2 text-sm leading-snug text-ink-muted">{description}</p>
+    )
+  }
+
+  {
+    notes && notes.length > 0 && (
+      <p class="mono mt-2 text-sm leading-snug text-ink-muted" aria-label="Tasting notes">
+        {notes.join(" · ")}
+      </p>
+    )
+  }
+</li>

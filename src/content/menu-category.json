@@ -5,6 +5,7 @@
     "gloss": "No milk. The leaf on its own.",
     "order": 1,
     "source": "matcha",
+    "layout": "list",
     "gallery": [{ "image": "./menu-categories/clear.jpg" }],
     "sweetnessScale": false
   },
@@ -14,6 +15,7 @@
     "gloss": "The same leaf, with milk.",
     "order": 2,
     "source": "matcha",
+    "layout": "list",
     "gallery": [{ "image": "./menu-categories/latte.jpg" }],
     "sweetnessScale": true
   },
@@ -23,6 +25,7 @@
     "gloss": "A blend of its own — coarser grind, never koicha.",
     "order": 3,
     "source": "desserts",
+    "layout": "grid",
     "gallery": [
       { "image": "./menu-categories/dessert.jpg", "description": "Affogato with monaka" }
     ],
@@ -34,6 +37,7 @@
     "gloss": "Tins and pouches to take home, ground to order.",
     "order": 4,
     "source": "matcha",
+    "layout": "list",
     "gallery": [
       {
         "image": "./menu-categories/powder.jpg",
@@ -48,6 +52,7 @@
     "gloss": "The bowls and whisks we use at the counter.",
     "order": 5,
     "source": "teawear",
+    "layout": "grid",
     "gallery": [
       { "image": "./menu-categories/teawear.jpg", "description": "Katakuchi bowl, matte black" }
     ],

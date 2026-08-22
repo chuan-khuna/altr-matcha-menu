@@ -12,7 +12,8 @@ Content files live in `src/content/<plural-folder>/` as `.md` files.
 | Collection key | Definition file | Content folder | Format |
 |---|---|---|---|
 | `matcha` | `src/collection-definitions/matcha.ts` | `src/content/matcha/<yyyy>/<slug>/` | `index.md` or `index.mdx` |
-| `desserts` | `src/collection-definitions/dessert.ts` | `src/content/desserts/` | `.md` or `.mdx` |
+| `desserts` | `src/collection-definitions/dessert.ts` | `src/content/desserts/<slug>/index.md` | `.md` |
+| `teawear` | `src/collection-definitions/teawear.ts` | `src/content/teawear/<slug>/index.md` | `.md` |
 | `menuCategories` | `src/collection-definitions/menu-category.ts` | `src/content/menu-category.json` (+ images in `src/content/menu-categories/`) | single JSON array |
 
 > `matchaDrinks` / `src/content/matcha-drinks/` used to be listed here but has
@@ -26,7 +27,7 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 
 | File | Exports | Used by |
 |---|---|---|
-| `src/data/site.ts` | `address`, `hours`, `reach`, `nav` | `Contact.astro`, `Nav.astro`, `Footer.astro` |
+| `src/data/site.ts` | `announcement`, `address`, `hours`, `reach`, `nav` | `Contact.astro`, `Nav.astro`, `Announcement.astro`, `Footer.astro` |
 
 ---
 
@@ -37,6 +38,7 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 | Collection definition file | `kebab-case-singular.ts` | `matcha-drink.ts` |
 | Collection export variable | `camelCasePlural` | `matchaDrinks` |
 | Content folder | `kebab-case-plural/` | `matcha-drinks/` |
+| — uncountable noun | `kebab-case-singular/` | `matcha/`, `teawear/` |
 | Content file | `kebab-case.md` | `hana-blend.md` |
 
 ---

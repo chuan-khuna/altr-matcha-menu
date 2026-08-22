@@ -23,6 +23,7 @@ own** — each category names the collection its entries come from.
   "gloss": "No milk...",    // (optional) italic line under the head
   "order": 1,               // ascending; controls the running order
   "source": "matcha",       // matcha | desserts | teawear
+  "layout": "list",         // list | grid  (default: list)
   "gallery": [              // (optional) one or more photographs
     { "image": "./menu-categories/clear.jpg", "description": "caption" }
   ],
@@ -41,12 +42,28 @@ arrows included. A single image renders as a still frame with no controls.
 | Value      | Entries                                                                    |
 | ---------- | -------------------------------------------------------------------------- |
 | `matcha`   | The `matcha` collection, keyed by the category's own `id` into each blend's `menus`. |
-| `desserts` | The `desserts` collection — every group, with its notes and items.           |
-| `teawear`  | Reserved. No collection backs it yet, so the category never renders.         |
+| `desserts` | The `desserts` collection — one entry per dessert, each with its own price(s) and photograph. |
+| `teawear`  | The `teawear` collection — one entry per piece, each with its own price(s) and photograph. |
+
+### `layout` — how the entries are set
+
+| Value  | Component                 | Shows                                                  |
+| ------ | ------------------------- | ------------------------------------------------------ |
+| `list` | `ui/MenuSpecialRow.astro` | Rows down the measure: name left, price(s) right.       |
+| `grid` | `ui/MenuGridTile.astro`   | Image tiles — two across, three from 46rem.             |
+
+`list` is the default and the only layout a **`matcha`** source uses: a blend's
+photographs belong to the blend page, not to a priced row, so `layout` is ignored
+on `clear`, `latte` and `powder`. `grid` is for a source whose entries each carry
+their own photograph — `desserts` and `teawear` — which is why `dessert` and
+`teawear` are the two categories set to `grid`.
+
+`desserts` and `teawear` are flattened to the same shape before rendering
+(`MenuItem` in `Menu.astro`), so both layouts and both components serve either
+source without a branch of their own.
 
 **A category with nothing priced is not rendered.** That is the mechanism that
-keeps `powder` off the page while its prices are commented out of the blends,
-and `teawear` off it until a collection exists.
+keeps `powder` off the page while its prices are commented out of the blends.
 
 ---
 
@@ -72,10 +89,9 @@ and `teawear` off it until a collection exists.
 - **`powder`** — uncomment the `powder:` block in the blends that should sell it
   (`src/content/matcha/<year>/<slug>/index.md`). See
   [how-to-manage-matcha.md](./how-to-manage-matcha.md).
-- **`teawear`** — needs a collection. Scaffold `src/collection-definitions/teawear.ts`
-  + `src/content/teawear/`, register it in `src/content.config.ts`, then teach
-  `src/components/sections/Menu.astro` to read it (the `source` switch already has
-  the branch).
+- **`teawear`** — live. Add a folder under `src/content/teawear/` with an
+  `index.md` and a photograph; see
+  [how-to-manage-teawear.md](./how-to-manage-teawear.md).
 
 ---
 
@@ -87,6 +103,8 @@ and `teawear` off it until a collection exists.
   makes the file easier to read.
 - `sweetnessScale` renders `src/components/matcha-info/MenuRemark.astro`. Only
   `latte` sets it today.
+- `layout` is written explicitly on every category even though `list` is the
+  default, to keep the file readable as a single table of settings.
 - The category head and its `gloss` run the **full measure** and pin under the nav
   from 46rem up. The gallery sits in a left rail below the head, `position: sticky`
   from 62rem up, so the photographs stay level with the entries as you scroll that
