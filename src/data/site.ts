@@ -26,5 +26,4 @@ export const reach: { label: string; href: string; display: string }[] = [
 
 export const nav: { label: string; href: string }[] = [
   { label: "Menu", href: "#menu" },
-  { label: "About", href: "#about" },
 ];

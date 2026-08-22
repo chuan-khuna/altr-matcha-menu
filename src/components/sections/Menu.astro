@@ -73,25 +73,6 @@ const navItems = groups.map((group) => ({
   label: group.category.data.label,
 }));
 
-/* Keep the lede honest as the harvest changes rather than hard-coding a count. */
-const NUMBER_WORDS = [
-  "no", "one", "two", "three", "four", "five", "six",
-  "seven", "eight", "nine", "ten", "eleven", "twelve",
-];
-const spell = (n: number) => NUMBER_WORDS[n] ?? String(n);
-
-const dessertBlends = dessertGroups.filter((g) => g.data.items.length > 0).length;
-
-/* Composed here, not inline in the markup — an inline conditional puts a newline
-   in front of the comma and the browser collapses it to a visible space. */
-const lede = [
-  `We are pouring ${spell(matchas.length)} matcha this harvest`,
-  dessertBlends > 0
-    ? `, and ${spell(dessertBlends)} blend${dessertBlends === 1 ? "" : "s"} kept back for dessert`
-    : "",
-  ". Matcha names link through to the sourcing note — cultivar, garden, shading, mill.",
-].join("");
-
 /* Rendered width of the gallery rail, in px — matches --menu-cat-img-lg (17rem)
    so Astro emits a sized image instead of the full-resolution original. */
 const RAIL_IMAGE_PX = 272;
@@ -99,19 +80,11 @@ const RAIL_IMAGE_PX = 272;
 
 <section
   id="menu"
-  class="page-gutter border-t border-border py-16"
+  class="page-gutter pt-[calc(var(--nav-h)+3rem)] pb-16"
   aria-label="Menu"
 >
   <div class="mx-auto max-w-[var(--content-max)]">
     <div class="max-w-[var(--menu-measure)]">
-      <!-- Index-First opens on a paragraph, not a display headline -->
-      <header class="mb-10 max-w-[48ch]">
-        <p class="mono text-md leading-snug text-ink">{lede}</p>
-        <p class="mono mt-4 text-sm leading-normal text-ink-muted">
-          Prices in baht, per serving. Blends change with the harvest, so this page
-          changes with them.
-        </p>
-      </header>
 
       {navItems.length > 1 && <MenuCategoryNav items={navItems} />}
 
