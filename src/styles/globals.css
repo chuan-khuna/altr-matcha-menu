@@ -108,6 +108,13 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+  /* In-page jumps — the menu category index, the nav, the skip link — travel
+     rather than cut, so you can see where you landed. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
   body {
     margin: 0;
     min-height: 100vh;

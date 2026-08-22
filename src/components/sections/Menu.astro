@@ -4,6 +4,7 @@ import MenuCard from "@/components/matcha-info/ui/MenuCard.astro";
 import MenuSpecialRow from "@/components/matcha-info/ui/MenuSpecialRow.astro";
 import MenuRemark from "@/components/matcha-info/MenuRemark.astro";
 import MatchaGallery from "@/components/matcha-info/MatchaGallery.astro";
+import MenuCategoryNav from "@/components/matcha-info/MenuCategoryNav.astro";
 
 /* Categories sourced from `matcha` key into each blend's `menus` record by
    their own id, so the JSON id and the schema key are the same string. */
@@ -63,6 +64,15 @@ const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
   return [];
 });
 
+const sectionId = (category: CollectionEntry<"menuCategories">) => `menu-${category.id}`;
+
+/* Built off `groups`, so a category that has nothing to price and never renders
+   never appears in the index either. */
+const navItems = groups.map((group) => ({
+  href: `#${sectionId(group.category)}`,
+  label: group.category.data.label,
+}));
+
 /* Keep the lede honest as the harvest changes rather than hard-coding a count. */
 const NUMBER_WORDS = [
   "no", "one", "two", "three", "four", "five", "six",
@@ -95,7 +105,7 @@ const RAIL_IMAGE_PX = 272;
   <div class="mx-auto max-w-[var(--content-max)]">
     <div class="max-w-[var(--menu-measure)]">
       <!-- Index-First opens on a paragraph, not a display headline -->
-      <header class="mb-16 max-w-[48ch]">
+      <header class="mb-10 max-w-[48ch]">
         <p class="mono text-md leading-snug text-ink">{lede}</p>
         <p class="mono mt-4 text-sm leading-normal text-ink-muted">
           Prices in baht, per serving. Blends change with the harvest, so this page
@@ -103,21 +113,26 @@ const RAIL_IMAGE_PX = 272;
         </p>
       </header>
 
+      {navItems.length > 1 && <MenuCategoryNav items={navItems} />}
+
       {
         groups.map((group) => {
           const { label, gloss, gallery, sweetnessScale } = group.category.data;
-          const headId = `menu-${group.category.id}`;
+          const id = sectionId(group.category);
+          const headId = `${id}-label`;
           const hasGallery = !!gallery && gallery.length > 0;
           return (
-            <section class="pb-20 last:pb-0" aria-labelledby={headId}>
+            <section
+              id={id}
+              class="scroll-mt-[calc(var(--nav-h)+var(--menu-nav-h))] pb-20 last:pb-0"
+              aria-labelledby={headId}
+            >
               {/* S4 · category head — the full measure, label above gloss. The
-                  rule under it is what everything below belongs to. Pins under
-                  the nav from 46rem up, where the gloss still sets on one line;
-                  below that the head plus the nav would eat too much of a phone
-                  screen. bg-paper so the entries pass behind it, and z-20 because
-                  the photo rail is a later positioned sibling that would
-                  otherwise paint over it. */}
-              <header class="border-b border-ink pt-2 pb-2 min-[46rem]:sticky min-[46rem]:top-[var(--nav-h)] min-[46rem]:z-20 min-[46rem]:bg-paper">
+                  rule under it is what everything below belongs to. It scrolls
+                  away with its entries: the pinned index above already says
+                  which category you are in, and stacking a second pinned band
+                  under it would eat a third of a phone screen. */}
+              <header class="border-b border-ink pt-2 pb-2">
                 <h2
                   id={headId}
                   data-optical
@@ -143,7 +158,7 @@ const RAIL_IMAGE_PX = 272;
                     blend pages, on the paper. No frame, no radius, no shadow. It
                     travels down with the entries it belongs to, from 62rem up. */}
                 {hasGallery && (
-                  <div class="w-[var(--menu-cat-img)] min-[62rem]:sticky min-[62rem]:top-[calc(var(--nav-h)+var(--menu-head-h)+var(--space-lg))] min-[62rem]:z-10 min-[62rem]:w-full min-[62rem]:self-start">
+                  <div class="w-[var(--menu-cat-img)] min-[62rem]:sticky min-[62rem]:top-[calc(var(--nav-h)+var(--menu-nav-h)+var(--space-lg))] min-[62rem]:z-10 min-[62rem]:w-full min-[62rem]:self-start">
                     <MatchaGallery
                       items={gallery!}
                       imageWidth={RAIL_IMAGE_PX}

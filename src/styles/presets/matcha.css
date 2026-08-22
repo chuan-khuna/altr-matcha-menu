@@ -139,15 +139,10 @@
     --menu-cat-img: min(100%, 20rem); /* category gallery · narrow       */
     --menu-cat-img-lg: 17rem; /* category gallery · >=62rem            */
 
-    /* Height of a pinned category head, derived from the type scale rather than
-       measured: top padding + label line + gap + gloss line + bottom padding +
-       the ink rule. The photo rail sticks below this, so the two never overlap.
-       Holds as long as label and gloss are one line each — at the 62rem measure
-       they are. */
-    --menu-head-h: calc(
-      var(--space-2) + var(--text-lg) * var(--leading-tight) + var(--space-1) + var(--text-md) *
-        var(--leading-snug) + var(--space-2) + 1px
-    );
+    /* Height of the pinned category index. Fixed rather than derived: the bar
+       is one line of micro-type, and everything measured off it — the photo
+       rail's sticky offset, each category's scroll-margin — uses this number. */
+    --menu-nav-h: 2.75rem;
     --menu-item-img: 5.5rem; /* item thumbnail · narrow               */
     --menu-item-img-lg: 7rem; /* item thumbnail · >=46rem              */
 
