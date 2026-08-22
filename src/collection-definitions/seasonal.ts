@@ -13,7 +13,7 @@ import { file } from 'astro/loaders';
  *
  * `seasonal` has no natural plural, so the definition file, the exported
  * variable and the content file are all singular (the same exception the
- * `matcha` and `teawear` collections take).
+ * `matcha` and `teaware` collections take).
  */
 export const seasonal = defineCollection({
   loader: file('./src/content/seasonal.json', {

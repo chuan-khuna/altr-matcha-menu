@@ -13,7 +13,7 @@ Content files live in `src/content/<plural-folder>/` as `.md` files.
 |---|---|---|---|
 | `matcha` | `src/collection-definitions/matcha.ts` | `src/content/matcha/<yyyy>/<slug>/` | `index.md` or `index.mdx` |
 | `desserts` | `src/collection-definitions/dessert.ts` | `src/content/desserts/<slug>/index.md` | `.md` |
-| `teawear` | `src/collection-definitions/teawear.ts` | `src/content/teawear/<slug>/index.md` | `.md` |
+| `teaware` | `src/collection-definitions/teaware.ts` | `src/content/teaware/<slug>/index.md` | `.md` |
 | `seasonal` | `src/collection-definitions/seasonal.ts` | `src/content/seasonal.json` (+ one layout per season in `src/components/seasonal/`) | single JSON array |
 | `menuCategories` | `src/collection-definitions/menu-category.ts` | `src/content/menu-category.json` (+ images in `src/content/menu-categories/`) | single JSON array |
 
@@ -48,7 +48,7 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 | Collection definition file | `kebab-case-singular.ts` | `matcha-drink.ts` |
 | Collection export variable | `camelCasePlural` | `matchaDrinks` |
 | Content folder | `kebab-case-plural/` | `matcha-drinks/` |
-| — uncountable noun | `kebab-case-singular/` | `matcha/`, `teawear/`, `seasonal` |
+| — uncountable noun | `kebab-case-singular/` | `matcha/`, `teaware/`, `seasonal` |
 | Content file | `kebab-case.md` | `hana-blend.md` |
 
 ---

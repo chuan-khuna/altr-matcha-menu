@@ -3,16 +3,16 @@ import { glob } from 'astro/loaders';
 
 /**
  * The bowls, whisks and scoops we use at the counter and sell across it.
- * One piece per folder — `teawear/<slug>/index.md` — the same shape desserts
+ * One piece per folder — `teaware/<slug>/index.md` — the same shape desserts
  * and matcha blends use, so a piece's photograph sits beside the file that
  * names it.
  *
- * `teawear` has no natural plural, so the definition file, the exported
+ * `teaware` has no natural plural, so the definition file, the exported
  * variable and the content folder are all singular (the same exception the
  * `matcha` collection takes).
  */
-export const teawear = defineCollection({
-  loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/teawear' }),
+export const teaware = defineCollection({
+  loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/teaware' }),
   schema: ({ image }) => z.object({
     name: z.string(),
     order: z.number().default(0),

@@ -34,7 +34,7 @@ src/components/seasonal/
 
 > **Naming.** `seasonal` has no natural plural, so the definition file, the
 > exported variable and the content file are all singular — the same exception
-> `matcha` and `teawear` take. See
+> `matcha` and `teaware` take. See
 > [content-architecture.md](./content-architecture.md).
 
 ---

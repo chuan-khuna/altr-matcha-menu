@@ -20,7 +20,7 @@ const byOrder = (a: { data: { order: number } }, b: { data: { order: number } })
 const categories = (await getCollection("menuCategories")).sort(byOrder);
 const matchas = (await getCollection("matcha")).sort(byOrder);
 const desserts = (await getCollection("desserts")).sort(byOrder);
-const teawear = (await getCollection("teawear")).sort(byOrder);
+const teaware = (await getCollection("teaware")).sort(byOrder);
 
 const getSlug = (id: string) => id.split("/").at(-1)!;
 
@@ -40,7 +40,7 @@ type MenuGroup =
       items: MenuItem[];
     };
 
-/* A dessert or a piece of teawear, flattened to what the menu renders. The two
+/* A dessert or a piece of teaware, flattened to what the menu renders. The two
    collections carry the same fields, so one arm of the union and one pair of
    components cover both. */
 type MenuItem = {
@@ -55,7 +55,7 @@ type MenuItem = {
 };
 
 const toMenuItem = (
-  entry: CollectionEntry<"desserts"> | CollectionEntry<"teawear">,
+  entry: CollectionEntry<"desserts"> | CollectionEntry<"teaware">,
   href?: string
 ): MenuItem => ({
   ...entry.data,
@@ -79,13 +79,13 @@ const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
     return blends.length > 0 ? [{ kind: "matcha", category, blends }] : [];
   }
 
-  if (category.data.source === "desserts" || category.data.source === "teawear") {
-    const teawearCategory = category.data.source === "teawear";
-    const entries = teawearCategory ? teawear : desserts;
+  if (category.data.source === "desserts" || category.data.source === "teaware") {
+    const teawareCategory = category.data.source === "teaware";
+    const entries = teawareCategory ? teaware : desserts;
     const items = entries
       .filter((e) => Object.keys(e.data.prices).length > 0)
       .map((e) =>
-        toMenuItem(e, teawearCategory ? `/teawear/${getSlug(e.id)}` : undefined)
+        toMenuItem(e, teawareCategory ? `/teaware/${getSlug(e.id)}` : undefined)
       );
     return items.length > 0 ? [{ kind: "items", category, items }] : [];
   }
