@@ -16,6 +16,12 @@ interface Props {
    * (a seasonal menu) gets wider tiles and passes its own number.
    */
   imageWidth?: number;
+  /**
+   * A page of its own for this entry. Present → the photograph and the name are
+   * one link to it; absent → the tile is plain, which is what a dessert (no
+   * page behind it) gets.
+   */
+  href?: string;
 }
 
 const {
@@ -26,6 +32,7 @@ const {
   image,
   imageAlt = "",
   imageWidth = 240,
+  href,
 } = Astro.props;
 
 const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
@@ -33,28 +40,38 @@ const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
 /* One way to buy it — the label is the dessert's name, so printing it again
    under the figure says nothing. Several, and every label has to show. */
 const single = prices.length === 1;
+
+/* Photograph and name go inside one element so a linked tile is one target and
+   one tab stop, not two links to the same page. */
+const Frame = href ? "a" : "div";
 ---
 
 <li class="fade-up min-w-0">
-  {
-    image ? (
-      <Image
-        src={image}
-        alt={imageAlt}
-        width={imageWidth}
-        densities={[1, 2]}
-        loading="lazy"
-        decoding="async"
-        class="aspect-square w-full bg-paper-2 object-cover"
-      />
-    ) : (
-      /* Held open so a dessert without a photograph keeps the grid's rhythm
-         instead of riding up level with its neighbours' captions. */
-      <div class="aspect-square w-full bg-paper-2" aria-hidden="true" />
-    )
-  }
+  <Frame class:list={["group block", href && "cursor-pointer"]} href={href}>
+    {
+      image ? (
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={imageWidth}
+          densities={[1, 2]}
+          loading="lazy"
+          decoding="async"
+          class="aspect-square w-full bg-paper-2 object-cover transition-opacity duration-150 ease-out group-hover:opacity-90"
+        />
+      ) : (
+        /* Held open so a dessert without a photograph keeps the grid's rhythm
+           instead of riding up level with its neighbours' captions. */
+        <div class="aspect-square w-full bg-paper-2" aria-hidden="true" />
+      )
+    }
 
-  <p class="mono mt-3 text-base leading-tight tracking-snug text-ink">{name}</p>
+    <p
+      class="mono mt-3 text-base leading-tight tracking-snug text-ink transition-colors duration-150 ease-out group-hover:text-accent"
+    >
+      {name}
+    </p>
+  </Frame>
 
   {
     single ? (

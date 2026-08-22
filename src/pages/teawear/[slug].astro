@@ -1,0 +1,126 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import Nav from "@/components/Nav.astro";
+import Story from "@/components/matcha-info/Story.astro";
+
+/* One page per piece. The folder name is the slug, the same way the blend pages
+   take theirs — `teawear/mtch-shade/index.md` → `/teawear/mtch-shade`. */
+export async function getStaticPaths() {
+  const pieces = await getCollection("teawear");
+  return pieces.map((entry) => ({
+    params: {
+      slug: entry.id
+        .replace(/\/index$/, "")
+        .split("/")
+        .at(-1),
+    },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<"teawear">;
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const prices = Object.entries(d.prices);
+
+/* One way to buy it — the label is the piece's name, so printing it again
+   beside the figure says nothing. Several, and every label has to show. The
+   same rule the menu tile follows. */
+const single = prices.length === 1;
+const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
+
+/* A piece is a photograph and a price until someone writes it up, so an empty
+   file body is the ordinary case, not a missing one. */
+const hasStory = (entry.body ?? "").trim().length > 0;
+
+/* Rendered width of the photograph, in px — the 4-column aside at the page's
+   64rem measure. Astro emits at that width plus a 2x variant rather than at the
+   source resolution. */
+const IMAGE_PX = 340;
+---
+
+<Layout
+  title={`${d.name} — Teawear — ALTR`}
+  description={[d.name, d.description].filter(Boolean).join(" · ")}
+>
+  <Nav showBack />
+  <main class="page-gutter pb-24 pt-[calc(var(--nav-h)+5rem)]">
+    <div class="mx-auto max-w-[64rem]">
+      <!-- Specimen header — the italic name a blend page carries, set a step
+           down: a bowl is one line long and does not need the full specimen
+           size. The price sits with it, so the piece is named and priced in one
+           block and there is nothing else to read before the story. -->
+      <header class="fade-up border-b border-border pb-6">
+        <h1
+          data-optical
+          class="display text-display-s italic leading-display tracking-tight"
+        >
+          {d.name}
+        </h1>
+        {
+          single ? (
+            <p class="mono mt-4 text-md tabular-nums text-ink">
+              {formatPrice(prices[0][1])}
+            </p>
+          ) : (
+            /* Sold several ways — every label shows, laid along one line and
+               wrapping only when the header runs out of room. */
+            <dl class="mono mt-4 m-0 flex flex-wrap items-baseline gap-x-8 gap-y-1 text-md">
+              {prices.map(([label, price]) => (
+                <div class="flex items-baseline gap-2">
+                  <dt class="text-xs uppercase tracking-widest text-ink-muted">
+                    {label}
+                  </dt>
+                  <dd class="m-0 tabular-nums text-ink">{formatPrice(price)}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+      </header>
+
+      <!-- Story / photograph band — the blend pages' arrangement exactly: the
+           prose on eight columns, the picture riding along beside it on four. -->
+      {
+        (hasStory || d.image) && (
+          <div class="mt-12 field-grid">
+            {hasStory && (
+              <div class="col-span-12 min-[800px]:col-span-8">
+                <Story Content={Content} />
+              </div>
+            )}
+            {d.image && (
+              <aside class="fade-up col-span-12 min-[800px]:col-span-4 min-[800px]:col-start-9 min-[800px]:sticky min-[800px]:top-[calc(var(--nav-h)+2rem)] min-[800px]:self-start">
+                <Image
+                  src={d.image}
+                  alt={d.imageAlt}
+                  width={IMAGE_PX}
+                  densities={[1, 2]}
+                  quality={90}
+                  loading="eager"
+                  decoding="async"
+                  class="aspect-square w-full bg-paper-2 object-cover"
+                />
+                {/* No caption under it — the blend pages caption a gallery
+                    because several pictures cycle through one frame. Here there
+                    is one, and the line under the name already names it. */}
+              </aside>
+            )}
+          </div>
+        )
+      }
+
+      <a
+        href="/#menu-teawear"
+        class="mono mt-16 inline-block border-t border-border pt-4 text-xs uppercase tracking-widest text-ink-muted transition-all duration-150 ease-out hover:-translate-x-[2px] hover:text-accent"
+        >← Back to the menu</a
+      >
+    </div>
+  </main>
+</Layout>

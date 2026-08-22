@@ -71,5 +71,12 @@ imageAlt: "Chawan MTCH Shade — matte black katakuchi bowl with a drawn spout"
 - The Teawear category is set to `grid` in `menu-category.json`, so each piece
   renders as an image tile. See
   [how-to-manage-menu-categories.md](./how-to-manage-menu-categories.md).
+- Every piece also gets a page of its own at `/teawear/<slug>`
+  (`src/pages/teawear/[slug].astro`), and the menu tile links to it. The page
+  heads with the name and the price, then sets anything written in the file
+  **body** (below the frontmatter) beside the photograph as the piece's story.
+  Leave the body empty and that block is simply omitted. `description` is not
+  printed there — it is the line under the name on the menu tile, and the page's
+  meta description.
 - **The photograph and the price in the tree are mock** — a stand-in to shape the
   grid, not final photography or a real figure.

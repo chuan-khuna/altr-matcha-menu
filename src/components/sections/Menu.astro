@@ -50,18 +50,22 @@ type MenuItem = {
   notes?: string[];
   image?: ImageMetadata;
   imageAlt?: string;
+  /** Set for a piece with a page of its own; a dessert has none. */
+  href?: string;
 };
 
 const toMenuItem = (
-  entry: CollectionEntry<"desserts"> | CollectionEntry<"teawear">
+  entry: CollectionEntry<"desserts"> | CollectionEntry<"teawear">,
+  href?: string
 ): MenuItem => ({
   ...entry.data,
   prices: Object.entries(entry.data.prices),
+  href,
 });
 
 /* A category with nothing to price is not rendered — that covers `powder` while
-   its prices are commented out of the blends, and `teawear`, which is configured
-   with photographs but has no collection behind it yet. */
+   its prices are commented out of the blends, and any collection whose entries
+   all have their prices commented out. */
 const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
   if (category.data.source === "matcha" && isMatchaMenuKey(category.id)) {
     const key = category.id;
@@ -76,10 +80,13 @@ const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
   }
 
   if (category.data.source === "desserts" || category.data.source === "teawear") {
-    const entries = category.data.source === "desserts" ? desserts : teawear;
+    const teawearCategory = category.data.source === "teawear";
+    const entries = teawearCategory ? teawear : desserts;
     const items = entries
       .filter((e) => Object.keys(e.data.prices).length > 0)
-      .map(toMenuItem);
+      .map((e) =>
+        toMenuItem(e, teawearCategory ? `/teawear/${getSlug(e.id)}` : undefined)
+      );
     return items.length > 0 ? [{ kind: "items", category, items }] : [];
   }
 
