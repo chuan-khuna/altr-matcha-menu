@@ -18,6 +18,9 @@ notes:                  # (optional) Array of tasting descriptors
 items:                  # List of individual items with prices (THB)
   - name: string
     price: number
+    description: string  # (optional) one short line under the item name
+    image: path          # (optional) photograph, relative to this file
+    imageAlt: string     # (optional) defaults to "" (decorative)
 ```
 
 ---
@@ -46,3 +49,12 @@ Body text describing the dessert collection — flavour intent, best pairings, h
 - `order` controls sort order across all dessert groups (ascending).
 - All prices are in Thai Baht (THB).
 - The markdown body is used as the dessert description in the menu card.
+- `items[].description` is optional — one short line under the item name, shown
+  in muted ink. No dessert item carries one today.
+- `items[].image` is optional. Drop the file next to the `.md` and reference it
+  relatively (`./matcha-affogato.jpg`). When an item has one, the menu renders it
+  as a thumbnail row; without one it renders as a plain name / price row. No
+  dessert item carries a photograph today.
+- The Dessert **category** head, its gloss and its category photograph come from
+  `menu-category.json`, not from here — see
+  [how-to-manage-menu-categories.md](./how-to-manage-menu-categories.md).

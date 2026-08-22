@@ -1,0 +1,61 @@
+---
+import type { MenuCardProps } from "@/components/matcha-info/ui/types";
+
+type Props = MenuCardProps;
+
+const { blend, menuItems, href } = Astro.props;
+const d = blend.data;
+
+/* Bare numerals. The lede states the currency once, so the price column stays a
+   clean tabular block instead of repeating ฿ on every row. */
+const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
+
+/* brand · cultivar · garden · shading — one spec line, not four labels */
+const spec = [d.info?.brand, d.info?.cultivar, d.info?.origin, d.info?.shading]
+  .filter(Boolean)
+  .join(" · ");
+---
+
+<li
+  class="fade-up grid grid-cols-[minmax(0,1fr)] gap-y-4 py-6 min-[46rem]:grid-cols-[minmax(0,1fr)_minmax(0,var(--menu-prices-block))] min-[46rem]:items-start min-[46rem]:gap-x-8"
+>
+  <div class="min-w-0">
+    <!-- The name is the only link in the row — the price is not clickable. No
+         resting underline: the row already reads as a record, and a rule under
+         every name fights the hairline between them. -->
+    <a
+      href={href}
+      class="mono inline-block text-md leading-tight tracking-snug text-ink underline-offset-[0.16em] hover:text-accent-ink hover:underline hover:decoration-accent hover:decoration-1 [@media(pointer:coarse)]:py-2"
+      aria-label={`${d.name} — sourcing note`}>{d.name}</a
+    >
+
+    {spec && <p class="mono mt-3 text-sm leading-normal text-ink-muted">{spec}</p>}
+
+    {
+      d.notes.length > 0 && (
+        <p
+          class="mono mt-2 max-w-[64ch] text-base leading-snug text-ink"
+          aria-label="Tasting notes"
+        >
+          {d.notes.join(" · ")}
+        </p>
+      )
+    }
+  </div>
+
+  {
+    menuItems.length > 0 && (
+      /* The figures drop to the spec line rather than sitting level with the
+         name, so the name keeps a clear row of its own across the entry: one
+         body line box plus the spec's top margin, tracked off the type scale. */
+      <dl class="mono grid grid-cols-[minmax(0,1fr)_var(--menu-price-col)] content-start gap-x-4 gap-y-1 text-sm min-[46rem]:mt-[calc(var(--text-base)*var(--leading-normal)+var(--space-sm))]">
+        {menuItems.map(([name, price]) => (
+          <Fragment>
+            <dt class="min-w-0 text-ink-muted">{name}</dt>
+            <dd class="text-right tabular-nums text-ink">{formatPrice(price)}</dd>
+          </Fragment>
+        ))}
+      </dl>
+    )
+  }
+</li>

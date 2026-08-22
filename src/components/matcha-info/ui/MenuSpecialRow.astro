@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  name: string;
+  price: number;
+  description?: string;
+  /** Optional per-item photograph. Present → the row leads with a thumbnail. */
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+
+const { name, price, description, image, imageAlt = "" } = Astro.props;
+
+const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
+---
+
+<li
+  class="fade-up grid grid-cols-[minmax(0,1fr)_var(--menu-price-col)] items-start gap-x-4 py-4 min-[46rem]:grid-cols-[minmax(0,1fr)_minmax(0,var(--menu-prices-block))] min-[46rem]:gap-x-8"
+>
+  <div class="flex min-w-0 items-start gap-4">
+    {
+      image && (
+        <Image
+          src={image}
+          alt={imageAlt}
+          width={112}
+          densities={[1, 2]}
+          loading="lazy"
+          decoding="async"
+          class="aspect-square w-[var(--menu-item-img)] shrink-0 bg-paper-2 object-cover min-[46rem]:w-[var(--menu-item-img-lg)]"
+        />
+      )
+    }
+    <div class="min-w-0">
+      <span class="mono block text-md leading-tight tracking-snug text-ink">{name}</span>
+      {
+        description && (
+          <p class="mono mt-2 max-w-[54ch] text-sm leading-snug text-ink-muted">
+            {description}
+          </p>
+        )
+      }
+    </div>
+  </div>
+
+  <!-- Right-aligned in the same block width as the matcha price column, so every
+       figure on the page lands on one vertical. -->
+  <p class="mono pt-0.5 text-right text-sm tabular-nums text-ink">{formatPrice(price)}</p>
+</li>

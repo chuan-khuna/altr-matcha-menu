@@ -9,14 +9,33 @@ interface GalleryItem {
 
 interface Props {
   items: GalleryItem[];
+  /**
+   * Rendered width in px. Set it where the gallery sits in a narrow column (the
+   * menu) so Astro emits a sized image instead of the full-resolution original.
+   * Omitted → full size, which is what the blend pages want.
+   */
+  imageWidth?: number;
+  /**
+   * `contain` (default) letterboxes the whole frame — right for the cut-out
+   * product shots on the blend pages. `cover` fills the square, which is what
+   * photographs with their own background need so no white box shows against
+   * the paper.
+   */
+  fit?: "contain" | "cover";
+  /**
+   * Scroll-triggered fade-in. Turn it OFF inside a `position: sticky` rail: the
+   * rail can already be pinned when it first enters the viewport, and a pinned
+   * element that starts at `opacity: 0` has no reliable moment to fade in.
+   */
+  animate?: boolean;
 }
 
-const { items } = Astro.props;
+const { items, imageWidth, fit = "contain", animate = true } = Astro.props;
 ---
 
 {
   items.length > 0 && (
-    <div class="fade-up" data-gallery>
+    <div class:list={[{ "fade-up": animate }]} data-gallery>
       <!-- image stage — stacked slides, crossfade transition -->
       <div class="gallery-stage">
         {items.map((item, i) => (
@@ -28,8 +47,9 @@ const { items } = Astro.props;
             <Image
               src={item.image}
               alt={item.description ?? ""}
-              class="h-full w-full object-contain"
+              class:list={["h-full w-full", fit === "cover" ? "object-cover" : "object-contain"]}
               quality={90}
+              {...(imageWidth ? { width: imageWidth, densities: [1, 2] } : {})}
             />
           </figure>
         ))}

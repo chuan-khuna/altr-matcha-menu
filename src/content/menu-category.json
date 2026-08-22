@@ -1,0 +1,56 @@
+[
+  {
+    "id": "clear",
+    "label": "Clear",
+    "gloss": "No milk. The leaf on its own.",
+    "order": 1,
+    "source": "matcha",
+    "gallery": [{ "image": "./menu-categories/clear.jpg" }],
+    "sweetnessScale": false
+  },
+  {
+    "id": "latte",
+    "label": "Latte",
+    "gloss": "The same leaf, with milk.",
+    "order": 2,
+    "source": "matcha",
+    "gallery": [{ "image": "./menu-categories/latte.jpg" }],
+    "sweetnessScale": true
+  },
+  {
+    "id": "dessert",
+    "label": "Dessert",
+    "gloss": "A blend of its own — coarser grind, never koicha.",
+    "order": 3,
+    "source": "desserts",
+    "gallery": [
+      { "image": "./menu-categories/dessert.jpg", "description": "Affogato with monaka" }
+    ],
+    "sweetnessScale": false
+  },
+  {
+    "id": "powder",
+    "label": "Powder",
+    "gloss": "Tins and pouches to take home, ground to order.",
+    "order": 4,
+    "source": "matcha",
+    "gallery": [
+      {
+        "image": "./menu-categories/powder.jpg",
+        "description": "O-Y-T Signature Blend · Yame / Hoshinomura · MTCH"
+      }
+    ],
+    "sweetnessScale": false
+  },
+  {
+    "id": "teawear",
+    "label": "Teawear",
+    "gloss": "The bowls and whisks we use at the counter.",
+    "order": 5,
+    "source": "teawear",
+    "gallery": [
+      { "image": "./menu-categories/teawear.jpg", "description": "Katakuchi bowl, matte black" }
+    ],
+    "sweetnessScale": false
+  }
+]

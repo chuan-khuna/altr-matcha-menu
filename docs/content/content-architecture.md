@@ -12,8 +12,11 @@ Content files live in `src/content/<plural-folder>/` as `.md` files.
 | Collection key | Definition file | Content folder | Format |
 |---|---|---|---|
 | `matcha` | `src/collection-definitions/matcha.ts` | `src/content/matcha/<yyyy>/<slug>/` | `index.md` or `index.mdx` |
-| `matchaDrinks` | `src/collection-definitions/matcha-drink.ts` | `src/content/matcha-drinks/` (`clear/`, `latte/`, `powder/`) | `.md` or `.mdx` |
 | `desserts` | `src/collection-definitions/dessert.ts` | `src/content/desserts/` | `.md` or `.mdx` |
+| `menuCategories` | `src/collection-definitions/menu-category.ts` | `src/content/menu-category.json` (+ images in `src/content/menu-categories/`) | single JSON array |
+
+> `matchaDrinks` / `src/content/matcha-drinks/` used to be listed here but has
+> never existed in the tree or in `content.config.ts`. Row removed.
 
 ---
 
@@ -23,7 +26,7 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 
 | File | Exports | Used by |
 |---|---|---|
-| `src/data/site.ts` | `address`, `hours`, `reach`, `nav` | `Contact.astro`, `Nav.astro` |
+| `src/data/site.ts` | `address`, `hours`, `reach`, `nav` | `Contact.astro`, `Nav.astro`, `Footer.astro` |
 
 ---
 
