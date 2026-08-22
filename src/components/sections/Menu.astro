@@ -128,11 +128,13 @@ const RAIL_IMAGE_PX = 272;
               aria-labelledby={headId}
             >
               {/* S4 · category head — the full measure, label above gloss. The
-                  rule under it is what everything below belongs to. It scrolls
-                  away with its entries: the pinned index above already says
-                  which category you are in, and stacking a second pinned band
-                  under it would eat a third of a phone screen. */}
-              <header class="border-b border-ink pt-2 pb-2">
+                  rule under it is what everything below belongs to. Pins under
+                  the category index from 46rem up, where the gloss still sets on
+                  one line; below that the nav, the index and the head together
+                  would eat too much of a phone screen. bg-paper so the entries
+                  pass behind it, and z-20 because the photo rail is a later
+                  positioned sibling that would otherwise paint over it. */}
+              <header class="border-b border-ink pt-2 pb-2 min-[46rem]:sticky min-[46rem]:top-[calc(var(--nav-h)+var(--menu-nav-h))] min-[46rem]:z-20 min-[46rem]:bg-paper">
                 <h2
                   id={headId}
                   data-optical
@@ -158,7 +160,7 @@ const RAIL_IMAGE_PX = 272;
                     blend pages, on the paper. No frame, no radius, no shadow. It
                     travels down with the entries it belongs to, from 62rem up. */}
                 {hasGallery && (
-                  <div class="w-[var(--menu-cat-img)] min-[62rem]:sticky min-[62rem]:top-[calc(var(--nav-h)+var(--menu-nav-h)+var(--space-lg))] min-[62rem]:z-10 min-[62rem]:w-full min-[62rem]:self-start">
+                  <div class="w-[var(--menu-cat-img)] min-[62rem]:sticky min-[62rem]:top-[calc(var(--nav-h)+var(--menu-nav-h)+var(--menu-head-h)+var(--space-lg))] min-[62rem]:z-10 min-[62rem]:w-full min-[62rem]:self-start">
                     <MatchaGallery
                       items={gallery!}
                       imageWidth={RAIL_IMAGE_PX}

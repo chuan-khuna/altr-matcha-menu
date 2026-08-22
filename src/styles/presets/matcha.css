@@ -140,9 +140,19 @@
     --menu-cat-img-lg: 17rem; /* category gallery · >=62rem            */
 
     /* Height of the pinned category index. Fixed rather than derived: the bar
-       is one line of micro-type, and everything measured off it — the photo
-       rail's sticky offset, each category's scroll-margin — uses this number. */
+       is one line of micro-type. Everything that pins or lands under it is
+       offset by this number. */
     --menu-nav-h: 2.75rem;
+
+    /* Height of a pinned category head, derived from the type scale rather than
+       measured: top padding + label line + gap + gloss line + bottom padding +
+       the ink rule. The head pins under the index bar and the photo rail pins
+       under both, so the three never overlap. Holds as long as label and gloss
+       are one line each — at the 62rem measure they are. */
+    --menu-head-h: calc(
+      var(--space-2) + var(--text-lg) * var(--leading-tight) + var(--space-1) + var(--text-md) *
+        var(--leading-snug) + var(--space-2) + 1px
+    );
     --menu-item-img: 5.5rem; /* item thumbnail · narrow               */
     --menu-item-img-lg: 7rem; /* item thumbnail · >=46rem              */
 
