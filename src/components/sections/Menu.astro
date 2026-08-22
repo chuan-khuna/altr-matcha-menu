@@ -100,9 +100,12 @@ const navItems = groups.map((group) => ({
 const RAIL_IMAGE_PX = 272;
 ---
 
+{/* Clears the nav only when nothing precedes it. With a seasonal menu above,
+    that section has already cleared it and this is just the gap between the
+    two. */}
 <section
   id="menu"
-  class="page-gutter pt-[calc(var(--nav-h)+3rem)] pb-16"
+  class="page-gutter pt-12 pb-16 first:pt-[calc(var(--nav-h)+3rem)]"
   aria-label="Menu"
 >
   <div class="mx-auto max-w-[var(--content-max)]">

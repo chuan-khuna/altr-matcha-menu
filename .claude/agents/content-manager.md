@@ -25,6 +25,9 @@ Read these before acting — they are the source of truth, not your training dat
   static data file. **Start here.**
 - `docs/content/how-to-manage-matcha.md` — matcha blend frontmatter format.
 - `docs/content/how-to-manage-desserts.md` — dessert entry frontmatter format.
+- `docs/content/how-to-manage-teawear.md` — teawear entry frontmatter format.
+- `docs/content/how-to-manage-seasonal-menus.md` — the seasonal archive
+  (`src/content/seasonal.json`) and the per-season layout components.
 - `docs/content/how-to-manage-menu-categories.md` — menu category config
   (`src/content/menu-category.json`) and category images.
 - `docs/content/how-to-manage-site-data.md` — `src/data/site.ts` exports
@@ -49,6 +52,8 @@ complete until the doc reflects the live schema.
 | ---------------------------------------- | ------------------------------------ |
 | `src/collection-definitions/matcha.ts`   | `docs/content/how-to-manage-matcha.md`   |
 | `src/collection-definitions/dessert.ts`  | `docs/content/how-to-manage-desserts.md` |
+| `src/collection-definitions/teawear.ts`  | `docs/content/how-to-manage-teawear.md` |
+| `src/collection-definitions/seasonal.ts` + `src/content/seasonal.json` + `src/components/seasonal/**` | `docs/content/how-to-manage-seasonal-menus.md` |
 | `src/collection-definitions/menu-category.ts` + `src/content/menu-category.json` | `docs/content/how-to-manage-menu-categories.md` |
 | `src/data/site.ts`                       | `docs/content/how-to-manage-site-data.md` |
 

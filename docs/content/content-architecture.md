@@ -14,6 +14,7 @@ Content files live in `src/content/<plural-folder>/` as `.md` files.
 | `matcha` | `src/collection-definitions/matcha.ts` | `src/content/matcha/<yyyy>/<slug>/` | `index.md` or `index.mdx` |
 | `desserts` | `src/collection-definitions/dessert.ts` | `src/content/desserts/<slug>/index.md` | `.md` |
 | `teawear` | `src/collection-definitions/teawear.ts` | `src/content/teawear/<slug>/index.md` | `.md` |
+| `seasonal` | `src/collection-definitions/seasonal.ts` | `src/content/seasonal.json` (+ one layout per season in `src/components/seasonal/`) | single JSON array |
 | `menuCategories` | `src/collection-definitions/menu-category.ts` | `src/content/menu-category.json` (+ images in `src/content/menu-categories/`) | single JSON array |
 
 > `matchaDrinks` / `src/content/matcha-drinks/` used to be listed here but has
@@ -29,6 +30,15 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 |---|---|---|
 | `src/data/site.ts` | `announcement`, `address`, `hours`, `reach`, `nav` | `Contact.astro`, `Nav.astro`, `Announcement.astro`, `Footer.astro` |
 
+### Helper modules
+
+| File | Exports | Used by |
+|---|---|---|
+| `src/lib/seasonal.ts` | `getSeasons`, `getLiveSeasons`, `seasonLayout`, `seasonHref` | `Seasonal.astro`, `seasonal/[slug].astro`, `Footer.astro` |
+
+`seasonal.ts` also holds the layout registry — the glob over
+`src/components/seasonal/*.astro` that maps a slug to the component rendering it.
+
 ---
 
 ## Naming conventions
@@ -38,7 +48,7 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 | Collection definition file | `kebab-case-singular.ts` | `matcha-drink.ts` |
 | Collection export variable | `camelCasePlural` | `matchaDrinks` |
 | Content folder | `kebab-case-plural/` | `matcha-drinks/` |
-| — uncountable noun | `kebab-case-singular/` | `matcha/`, `teawear/` |
+| — uncountable noun | `kebab-case-singular/` | `matcha/`, `teawear/`, `seasonal` |
 | Content file | `kebab-case.md` | `hana-blend.md` |
 
 ---

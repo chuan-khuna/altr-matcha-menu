@@ -9,15 +9,26 @@ interface Props {
   notes?: string[];
   image?: ImageMetadata;
   imageAlt?: string;
+  /**
+   * Widest this tile gets, in px — Astro emits at that width rather than at the
+   * source resolution. The default is the entries column at the 62rem measure,
+   * three across, beside the category photo rail. A grid with no rail beside it
+   * (a seasonal menu) gets wider tiles and passes its own number.
+   */
+  imageWidth?: number;
 }
 
-const { name, prices, description, notes, image, imageAlt = "" } = Astro.props;
+const {
+  name,
+  prices,
+  description,
+  notes,
+  image,
+  imageAlt = "",
+  imageWidth = 240,
+} = Astro.props;
 
 const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
-
-/* Widest a tile gets: the entries column at the 62rem measure, three across.
-   Astro emits at this width rather than at the source resolution. */
-const TILE_IMAGE_PX = 240;
 
 /* One way to buy it — the label is the dessert's name, so printing it again
    under the figure says nothing. Several, and every label has to show. */
@@ -30,7 +41,7 @@ const single = prices.length === 1;
       <Image
         src={image}
         alt={imageAlt}
-        width={TILE_IMAGE_PX}
+        width={imageWidth}
         densities={[1, 2]}
         loading="lazy"
         decoding="async"

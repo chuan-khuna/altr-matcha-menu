@@ -1,0 +1,54 @@
+---
+import type { Season } from "@/lib/seasonal";
+import { seasonHref } from "@/lib/seasonal";
+
+interface Props {
+  season: Season;
+  /** `h1` on the season's own page, `h2` where it sits inside the landing page. */
+  headingLevel?: "h1" | "h2";
+  /** Link the title to the season's page. On by default; off on the page itself. */
+  linked?: boolean;
+}
+
+const { season, headingLevel = "h2", linked = true } = Astro.props;
+const { slug, title, display, description } = season.data;
+
+const Heading = headingLevel;
+const href = seasonHref(slug);
+---
+
+{/* The head every season opens on, so the archive, the landing page and the
+    season's own page all name a season the same way. What comes after it is
+    the season's own business. */}
+<header class="fade-up border-b border-ink pb-3">
+  <p class="mono text-xs uppercase tracking-widest text-ink-muted">
+    Seasonal · {display}
+  </p>
+
+  <Heading
+    id={`seasonal-${slug}-label`}
+    data-optical
+    class="display mt-3 text-2xl italic leading-tight tracking-snug text-ink"
+  >
+    {
+      linked ? (
+        <a
+          href={href}
+          class="border-b border-sand transition-colors duration-150 hover:border-accent hover:text-accent"
+        >
+          {title}
+        </a>
+      ) : (
+        title
+      )
+    }
+  </Heading>
+
+  {
+    description && (
+      <p class="display mt-2 max-w-[46ch] text-md italic leading-snug text-ink-muted">
+        {description}
+      </p>
+    )
+  }
+</header>

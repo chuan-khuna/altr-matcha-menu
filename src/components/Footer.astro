@@ -1,10 +1,20 @@
 ---
 import { address, hours, reach } from "@/data/site";
+import { getSeasons, seasonHref } from "@/lib/seasonal";
+
 const year = new Date().getFullYear();
+
+/* The seasonal archive, newest first. Every season we have run stays here once
+   it leaves the landing page, so a menu that is over is still somewhere. */
+const seasons = await getSeasons();
+const here = Astro.url.pathname.replace(/\/$/, "");
 ---
 
 <footer class="page-gutter border-t border-border pb-16 pt-10">
   <div class="mx-auto max-w-[var(--content-max)]">
+    {/* Sign-off and archive sit side by side from 52rem; below that the archive
+        follows the address rather than crowding it. */}
+    <div class="flex flex-col gap-12 min-[52rem]:flex-row min-[52rem]:justify-between min-[52rem]:gap-16">
     <div>
       <p data-optical class="display text-2xl italic leading-snug text-ink">
         Yours,<br />
@@ -46,6 +56,41 @@ const year = new Date().getFullYear();
         }
         <span class="ml-3 text-sand">· {year}</span>
       </p>
+    </div>
+
+    {
+      seasons.length > 0 && (
+        <nav
+          aria-label="Seasonal menu archive"
+          class="min-[52rem]:w-[20rem] min-[52rem]:shrink-0"
+        >
+          <h2 class="mono text-xs uppercase tracking-widest text-ink-muted">
+            Seasonal menu
+          </h2>
+          <ul class="m-0 mt-4 list-none divide-y divide-rule border-t border-rule p-0" role="list">
+            {seasons.map((season) => {
+              const href = seasonHref(season.data.slug);
+              return (
+                <li>
+                  <a
+                    href={href}
+                    aria-current={here === href ? "page" : undefined}
+                    class="group flex items-baseline justify-between gap-4 py-2.5"
+                  >
+                    <span class="display text-md italic leading-snug text-ink transition-colors duration-150 group-hover:text-accent group-aria-[current=page]:text-ink-muted">
+                      {season.data.title}
+                    </span>
+                    <span class="mono shrink-0 text-xs tracking-wide text-ink-muted">
+                      {season.data.display}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )
+    }
     </div>
   </div>
 </footer>
