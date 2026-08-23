@@ -122,7 +122,12 @@
     /* ─── project: layout ─── */
 
     --page-gutter: clamp(1rem, 5vw, 4rem);
-    --content-max: 80rem;
+    /* One measure for the whole site. The nav row, the announcement strip, the
+       content and the footer all hang off the same two verticals, so the
+       wordmark, the MENU link and the right edge of every rule under them land
+       on one line rather than on three. Prose inside is held to its own ch
+       measure, so the width buys wider grids, not longer lines. */
+    --content-max: 72rem;
     /* Everything on the page offsets off --nav-h, so it holds the height of the
        whole fixed block: the nav row plus the announcement strip beneath it.
        Change either row and the menu index, the pinned category heads and the
@@ -139,7 +144,6 @@
     /* ─── project: menu spec-sheet ─── */
     /* The menu is a tabular record, so its columns are fixed rather than fluid:
        every price figure on the page lands on the same vertical. */
-    --menu-measure: 62rem; /* readable width of the whole menu block */
     --menu-price-col: 3.5rem; /* the numerals                          */
     --menu-prices-block: 16.5rem; /* label + numerals, constant            */
     --menu-cat-img: min(100%, 20rem); /* category gallery · narrow       */
@@ -154,7 +158,7 @@
        measured: top padding + label line + gap + gloss line + bottom padding +
        the ink rule. The head pins under the index bar and the photo rail pins
        under both, so the three never overlap. Holds as long as label and gloss
-       are one line each — at the 62rem measure they are. */
+       are one line each — at the page measure they are. */
     --menu-head-h: calc(
       var(--space-2) + var(--text-lg) * var(--leading-tight) + var(--space-1) + var(--text-md) *
         var(--leading-snug) + var(--space-2) + 1px

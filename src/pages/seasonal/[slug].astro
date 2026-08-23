@@ -34,12 +34,10 @@ const SeasonMenu = seasonLayout(season.data.slug)!;
     tabindex="-1"
     class="page-gutter pt-[calc(var(--nav-h)+3rem)] pb-24"
   >
+    {/* The page measure, so a season reads at the same width here as it does
+        on the landing page, and the nav above it ends on the same vertical. */}
     <div class="mx-auto max-w-[var(--content-max)]">
-      {/* The measure the standing menu is set on, so a season reads at the same
-          width here as it does on the landing page. */}
-      <div class="max-w-[var(--menu-measure)]">
-        <SeasonMenu season={season} headingLevel="h1" />
-      </div>
+      <SeasonMenu season={season} headingLevel="h1" />
     </div>
   </main>
 </Layout>

@@ -39,10 +39,10 @@ const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
    file body is the ordinary case, not a missing one. */
 const hasStory = (entry.body ?? "").trim().length > 0;
 
-/* Rendered width of the photograph, in px — the 4-column aside at the page's
-   64rem measure. Astro emits at that width plus a 2x variant rather than at the
-   source resolution. */
-const IMAGE_PX = 340;
+/* Rendered width of the photograph, in px — the 4-column aside at the page
+   measure, rounded up. Astro emits at that width plus a 2x variant rather than
+   at the source resolution. */
+const IMAGE_PX = 380;
 ---
 
 <Layout
@@ -51,7 +51,7 @@ const IMAGE_PX = 340;
 >
   <Nav showBack />
   <main class="page-gutter pb-24 pt-[calc(var(--nav-h)+5rem)]">
-    <div class="mx-auto max-w-[64rem]">
+    <div class="mx-auto max-w-[var(--content-max)]">
       <!-- Specimen header — the italic name a blend page carries, set a step
            down: a bowl is one line long and does not need the full specimen
            size. The price sits with it, so the piece is named and priced in one

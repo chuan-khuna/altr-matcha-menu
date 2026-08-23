@@ -11,7 +11,7 @@ interface Props {
   imageAlt?: string;
   /**
    * Widest this tile gets, in px — Astro emits at that width rather than at the
-   * source resolution. The default is the entries column at the 62rem measure,
+   * source resolution. The default is the entries column at the page measure,
    * three across, beside the category photo rail. A grid with no rail beside it
    * (a seasonal menu) gets wider tiles and passes its own number.
    */
@@ -31,7 +31,7 @@ const {
   notes,
   image,
   imageAlt = "",
-  imageWidth = 240,
+  imageWidth = 280,
   href,
 } = Astro.props;
 
