@@ -69,10 +69,10 @@ const single = prices.length === 1;
         {formatPrice(prices[0][1])}
       </p>
     ) : (
-      <dl class="mono grid grid-cols-[minmax(0,1fr)_var(--menu-price-col)] content-start gap-x-4 gap-y-1 pt-0.5 text-sm">
+      <dl class="mono grid grid-cols-[minmax(0,1fr)_auto] content-start gap-x-2 gap-y-1 pt-0.5 text-sm">
         {prices.map(([label, price]) => (
           <Fragment>
-            <dt class="min-w-0 text-ink-muted">{label}</dt>
+            <dt class="leader min-w-0 text-ink-muted">{label}</dt>
             <dd class="text-right tabular-nums text-ink">{formatPrice(price)}</dd>
           </Fragment>
         ))}
