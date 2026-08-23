@@ -224,3 +224,20 @@
 .hairline-ink {
   border-top: var(--rule-ink);
 }
+/* Menu leader — the dotted run between an item and its figure, so the eye
+   tracks the row across the gap the price column opens. Put it on the label:
+   the rule grows into whatever the label leaves, which works both inside a
+   fixed price grid (the standing menu) and in a plain three-part row (a blend
+   page). An empty flex item takes its bottom edge as its baseline, so the rule
+   lands on the text baseline and is lifted clear of it by hand. */
+.leader {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+.leader::after {
+  content: "";
+  flex: 1 1 var(--space-lg);
+  border-bottom: var(--rule-dotted);
+  transform: translateY(-3px);
+}

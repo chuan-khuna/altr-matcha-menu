@@ -35,8 +35,7 @@ const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join('
         <div class="mono mt-4 grid gap-1 text-sm sm:hidden">
           {menuItems.map(([name, price]) => (
             <div class="flex items-baseline gap-2">
-              <span class="min-w-0 text-ink">{name}</span>
-              <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true" />
+              <span class="leader min-w-0 flex-1 text-ink">{name}</span>
               <span class="tabular-nums text-ink">{formatPrice(price)}</span>
             </div>
           ))}
@@ -49,8 +48,7 @@ const cultivarOrigin = [d.info?.cultivar, d.info?.origin].filter(Boolean).join('
         <div class="mono hidden min-w-[14rem] gap-1 text-sm sm:grid">
           {menuItems.map(([name, price]) => (
             <div class="flex items-baseline gap-2">
-              <span class="min-w-0 text-ink">{name}</span>
-              <span class="flex-1 translate-y-[-3px] border-b border-dotted border-sand" aria-hidden="true" />
+              <span class="leader min-w-0 flex-1 text-ink">{name}</span>
               <span class="tabular-nums text-ink">{formatPrice(price)}</span>
             </div>
           ))}

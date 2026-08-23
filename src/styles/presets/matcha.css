@@ -142,9 +142,17 @@
     --label-col: 8rem; /* definition-list / contact label column */
 
     /* ─── project: menu spec-sheet ─── */
-    /* The menu is a tabular record, so its columns are fixed rather than fluid:
-       every price figure on the page lands on the same vertical. */
-    --menu-price-col: 3.5rem; /* the numerals                          */
+    /* The menu is a tabular record: every price figure on the page lands on the
+       same vertical. It does so because the prices block is a constant width
+       and the figures are right-aligned against its edge — the numeral column
+       itself sizes to its content, so a leader runs up to the digits instead of
+       stopping at a fixed edge with dead space behind it. */
+    --menu-price-col: 3.5rem; /* lone figure on a special row          */
+    /* What a blend entry is set on when the price block drops under the prose
+       instead of sitting beside it: spec line, tasting notes and figures all
+       stop on one vertical, so a stacked entry reads as one column rather than
+       as prose with a price stranded at the far edge. */
+    --menu-entry-measure: 30rem;
     --menu-prices-block: 16.5rem; /* label + numerals, constant            */
     --menu-cat-img: min(100%, 20rem); /* category gallery · narrow       */
     --menu-cat-img-lg: 17rem; /* category gallery · >=62rem            */
@@ -180,6 +188,7 @@
     --rule-hairline: 1px solid var(--border);
     --rule-ink: 1px solid var(--foreground);
     --rule-accent: 1px solid var(--primary);
+    --rule-dotted: 1px dotted var(--accent); /* menu leaders — sand */
 
     /* ─── compat aliases (existing code keeps working) ─── */
 

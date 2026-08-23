@@ -89,10 +89,10 @@ const Frame = href ? "a" : "div";
       /* One row per price — label left, figure right against the tile edge, so a
          dessert sold three ways reads as a short column instead of a wrapped
          line. */
-      <dl class="mono mt-1 grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-0.5 text-sm">
+      <dl class="mono mt-1 grid grid-cols-[minmax(0,1fr)_auto] gap-x-2 gap-y-0.5 text-sm">
         {prices.map(([label, price]) => (
           <Fragment>
-            <dt class="min-w-0 text-ink-muted">{label}</dt>
+            <dt class="leader min-w-0 text-ink-muted">{label}</dt>
             <dd class="text-right tabular-nums text-ink">{formatPrice(price)}</dd>
           </Fragment>
         ))}
