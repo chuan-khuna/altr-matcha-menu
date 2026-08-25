@@ -6,10 +6,10 @@ import { file } from 'astro/loaders';
  * standing menu, in one file.
  *
  * This collection carries no items or prices of its own. Each season's menu is
- * a component of its own at `src/components/seasonal/<slug>.astro`, laid out
+ * a folder of its own at `src/components/seasonal/<slug>/`, laid out
  * however that season wants to be laid out; this file only names the seasons,
  * orders them, and gives the footer archive and `/seasonal/<slug>` something to
- * list. A row whose component is missing is not rendered and not linked.
+ * list. A row whose folder is missing is not rendered and not linked.
  *
  * `seasonal` has no natural plural, so the definition file, the exported
  * variable and the content file are all singular (the same exception the
@@ -18,7 +18,7 @@ import { file } from 'astro/loaders';
 export const seasonal = defineCollection({
   loader: file('./src/content/seasonal.json', {
     /* The rows are keyed by `slug` rather than `id` — it is the component
-       filename and the URL segment, so naming it `slug` keeps the JSON, the
+       folder name and the URL segment, so naming it `slug` keeps the JSON, the
        component and the link reading as the same thing. */
     parser: (text) =>
       (JSON.parse(text) as Record<string, unknown>[]).map((row) => ({
@@ -29,8 +29,8 @@ export const seasonal = defineCollection({
   schema: z.object({
     /**
      * `<yyyy>-<season>`. Three things at once: the id of this row, the URL at
-     * `/seasonal/<slug>`, and the name of the component that renders it. Change
-     * it and all three move together.
+     * `/seasonal/<slug>`, and the folder holding the component that renders it.
+     * Change it and all three move together.
      */
     slug: z.string(),
     /** Serif head for the season — "Sakura", "Christmas". */

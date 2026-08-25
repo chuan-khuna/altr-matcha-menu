@@ -13,16 +13,22 @@ export type SeasonLayout = (_props: SeasonLayoutProps) => unknown;
 
 /**
  * Every season's layout, keyed by slug. A season is on the site as soon as two
- * things exist: a row in `src/content/seasonal.json` and a component named
- * after its slug in this folder. There is no third place to register it, and a
- * row without a component is filtered out rather than linked to a 404.
+ * things exist: a row in `src/content/seasonal.json` and a folder named after
+ * its slug in this directory with an `index.astro` in it. There is no third
+ * place to register it, and a row without a folder is filtered out rather than
+ * linked to a 404.
+ *
+ * The glob matches the `index.astro` and nothing else, so a season's
+ * photographs — and anything shared, in `ui/` — sit inside the tree without
+ * being mistaken for a season.
  */
 const layouts = new Map<string, SeasonLayout>(
   Object.entries(
-    import.meta.glob<{ default: SeasonLayout }>('/src/components/seasonal/*.astro', {
-      eager: true,
-    })
-  ).map(([path, mod]) => [path.split('/').at(-1)!.replace(/\.astro$/, ''), mod.default])
+    import.meta.glob<{ default: SeasonLayout }>(
+      '/src/components/seasonal/*/index.astro',
+      { eager: true }
+    )
+  ).map(([path, mod]) => [path.split('/').at(-2)!, mod.default])
 );
 
 export const seasonLayout = (slug: string) => layouts.get(slug);
