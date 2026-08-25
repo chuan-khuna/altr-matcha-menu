@@ -3,8 +3,8 @@
 Collection key: `seasonal`
 Definition: `src/collection-definitions/seasonal.ts`
 Content file: `src/content/seasonal.json`
-Layouts: `src/components/seasonal/<slug>.astro`
-File format: single JSON array + one `.astro` component per season
+Layouts: `src/components/seasonal/<slug>/index.astro`
+File format: single JSON array + one folder per season
 
 The short runs that sit beside the standing menu — Sakura in spring, Christmas
 in December.
@@ -16,11 +16,11 @@ wants to be laid out. Neither works without the other:
 ```
 src/content/seasonal.json                  # the archive — slug, title, date, description
 src/components/seasonal/
-  2026-sakura.astro                        # the layout, named after the slug
-  2026-sakura/                             # its photographs
-    cover.jpg  sakura-float.jpg  …
-  2025-christmas.astro
+  2026-sakura/                             # the season, named after the slug
+    index.astro                            # its layout
+    cover.jpg  sakura-float.jpg  …         # its photographs
   2025-christmas/
+    index.astro
     cover.jpg
   ui/
     SeasonHead.astro                       # the head every season opens on
@@ -43,7 +43,7 @@ src/components/seasonal/
 
 ```jsonc
 {
-  "slug": "2026-sakura",      // <yyyy>-<season>. The row id, the URL, and the component filename.
+  "slug": "2026-sakura",      // <yyyy>-<season>. The row id, the URL, and the component folder.
   "title": "Sakura",          // serif head for the season
   "year_month": "2026-03",    // yyyy-mm — sorts the archive, newest first. Never printed.
   "display": "Spring 2026",   // what the archive prints beside the title
@@ -53,9 +53,9 @@ src/components/seasonal/
 ```
 
 `slug` does three jobs at once — it is the row's id, the URL at
-`/seasonal/<slug>`, and the name of the component that renders it. Change it and
-rename the component and its image folder to match, or the season drops off the
-site.
+`/seasonal/<slug>`, and the name of the folder holding the component that
+renders it. Change it and rename the folder to match, or the season drops off
+the site.
 
 `live` is the only thing that decides what the landing page shows. A season stays
 in the footer archive for good; retiring one is a one-word edit. Set it on more
@@ -67,10 +67,10 @@ than one and the index stacks them, newest first.
 
 1. **Add the row** to `src/content/seasonal.json`. Set `live: true` and set the
    outgoing season's `live` back to `false`.
-2. **Make the image folder** `src/components/seasonal/<slug>/` and put the
+2. **Make the folder** `src/components/seasonal/<slug>/` and put the
    photographs in it.
-3. **Write the layout** at `src/components/seasonal/<slug>.astro`. It receives
-   `season` and `headingLevel` and should open with `<SeasonHead>`:
+3. **Write the layout** at `src/components/seasonal/<slug>/index.astro`. It
+   receives `season` and `headingLevel` and should open with `<SeasonHead>`:
 
    ```astro
    ---
@@ -105,9 +105,9 @@ archive all pick it up — there is no third place to register it.
 | `/seasonal/<slug>` | `src/pages/seasonal/[slug].astro` | that one season, head as `<h1>` |
 | Footer, every page | `src/components/Footer.astro` | every season, newest first |
 
-A row whose component is missing is **dropped everywhere** rather than linked to
-a 404 — see `getSeasons()` in `src/lib/seasonal.ts`. That is the safe way to
-sketch a season in the JSON before its layout exists.
+A row whose folder is missing is **dropped everywhere** rather than linked to a
+404 — see `getSeasons()` in `src/lib/seasonal.ts`. That is the safe way to sketch
+a season in the JSON before its layout exists.
 
 ---
 
@@ -120,9 +120,9 @@ sketch a season in the JSON before its layout exists.
   photographed season — it takes `name`, `prices`, `description`, `notes`,
   `image`, `imageAlt` and an optional `imageWidth`. Ignore it when the season
   wants something else.
-- Keep `<slug>.astro` files flat in `src/components/seasonal/`. The layout
-  registry globs that folder one level deep, so anything shared goes in
-  `src/components/seasonal/ui/` — a component dropped beside the seasons would
-  be registered as a season.
+- One folder per season, holding its `index.astro` and its photographs. The
+  layout registry globs `src/components/seasonal/*/index.astro`, so a folder is
+  a season only once it has an `index.astro` — shared components live in
+  `src/components/seasonal/ui/` and are never mistaken for one.
 - **Every photograph and price in the tree is mock** — stand-ins to shape the
   layout, not final photography or real figures.

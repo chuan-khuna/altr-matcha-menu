@@ -14,7 +14,7 @@ Content files live in `src/content/<plural-folder>/` as `.md` files.
 | `matcha` | `src/collection-definitions/matcha.ts` | `src/content/matcha/<yyyy>/<slug>/` | `index.md` or `index.mdx` |
 | `desserts` | `src/collection-definitions/dessert.ts` | `src/content/desserts/<slug>/index.md` | `.md` |
 | `teaware` | `src/collection-definitions/teaware.ts` | `src/content/teaware/<slug>/index.md` | `.md` |
-| `seasonal` | `src/collection-definitions/seasonal.ts` | `src/content/seasonal.json` (+ one layout per season in `src/components/seasonal/`) | single JSON array |
+| `seasonal` | `src/collection-definitions/seasonal.ts` | `src/content/seasonal.json` (+ one folder per season in `src/components/seasonal/`) | single JSON array |
 | `menuCategories` | `src/collection-definitions/menu-category.ts` | `src/content/menu-category.json` (+ images in `src/content/menu-categories/`) | single JSON array |
 
 > `matchaDrinks` / `src/content/matcha-drinks/` used to be listed here but has
@@ -37,7 +37,8 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 | `src/lib/seasonal.ts` | `getSeasons`, `getLiveSeasons`, `seasonLayout`, `seasonHref` | `Seasonal.astro`, `seasonal/[slug].astro`, `Footer.astro` |
 
 `seasonal.ts` also holds the layout registry — the glob over
-`src/components/seasonal/*.astro` that maps a slug to the component rendering it.
+`src/components/seasonal/*/index.astro` that maps a slug to the component
+rendering it. Each season is one folder: its `index.astro` and its photographs.
 
 ---
 
