@@ -77,4 +77,5 @@ renders it.
   is `camelCasePlural`, content folder is `kebab-case-plural/`. Uncountable nouns
   (e.g. "matcha") use the singular for both variable and folder.
 - All prices are in Thai Baht (THB).
-- Save LLM artifacts to `docs/artifacts/<type>/yyyy-mm-dd-<topic>.md`.
+- Save session artifacts (PRDs, plans, research and design notes) under
+  `.scratch/<feature-slug>/` — see `docs/agents/issue-tracker.md`.

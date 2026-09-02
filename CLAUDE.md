@@ -141,19 +141,16 @@ If an animation works in isolation but breaks on the site, first check whether t
 
 Design references and inspiration files are stored in `_references/` (gitignored — do not commit). Ignore all files in that folder.
 
-## LLM-generated artifacts
+## Agent skills
 
-Artifacts produced during AI-assisted sessions (plans, research notes, design decisions) are stored under:
+### Issue tracker
 
-```
-docs/artifacts/<type>/yyyy-mm-dd-<topic>.md
-```
+Issues, specs, and session artifacts (PRDs, plans, research and design notes) live as local markdown under `.scratch/<feature-slug>/`. See `docs/agents/issue-tracker.md`.
 
-| Type       | Contents                                                   |
-| ---------- | ---------------------------------------------------------- |
-| `prd`      | Product requirement documents and feature specs            |
-| `plan`     | Implementation plans and architectural decisions           |
-| `research` | Research notes, reference analysis, technology comparisons |
-| `design`   | Design decisions, UX notes, visual direction               |
+### Triage labels
 
-When producing an artifact during a session, save it to the appropriate subdirectory. Do not place artifacts directly in `docs/` root.
+The five canonical triage roles, used verbatim as status strings. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` + `docs/adr/` at the repo root. See `docs/agents/domain.md`.
