@@ -1,8 +1,13 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { entryId } from '@/lib/content';
 
 export const matcha = defineCollection({
-  loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/matcha' }),
+  loader: glob({
+    pattern: '**/index.{md,mdx}',
+    base: './src/content/matcha',
+    generateId: entryId,
+  }),
   schema: ({ image }) => z.object({
     name: z.string(),
     order: z.number().default(0),

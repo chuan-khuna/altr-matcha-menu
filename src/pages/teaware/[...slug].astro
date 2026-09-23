@@ -5,16 +5,13 @@ import Layout from "@/layouts/Layout.astro";
 import Nav from "@/components/Nav.astro";
 import Story from "@/components/matcha-info/Story.astro";
 
-/* One page per piece. The folder name is the slug, the same way the blend pages
-   take theirs — `teaware/mtch-shade/index.md` → `/teaware/mtch-shade`. */
+/* One page per piece. The entry id is the folder path, the same way the blend
+   pages take theirs — `teaware/mtch-shade/index.md` → `/teaware/mtch-shade`. */
 export async function getStaticPaths() {
   const pieces = await getCollection("teaware");
   return pieces.map((entry) => ({
     params: {
-      slug: entry.id
-        .replace(/\/index$/, "")
-        .split("/")
-        .at(-1),
+      slug: entry.id,
     },
     props: { entry },
   }));

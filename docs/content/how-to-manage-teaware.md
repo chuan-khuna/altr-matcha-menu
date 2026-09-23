@@ -8,8 +8,8 @@ File format: `.md` with YAML frontmatter
 The bowls, whisks and scoops used at the counter and sold across it.
 
 **One piece per folder**, the same shape desserts and matcha blends use — so a
-piece's photograph sits beside the file that names it, and the folder name is the
-slug:
+piece's photograph sits beside the file that names it, and the folder path is the
+entry id:
 
 ```
 src/content/teaware/
@@ -65,14 +65,15 @@ imageAlt: "Chawan MTCH Shade — matte black katakuchi bowl with a drawn spout"
 ## Notes
 
 - All prices are in Thai Baht (THB).
-- The folder name is the entry slug. Keep it kebab-case.
+- `entry.id` is the folder path under `src/content/teaware/` (e.g. `mtch-shade`, or
+  `bowls/mtch-shade` if you nest it). Keep folder names kebab-case.
 - Teaware has **no `notes` field** — a bowl has no tasting notes. That is the
   only way its schema differs from a dessert's.
 - The Teaware category is set to `grid` in `menu-category.json`, so each piece
   renders as an image tile. See
   [how-to-manage-menu-categories.md](./how-to-manage-menu-categories.md).
-- Every piece also gets a page of its own at `/teaware/<slug>`
-  (`src/pages/teaware/[slug].astro`), and the menu tile links to it. The page
+- Every piece also gets a page of its own at `/teaware/<id>`
+  (`src/pages/teaware/[...slug].astro`), and the menu tile links to it. The page
   heads with the name and the price, then sets anything written in the file
   **body** (below the frontmatter) beside the photograph as the piece's story.
   Leave the body empty and that block is simply omitted. `description` is not

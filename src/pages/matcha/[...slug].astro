@@ -13,10 +13,7 @@ export async function getStaticPaths() {
   const matchas = await getCollection("matcha");
   return matchas.map((entry) => ({
     params: {
-      slug: entry.id
-        .replace(/\/index$/, "")
-        .split("/")
-        .at(-1),
+      slug: entry.id,
     },
     props: { entry },
   }));

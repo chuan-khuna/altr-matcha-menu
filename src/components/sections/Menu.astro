@@ -22,8 +22,6 @@ const matchas = (await getCollection("matcha")).sort(byOrder);
 const desserts = (await getCollection("desserts")).sort(byOrder);
 const teaware = (await getCollection("teaware")).sort(byOrder);
 
-const getSlug = (id: string) => id.split("/").at(-1)!;
-
 type MenuGroup =
   | {
       kind: "matcha";
@@ -74,7 +72,7 @@ const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
       .map((b) => ({
         blend: b,
         menuItems: Object.entries(b.data.menus[key]!),
-        href: `/matcha/${getSlug(b.id)}`,
+        href: `/matcha/${b.id}`,
       }));
     return blends.length > 0 ? [{ kind: "matcha", category, blends }] : [];
   }
@@ -85,7 +83,7 @@ const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
     const items = entries
       .filter((e) => Object.keys(e.data.prices).length > 0)
       .map((e) =>
-        toMenuItem(e, teawareCategory ? `/teaware/${getSlug(e.id)}` : undefined)
+        toMenuItem(e, teawareCategory ? `/teaware/${e.id}` : undefined)
       );
     return items.length > 0 ? [{ kind: "items", category, items }] : [];
   }

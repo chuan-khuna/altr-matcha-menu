@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { entryId } from '@/lib/content';
 
 /**
  * The bowls, whisks and scoops we use at the counter and sell across it.
@@ -12,7 +13,11 @@ import { glob } from 'astro/loaders';
  * `matcha` collection takes).
  */
 export const teaware = defineCollection({
-  loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/teaware' }),
+  loader: glob({
+    pattern: '**/index.{md,mdx}',
+    base: './src/content/teaware',
+    generateId: entryId,
+  }),
   schema: ({ image }) => z.object({
     name: z.string(),
     order: z.number().default(0),

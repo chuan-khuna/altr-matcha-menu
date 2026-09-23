@@ -6,7 +6,8 @@ Content folder: `src/content/matcha/`
 Sub-folders: `yyyy/<slug>/` (one directory per blend, per year)  
 File format: `index.md` or `index.mdx` inside each blend folder  
 Assets: keep flat at `src/content/matcha/<yyyy>/` or `src/content/matcha/assets/` — **not** inside the blend sub-folder  
-Detail page route: `/matcha/<slug>` (slug = blend folder name)
+Entry id: the folder path under `src/content/matcha/`, e.g. `2026/narino`  
+Detail page route: `/matcha/<id>`, e.g. `/matcha/2026/narino`
 
 ---
 
@@ -91,7 +92,7 @@ Body text describing the blend — flavour profile, intent, how it was made.
 
 ## Notes
 
-- **Year folders:** place each blend as `src/content/matcha/<yyyy>/<slug>/index.md`. The glob loader picks up all depths; the slug is the folder name (the page strips `/index` from `entry.id` before routing).
+- **Year folders:** place each blend as `src/content/matcha/<yyyy>/<slug>/index.md`. The glob loader picks up all depths. `entry.id` is the whole folder path, `<yyyy>/<slug>` (set by `entryId` in `src/lib/content.ts`), and the page route is `src/pages/matcha/[...slug].astro`, so the same blend can have a folder in `2025/` and in `2026/`, and each gets its own page.
 - **Assets:** images referenced in `gallery` should be placed inside the blend sub-folder (e.g. `src/content/matcha/2025/hana-blend/photo.jpg`) and referenced as `./photo.jpg`. Other assets (not in gallery) keep flat at `src/content/matcha/<yyyy>/` or `src/content/matcha/assets/`.
 - **Grouping on the menu page:** derived from which `menus` keys are present. A blend with both `clear` and `latte` appears in both menu groups.
 - `order` controls sort order within each menu group (ascending).

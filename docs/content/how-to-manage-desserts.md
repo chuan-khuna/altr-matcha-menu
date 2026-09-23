@@ -6,7 +6,7 @@ Content folder: `src/content/desserts/<slug>/index.md`
 File format: `.md` with YAML frontmatter
 
 **One dessert per folder**, the same shape a matcha blend uses — so a dessert's
-photograph sits beside the file that names it, and the folder name is the slug:
+photograph sits beside the file that names it, and the folder path is the entry id:
 
 ```
 src/content/desserts/
@@ -132,7 +132,8 @@ The Dessert category is set to `grid`. See
 ## Notes
 
 - All prices are in Thai Baht (THB).
-- The folder name is the entry slug. Keep it kebab-case and matching `name`.
+- `entry.id` is the folder path under `src/content/desserts/` (e.g. `sakura-monaka`, or
+  `2026/sakura-monaka` if you nest it). Keep folder names kebab-case and matching `name`.
 - `order` controls sort order across all desserts (ascending).
 - `notes` and `description` are both optional and both render in muted ink under
   the name. Use `description` for a sentence about the dessert, `notes` for

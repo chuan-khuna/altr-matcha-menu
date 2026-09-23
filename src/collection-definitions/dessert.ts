@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { entryId } from '@/lib/content';
 
 /**
  * One dessert per folder — `desserts/<slug>/index.md`, the same shape a matcha
@@ -9,7 +10,11 @@ import { glob } from 'astro/loaders';
  * column of price rows.
  */
 export const desserts = defineCollection({
-  loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/desserts' }),
+  loader: glob({
+    pattern: '**/index.{md,mdx}',
+    base: './src/content/desserts',
+    generateId: entryId,
+  }),
   schema: ({ image }) => z.object({
     name: z.string(),
     order: z.number().default(0),
