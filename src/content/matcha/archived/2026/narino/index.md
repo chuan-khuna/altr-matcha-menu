@@ -1,7 +1,7 @@
 ---
 name: "Narino"
 order: 3
-available: true
+available: false
 notes:
   - "deep umami"
   - "roasted nori"

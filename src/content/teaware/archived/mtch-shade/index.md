@@ -1,7 +1,7 @@
 ---
 name: "Chawan MTCH Shade"
 order: 1
-available: true
+available: false
 prices:
   single: 850
 description: "Chawan, polycarbonate — MTCH"
