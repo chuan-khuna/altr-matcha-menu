@@ -1,7 +1,7 @@
 ---
 name: "Gokasho Samidori"
 order: 1
-available: true
+available: false
 notes:
   - "Ooika"
   - "sweet umami"

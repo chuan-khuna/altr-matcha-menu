@@ -1,7 +1,7 @@
 ---
 name: "Asatsuyu Baisen"
 order: 3
-available: true
+available: false
 notes:
   - "grilled nori"
   - "toasted grains"

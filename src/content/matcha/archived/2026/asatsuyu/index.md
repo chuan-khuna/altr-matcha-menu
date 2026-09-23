@@ -1,7 +1,7 @@
 ---
 name: "Asatsuyu (あさつゆ)"
 order: 4
-available: true
+available: false
 notes:
   - "morning dew"
   - "wheatgrass"

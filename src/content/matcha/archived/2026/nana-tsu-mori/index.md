@@ -1,7 +1,7 @@
 ---
 name: "Nana-Tsu-Mori"
 order: 4
-available: true
+available: false
 notes:
   - "lush green"
   - "vegetal"

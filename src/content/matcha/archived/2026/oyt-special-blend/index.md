@@ -1,7 +1,7 @@
 ---
 name: "O-Y-T™ Special Blend"
 order: 2
-available: true
+available: false
 notes:
   - "toast rice"
   - "roasted nori"

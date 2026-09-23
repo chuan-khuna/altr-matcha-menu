@@ -1,7 +1,7 @@
 ---
 name: "Star Village"
 order: 5
-available: true
+available: false
 notes:
   - "grilled mochi"
   - "light smoke"
