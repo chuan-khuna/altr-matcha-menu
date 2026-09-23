@@ -1,7 +1,7 @@
 ---
 name: "Strawberry Ichigo Pie"
 order: 5
-available: true
+available: false
 prices:
   single: 195
 image: ./strawberry-ichigo-pie.jpg

@@ -1,7 +1,7 @@
 ---
 name: "Sakura Gelato"
 order: 4
-available: true
+available: false
 prices:
   single: 160
 image: ./sakura-gelato.jpg
