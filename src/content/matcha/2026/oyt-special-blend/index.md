@@ -1,6 +1,7 @@
 ---
 name: "O-Y-T™ Special Blend"
 order: 2
+available: true
 notes:
   - "toast rice"
   - "roasted nori"
@@ -14,13 +15,23 @@ info:
   brand: "MTCH"
 menus:
   clear:
-    Usucha Set: 220
-    Usucha: 150
-    Hard Brew: 150
+    - title: "Usucha Set"
+      price: 220
+      available: true
+    - title: "Usucha"
+      price: 150
+      available: true
+    - title: "Hard Brew"
+      price: 150
+      available: true
   latte:
-    Cold Whisk Latte: 190
+    - title: "Cold Whisk Latte"
+      price: 190
+      available: true
   powder:
-    40g Bag: 1100
+    - title: "40g Bag"
+      price: 1100
+      available: true
 ---
 
 O-Y-T™ is our pride — a matcha five years in the making, developed in close collaboration with the producer at Hoshinomura, one of Yame's most respected tencha-growing villages. The name spells out its cultivars: Okumidori, Yabukita, and Tsuyuhikari, shaded for 14 to 21 days before harvest. The proportions shift slightly each season to maintain the taste, colour, and quality we hold to.

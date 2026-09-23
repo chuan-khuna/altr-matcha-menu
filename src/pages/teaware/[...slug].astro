@@ -8,7 +8,7 @@ import Story from "@/components/matcha-info/Story.astro";
 /* One page per piece. The entry id is the folder path, the same way the blend
    pages take theirs — `teaware/mtch-shade/index.md` → `/teaware/mtch-shade`. */
 export async function getStaticPaths() {
-  const pieces = await getCollection("teaware");
+  const pieces = await getCollection("teaware", (e) => e.data.available);
   return pieces.map((entry) => ({
     params: {
       slug: entry.id,

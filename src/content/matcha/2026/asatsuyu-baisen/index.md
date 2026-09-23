@@ -1,6 +1,7 @@
 ---
 name: "Asatsuyu Baisen"
 order: 3
+available: true
 notes:
   - "grilled nori"
   - "toasted grains"
@@ -17,14 +18,26 @@ info:
   brand: "MTCH"
 menus:
   clear:
-    Usucha: 130
-    Light Brew: 140
+    - title: "Usucha"
+      price: 130
+      available: true
+    - title: "Light Brew"
+      price: 140
+      available: true
   latte:
-    Cold Whisk Latte: 220
-    Latte: 180
-    Nitro Cold Whisk Latte: 150
+    - title: "Cold Whisk Latte"
+      price: 220
+      available: true
+    - title: "Latte"
+      price: 180
+      available: true
+    - title: "Nitro Cold Whisk Latte"
+      price: 150
+      available: true
   powder:
-    40g Bag: 1050
+    - title: "40g Bag"
+      price: 1050
+      available: true
 ---
 
 An Asatsuyu cultivar matcha from Kirishima, Kagoshima — organically grown and shaded under silver reflective fabric for 21 days, just like our standard offerings. What sets it apart is an additional post-shade heat treatment applied before grinding: a controlled Baisen process that drives off residual moisture and draws out the aromatic compounds, creating a more pronounced and layered roasted character while preserving the cultivar's natural freshness and umami.

@@ -1,6 +1,7 @@
 ---
 name: "Sakura Monaka"
 order: 1
+available: true
 prices:
   single: 160
 image: ./sakura-monaka.jpg

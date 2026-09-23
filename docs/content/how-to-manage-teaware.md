@@ -30,6 +30,7 @@ src/content/teaware/
 ```yaml
 name: string            # Display name of the piece
 order: number           # Sort order on the menu (default: 0, lower = first)
+available: boolean      # (default: true) false = hidden from the menu, and no /teaware page
 
 prices:                 # Variant label → price (THB). At least one key.
   <label>: number
@@ -42,7 +43,8 @@ imageAlt: string        # (optional) defaults to "" (decorative)
 `prices` behaves exactly as it does for desserts: one key renders as a bare
 figure, several render one row per price with every label shown. A piece with no
 priced variant is not rendered — comment the prices out to pull it off the menu
-without deleting the file.
+without deleting the file, or set `available: false` to hide the piece (and
+its page) with the prices left in place.
 
 ---
 
@@ -52,6 +54,7 @@ without deleting the file.
 ---
 name: "Chawan MTCH Shade"
 order: 1
+available: true
 prices:
   single: 1400
 description: "Katakuchi bowl, matte black"

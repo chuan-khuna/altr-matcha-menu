@@ -1,6 +1,7 @@
 ---
 name: "Gelato"
 order: 3
+available: true
 prices:
   single: 130
   set of four: 540

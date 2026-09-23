@@ -8,9 +8,10 @@ import MatchaInfo from "@/components/matcha-info/MatchaInfo.astro";
 import AvailableMenu from "@/components/matcha-info/AvailableMenu.astro";
 import MatchaGallery from "@/components/matcha-info/MatchaGallery.astro";
 import MenuRemark from "@/components/matcha-info/MenuRemark.astro";
+import { availableMenuItems } from "@/lib/content";
 
 export async function getStaticPaths() {
-  const matchas = await getCollection("matcha");
+  const matchas = await getCollection("matcha", (e) => e.data.available);
   return matchas.map((entry) => ({
     params: {
       slug: entry.id,
@@ -33,11 +34,12 @@ const categoryLabels: Record<string, string> = {
 };
 
 const menuEntries = (Object.keys(d.menus) as Array<keyof typeof d.menus>)
-  .filter((k) => d.menus[k])
   .map((k) => ({
+    key: k,
     label: categoryLabels[k],
-    items: Object.entries(d.menus[k]!),
-  }));
+    items: availableMenuItems(d.menus[k]),
+  }))
+  .filter((e) => e.items.length > 0);
 
 const eyebrow = menuEntries.map((e) => e.label).join(" · ");
 
@@ -67,13 +69,11 @@ const specRows = [
         >
           {d.name}
         </h1>
-        {
-          d.info?.brand && (
-            <p class="mono mt-4 text-xs uppercase tracking-widest text-ink-muted">
-              by {d.info.brand}
-            </p>
-          )
-        }
+        {d.info?.brand && (
+          <p class="mono mt-4 text-xs uppercase tracking-widest text-ink-muted">
+            by {d.info.brand}
+          </p>
+        )}
       </header>
 
       <TasteNotes notes={d.notes} />
@@ -85,9 +85,7 @@ const specRows = [
         </div>
         <div class="col-span-12 flex flex-col gap-8 min-[640px]:col-span-5">
           <AvailableMenu menuEntries={menuEntries} />
-          {d.menus.latte && Object.keys(d.menus.latte).length > 0 && (
-            <MenuRemark />
-          )}
+          {menuEntries.some((e) => e.key === "latte") && <MenuRemark />}
         </div>
       </div>
 
@@ -96,20 +94,19 @@ const specRows = [
         <div class="col-span-12 min-[800px]:col-span-8">
           <Story Content={Content} />
         </div>
-        {
-          d.gallery && d.gallery.length > 0 && (
-            <aside class="gallery-aside col-span-12 min-[800px]:col-span-4 min-[800px]:sticky min-[800px]:top-[calc(var(--nav-h)+2rem)] min-[800px]:self-start min-[800px]:max-h-[calc(100svh-var(--nav-h)-4rem)] min-[800px]:overflow-y-auto">
-              <MatchaGallery items={d.gallery} />
-            </aside>
-          )
-        }
+        {d.gallery && d.gallery.length > 0 && (
+          <aside class="gallery-aside col-span-12 min-[800px]:col-span-4 min-[800px]:sticky min-[800px]:top-[calc(var(--nav-h)+2rem)] min-[800px]:self-start min-[800px]:max-h-[calc(100svh-var(--nav-h)-4rem)] min-[800px]:overflow-y-auto">
+            <MatchaGallery items={d.gallery} />
+          </aside>
+        )}
       </div>
 
       <a
         href="/#menu"
         class="mono mt-16 inline-block border-t border-border pt-4 text-xs uppercase tracking-widest text-ink-muted transition-all duration-150 ease-out hover:-translate-x-[2px] hover:text-accent"
-        >← Back to the menu</a
       >
+        ← Back to the menu
+      </a>
     </div>
   </main>
 </Layout>

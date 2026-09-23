@@ -1,6 +1,7 @@
 ---
 name: "Asatsuyu (あさつゆ)"
 order: 4
+available: true
 notes:
   - "morning dew"
   - "wheatgrass"
@@ -19,13 +20,23 @@ info:
   brand: "MTCH"
 menus:
   clear:
-    Usucha: 130
-    Light Brew: 140
+    - title: "Usucha"
+      price: 130
+      available: true
+    - title: "Light Brew"
+      price: 140
+      available: true
   latte:
-    Cold Whisk Latte: 220
-    Latte: 180
+    - title: "Cold Whisk Latte"
+      price: 220
+      available: true
+    - title: "Latte"
+      price: 180
+      available: true
   powder:
-    40g Bag: 1050
+    - title: "40g Bag"
+      price: 1050
+      available: true
 ---
 
 Asatsuyu — nicknamed "Natural Gyokuro" — is a Kyoto-lineage cultivar grown in the volcanic soils of Kirishima, Kagoshima. Organically farmed on mineral-rich white volcanic earth that drains cleanly and holds the mountain cold, shaded for 21 days under silver reflective fabric that keeps temperature steady and coaxes the amino acids forward before a single harvest and stone milling.

@@ -1,6 +1,7 @@
 ---
 name: "Star Village"
 order: 5
+available: true
 notes:
   - "grilled mochi"
   - "light smoke"
@@ -13,13 +14,23 @@ info:
   processing: "Hand-Picked · Stone-Milled"
 menus:
   clear:
-    Light Brew: 170
+    - title: "Light Brew"
+      price: 170
+      available: true
   latte:
-    Cold Whisk Latte: 270
-    Latte: 220
-    Nitro Cold Whisk Latte: 160
+    - title: "Cold Whisk Latte"
+      price: 270
+      available: true
+    - title: "Latte"
+      price: 220
+      available: true
+    - title: "Nitro Cold Whisk Latte"
+      price: 160
+      available: true
   powder:
-    30g Tin Can: 990
+    - title: "30g Tin Can"
+      price: 990
+      available: true
 ---
 
 A hand-picked, stone-milled matcha from one of Yame's renowned growing villages, sourced in small quantities. Careful shading and cultivation produce a cup that is soft, defined, and full — opening with grilled mochi and a gentle waft of smoke, then settling into clear hazelnut and a smooth, creamy finish.

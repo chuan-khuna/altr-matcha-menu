@@ -9,3 +9,13 @@
  */
 export const entryId = ({ entry }: { entry: string }) =>
   entry.replace(/\/index\.mdx?$/, '');
+
+/**
+ * A blend's items under one `menus` category, as the `[title, price]` rows the
+ * menu components set — items marked unavailable dropped. Empty when the blend
+ * is not offered in that category, or when nothing in it is available.
+ */
+export const availableMenuItems = (
+  items: { title: string; price: number; available: boolean }[] = []
+): [string, number][] =>
+  items.filter((i) => i.available).map((i) => [i.title, i.price]);

@@ -1,6 +1,7 @@
 ---
 name: "Gokasho Samidori"
 order: 1
+available: true
 notes:
   - "Ooika"
   - "sweet umami"
@@ -12,12 +13,20 @@ info:
   brand: "MTCH"
 menus:
   clear:
-    Usucha: 190
-    Light Brew: 190
+    - title: "Usucha"
+      price: 190
+      available: true
+    - title: "Light Brew"
+      price: 190
+      available: true
   latte:
-    Cold Whisk Latte: 250
+    - title: "Cold Whisk Latte"
+      price: 250
+      available: true
   powder:
-    40g Bag: 1500
+    - title: "40g Bag"
+      price: 1500
+      available: true
 ---
 
 A limited-edition powder set built around a single Samidori cultivar from Gokasho, Uji — produced by an award-winning grower and ground to competition-grade quality. Each set arrives in a four-colour printed box with a special sticker set and coaster.

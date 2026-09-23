@@ -1,6 +1,7 @@
 ---
 name: "Forest Honey Yuzu Yoghurt Gelato"
 order: 2
+available: true
 prices:
   single: 165
 image: ./forest-honey-yuzu-yoghurt-gelato.jpg

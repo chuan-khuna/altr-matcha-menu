@@ -1,6 +1,7 @@
 ---
 name: "Narino"
 order: 3
+available: true
 notes:
   - "deep umami"
   - "roasted nori"
@@ -17,10 +18,16 @@ info:
   brand: "MTCH"
 menus:
   clear:
-    Usucha: 300
-    Light Brew: 300
+    - title: "Usucha"
+      price: 300
+      available: true
+    - title: "Light Brew"
+      price: 300
+      available: true
   powder:
-    20g Bag: 1900
+    - title: "20g Bag"
+      price: 1900
+      available: true
 gallery:
   - image: ./narino-cultivar.png
     description: "Narino Cultivar · MTCH"

@@ -6,6 +6,7 @@ import MenuGridTile from "@/components/matcha-info/ui/MenuGridTile.astro";
 import MenuRemark from "@/components/matcha-info/MenuRemark.astro";
 import MatchaGallery from "@/components/matcha-info/MatchaGallery.astro";
 import MenuCategoryNav from "@/components/matcha-info/MenuCategoryNav.astro";
+import { availableMenuItems } from "@/lib/content";
 
 /* Categories sourced from `matcha` key into each blend's `menus` record by
    their own id, so the JSON id and the schema key are the same string. */
@@ -14,13 +15,17 @@ type MatchaMenuKey = (typeof MATCHA_MENU_KEYS)[number];
 const isMatchaMenuKey = (id: string): id is MatchaMenuKey =>
   (MATCHA_MENU_KEYS as readonly string[]).includes(id);
 
-const byOrder = (a: { data: { order: number } }, b: { data: { order: number } }) =>
-  a.data.order - b.data.order;
+const byOrder = (
+  a: { data: { order: number } },
+  b: { data: { order: number } },
+) => a.data.order - b.data.order;
 
 const categories = (await getCollection("menuCategories")).sort(byOrder);
-const matchas = (await getCollection("matcha")).sort(byOrder);
-const desserts = (await getCollection("desserts")).sort(byOrder);
-const teaware = (await getCollection("teaware")).sort(byOrder);
+/* An entry marked `available: false` is off the site, not just off the menu. */
+const isAvailable = (e: { data: { available: boolean } }) => e.data.available;
+const matchas = (await getCollection("matcha", isAvailable)).sort(byOrder);
+const desserts = (await getCollection("desserts", isAvailable)).sort(byOrder);
+const teaware = (await getCollection("teaware", isAvailable)).sort(byOrder);
 
 type MenuGroup =
   | {
@@ -54,7 +59,7 @@ type MenuItem = {
 
 const toMenuItem = (
   entry: CollectionEntry<"desserts"> | CollectionEntry<"teaware">,
-  href?: string
+  href?: string,
 ): MenuItem => ({
   ...entry.data,
   prices: Object.entries(entry.data.prices),
@@ -68,22 +73,25 @@ const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
   if (category.data.source === "matcha" && isMatchaMenuKey(category.id)) {
     const key = category.id;
     const blends = matchas
-      .filter((b) => Object.keys(b.data.menus[key] ?? {}).length > 0)
       .map((b) => ({
         blend: b,
-        menuItems: Object.entries(b.data.menus[key]!),
+        menuItems: availableMenuItems(b.data.menus[key]),
         href: `/matcha/${b.id}`,
-      }));
+      }))
+      .filter((b) => b.menuItems.length > 0);
     return blends.length > 0 ? [{ kind: "matcha", category, blends }] : [];
   }
 
-  if (category.data.source === "desserts" || category.data.source === "teaware") {
+  if (
+    category.data.source === "desserts" ||
+    category.data.source === "teaware"
+  ) {
     const teawareCategory = category.data.source === "teaware";
     const entries = teawareCategory ? teaware : desserts;
     const items = entries
       .filter((e) => Object.keys(e.data.prices).length > 0)
       .map((e) =>
-        toMenuItem(e, teawareCategory ? `/teaware/${e.id}` : undefined)
+        toMenuItem(e, teawareCategory ? `/teaware/${e.id}` : undefined),
       );
     return items.length > 0 ? [{ kind: "items", category, items }] : [];
   }
@@ -91,7 +99,8 @@ const groups: MenuGroup[] = categories.flatMap((category): MenuGroup[] => {
   return [];
 });
 
-const sectionId = (category: CollectionEntry<"menuCategories">) => `menu-${category.id}`;
+const sectionId = (category: CollectionEntry<"menuCategories">) =>
+  `menu-${category.id}`;
 
 /* Built off `groups`, so a category that has nothing to price and never renders
    never appears in the index either. */
@@ -116,99 +125,98 @@ const RAIL_IMAGE_PX = 272;
   <div class="mx-auto max-w-[var(--content-max)]">
     {navItems.length > 1 && <MenuCategoryNav items={navItems} />}
 
-    {
-      groups.map((group) => {
-        const { label, gloss, gallery, sweetnessScale, layout } = group.category.data;
-        const id = sectionId(group.category);
-        const headId = `${id}-label`;
-        const hasGallery = !!gallery && gallery.length > 0;
-        return (
-          <section
-            id={id}
-            class="scroll-mt-[calc(var(--nav-h)+var(--menu-nav-h))] pb-20 last:pb-0"
-            aria-labelledby={headId}
-          >
-            {/* S4 · category head — the full measure, label above gloss. The
+    {groups.map((group) => {
+      const { label, gloss, gallery, sweetnessScale, layout } =
+        group.category.data;
+      const id = sectionId(group.category);
+      const headId = `${id}-label`;
+      const hasGallery = !!gallery && gallery.length > 0;
+      return (
+        <section
+          id={id}
+          class="scroll-mt-[calc(var(--nav-h)+var(--menu-nav-h))] pb-20 last:pb-0"
+          aria-labelledby={headId}
+        >
+          {/* S4 · category head — the full measure, label above gloss. The
                 rule under it is what everything below belongs to. Pins under
                 the category index from 46rem up, where the gloss still sets on
                 one line; below that the nav, the index and the head together
                 would eat too much of a phone screen. bg-paper so the entries
                 pass behind it, and z-20 because the photo rail is a later
                 positioned sibling that would otherwise paint over it. */}
-            <header class="border-b border-ink pt-2 pb-2 min-[46rem]:sticky min-[46rem]:top-[calc(var(--nav-h)+var(--menu-nav-h))] min-[46rem]:z-20 min-[46rem]:bg-paper">
-              <h2
-                id={headId}
-                data-optical
-                class="display text-lg leading-tight tracking-snug text-ink"
-              >
-                {label}
-              </h2>
-              {gloss && (
-                <p class="display mt-1 text-md italic leading-snug text-ink-muted">
-                  {gloss}
-                </p>
-              )}
-            </header>
-
-            <div
-              class:list={[
-                "mt-8",
-                hasGallery &&
-                  "min-[62rem]:grid min-[62rem]:grid-cols-[var(--menu-cat-img-lg)_minmax(0,1fr)] min-[62rem]:items-start min-[62rem]:gap-x-12",
-              ]}
+          <header class="border-b border-ink pt-2 pb-2 min-[46rem]:sticky min-[46rem]:top-[calc(var(--nav-h)+var(--menu-nav-h))] min-[46rem]:z-20 min-[46rem]:bg-paper">
+            <h2
+              id={headId}
+              data-optical
+              class="display text-lg leading-tight tracking-snug text-ink"
             >
-              {/* One photograph or several — the crossfading gallery from the
+              {label}
+            </h2>
+            {gloss && (
+              <p class="display mt-1 text-md italic leading-snug text-ink-muted">
+                {gloss}
+              </p>
+            )}
+          </header>
+
+          <div
+            class:list={[
+              "mt-8",
+              hasGallery &&
+                "min-[62rem]:grid min-[62rem]:grid-cols-[var(--menu-cat-img-lg)_minmax(0,1fr)] min-[62rem]:items-start min-[62rem]:gap-x-12",
+            ]}
+          >
+            {/* One photograph or several — the crossfading gallery from the
                   blend pages, on the paper. No frame, no radius, no shadow. It
                   travels down with the entries it belongs to, from 62rem up. */}
-              {hasGallery && (
-                <div class="w-[var(--menu-cat-img)] min-[62rem]:sticky min-[62rem]:top-[calc(var(--nav-h)+var(--menu-nav-h)+var(--menu-head-h)+var(--space-lg))] min-[62rem]:z-10 min-[62rem]:w-full min-[62rem]:self-start">
-                  <MatchaGallery
-                    items={gallery!}
-                    imageWidth={RAIL_IMAGE_PX}
-                    fit="cover"
-                    animate={false}
-                  />
-                </div>
-              )}
+            {hasGallery && (
+              <div class="w-[var(--menu-cat-img)] min-[62rem]:sticky min-[62rem]:top-[calc(var(--nav-h)+var(--menu-nav-h)+var(--menu-head-h)+var(--space-lg))] min-[62rem]:z-10 min-[62rem]:w-full min-[62rem]:self-start">
+                <MatchaGallery
+                  items={gallery!}
+                  imageWidth={RAIL_IMAGE_PX}
+                  fit="cover"
+                  animate={false}
+                />
+              </div>
+            )}
 
-              <div class="mt-10 min-w-0 min-[62rem]:mt-0">
-                {group.kind === "matcha" ? (
-                  <ul class="m-0 list-none divide-y divide-rule p-0" role="list">
-                    {group.blends.map(({ blend, menuItems, href }) => (
-                      <MenuCard blend={blend} menuItems={menuItems} href={href} />
-                    ))}
-                  </ul>
-                ) : layout === "grid" ? (
-                  /* Tiles, for a category whose entries each carry their own
+            <div class="mt-10 min-w-0 min-[62rem]:mt-0">
+              {group.kind === "matcha" ? (
+                <ul class="m-0 list-none divide-y divide-rule p-0" role="list">
+                  {group.blends.map(({ blend, menuItems, href }) => (
+                    <MenuCard blend={blend} menuItems={menuItems} href={href} />
+                  ))}
+                </ul>
+              ) : layout === "grid" ? (
+                /* Tiles, for a category whose entries each carry their own
                      photograph. Two across on a phone; three from 46rem, which
                      is also where the entries column stops sharing the measure
                      with the category rail. */
-                  <ul
-                    class="m-0 grid list-none grid-cols-2 gap-x-6 gap-y-10 p-0 min-[46rem]:grid-cols-3"
-                    role="list"
-                  >
-                    {group.items.map((item) => (
-                      <MenuGridTile {...item} />
-                    ))}
-                  </ul>
-                ) : (
-                  <ul class="m-0 list-none divide-y divide-rule p-0" role="list">
-                    {group.items.map((item) => (
-                      <MenuSpecialRow {...item} />
-                    ))}
-                  </ul>
-                )}
+                <ul
+                  class="m-0 grid list-none grid-cols-2 gap-x-6 gap-y-10 p-0 min-[46rem]:grid-cols-3"
+                  role="list"
+                >
+                  {group.items.map((item) => (
+                    <MenuGridTile {...item} />
+                  ))}
+                </ul>
+              ) : (
+                <ul class="m-0 list-none divide-y divide-rule p-0" role="list">
+                  {group.items.map((item) => (
+                    <MenuSpecialRow {...item} />
+                  ))}
+                </ul>
+              )}
 
-                {sweetnessScale && (
-                  <div class="mt-8 border-t border-rule pt-6">
-                    <MenuRemark />
-                  </div>
-                )}
-              </div>
+              {sweetnessScale && (
+                <div class="mt-8 border-t border-rule pt-6">
+                  <MenuRemark />
+                </div>
+              )}
             </div>
-          </section>
-        );
-      })
-    }
+          </div>
+        </section>
+      );
+    })}
   </div>
 </section>

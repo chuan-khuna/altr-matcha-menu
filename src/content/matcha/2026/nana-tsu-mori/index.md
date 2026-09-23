@@ -1,6 +1,7 @@
 ---
 name: "Nana-Tsu-Mori"
 order: 4
+available: true
 notes:
   - "lush green"
   - "vegetal"
@@ -16,13 +17,23 @@ info:
   processing: "Hand-Sorted · Stone-Milled"
 menus:
   clear:
-    Usucha: 150
-    Light Brew: 160
+    - title: "Usucha"
+      price: 150
+      available: true
+    - title: "Light Brew"
+      price: 160
+      available: true
   latte:
-    Cold Whisk Latte: 250
-    Latte: 200
+    - title: "Cold Whisk Latte"
+      price: 250
+      available: true
+    - title: "Latte"
+      price: 200
+      available: true
   powder:
-    40g Bag: 1200
+    - title: "40g Bag"
+      price: 1200
+      available: true
 ---
 
 Nana-Tsu-Mori (七ツ森) — Seven Forests — takes its name from the terrain surrounding the garden: riverbanks, mountain foothills, and the edge of old wooded groves. The tea is hand-picked, hand-sorted, and stone-milled by an award-winning producer with deep roots in the Uji tradition.

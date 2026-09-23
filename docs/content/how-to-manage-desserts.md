@@ -30,6 +30,7 @@ so they sit flat under `desserts/`.)
 ```yaml
 name: string            # Display name of the dessert
 order: number           # Sort order on the menu (default: 0, lower = first)
+available: boolean      # (default: true) false = hidden from the menu
 
 prices:                 # Variant label → price (THB). At least one key.
   <label>: number
@@ -45,8 +46,7 @@ imageAlt: string        # (optional) defaults to "" (decorative)
 
 ## `prices` — one dessert, one or several figures
 
-Same shape as a matcha blend's `menus.<category>`: an ordered map of variant
-label to price.
+An ordered map of variant label to price.
 
 ```yaml
 # Sold one way — the label is not printed, only the figure.
@@ -72,6 +72,9 @@ Keys are printed verbatim, so write them the way they should read on the menu
 pull a dessert off the menu without deleting the file — the same mechanism that
 keeps the `powder` category off the page.
 
+To hide a dessert and keep its prices written down, set `available: false`
+instead.
+
 ---
 
 ## Example file — `src/content/desserts/matcha-monaka/index.md`
@@ -80,6 +83,7 @@ keeps the `powder` category off the page.
 ---
 name: "Matcha Monaka"
 order: 4
+available: true
 prices:
   single: 160
   large: 190
