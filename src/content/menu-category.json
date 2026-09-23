@@ -6,7 +6,10 @@
     "order": 1,
     "source": "matcha",
     "layout": "list",
-    "gallery": [{ "image": "./menu-categories/clear.jpg" }],
+    "gallery": [
+      { "image": "./menu-categories/clear.jpg" },
+      { "image": "./menu-categories/clear-usucha.jpg", "description": "Usucha" }
+    ],
     "sweetnessScale": false
   },
   {
@@ -16,7 +19,12 @@
     "order": 2,
     "source": "matcha",
     "layout": "list",
-    "gallery": [{ "image": "./menu-categories/latte.jpg" }],
+    "gallery": [
+      {
+        "image": "./menu-categories/latte-dirty-matcha.jpg",
+        "description": "Dirty matcha"
+      }
+    ],
     "sweetnessScale": true
   },
   {
@@ -27,7 +35,10 @@
     "source": "desserts",
     "layout": "grid",
     "gallery": [
-      { "image": "./menu-categories/dessert.jpg", "description": "Affogato with monaka" }
+      {
+        "image": "./menu-categories/dessert.jpg",
+        "description": "Affogato with monaka"
+      }
     ],
     "sweetnessScale": false
   },
@@ -54,7 +65,10 @@
     "source": "teaware",
     "layout": "grid",
     "gallery": [
-      { "image": "./menu-categories/teaware.jpg", "description": "Katakuchi bowl, matte black" }
+      {
+        "image": "./menu-categories/teaware.jpg",
+        "description": "Katakuchi bowl, matte black"
+      }
     ],
     "sweetnessScale": false
   }
