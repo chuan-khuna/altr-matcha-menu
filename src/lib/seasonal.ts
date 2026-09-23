@@ -37,12 +37,14 @@ export const seasonHref = (slug: string) => `/seasonal/${slug}`;
 
 /**
  * Newest first — the order the footer archive and the index both read in.
+ * Rows marked `available: false` are dropped here, so they vanish from the
+ * landing page, the footer archive and the page routes all at once.
  * Sorted on `year_month`, which is `yyyy-mm` and so sorts as a plain string.
  */
 export async function getSeasons(): Promise<Season[]> {
   const seasons = await getCollection('seasonal');
   return seasons
-    .filter((s) => layouts.has(s.data.slug))
+    .filter((s) => s.data.available && layouts.has(s.data.slug))
     .sort((a, b) => b.data.year_month.localeCompare(a.data.year_month));
 }
 
