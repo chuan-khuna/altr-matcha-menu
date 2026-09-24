@@ -18,4 +18,7 @@ menus:
     - title: "Cold Whisk Latte"
       price: 150
       available: true
+    - title: "Dirty Matcha"
+      price: 150
+      available: true
 ---
