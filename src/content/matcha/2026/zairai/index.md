@@ -37,6 +37,8 @@ The aroma is pine forest, moss, and a spray of blossom, with the sweetness of Ja
 
 Maybe not anyone's first matcha. But for anyone curious about Japanese tea that is wild, unpredictable, hard to find, and unlike the cultivars you meet everywhere, it is well worth the cup.
 
+---
+
 <div lang="th">
 
 ไซไร (Zairai — 在来) จริง ๆ แปลว่า Native หรือ Conventional เป็นคำที่ใช้เรียกต้นชาที่ปลูกด้วยการหว่านเมล็ด และไม่ได้ผ่านการขยายพันธุ์แบบโคลนเหมือนต้นชาในอุตสาหกรรมชาส่วนใหญ่ในปัจจุบัน ต้นชา Zairai แต่ละต้นมีพันธุกรรมที่แตกต่างกัน ทำให้ไม่มีรสชาติหรือบุคลิกที่คาดเดาได้ แต่จะสะท้อนความแตกต่างของพื้นที่ปลูก สภาพอากาศ และการดูแลในแต่ละปีออกมาได้อย่างชัดเจน
