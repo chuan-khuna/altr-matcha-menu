@@ -1,17 +1,20 @@
 ---
-const levels = [
-  { label: "0%", grams: "—" },
-  { label: "25%", grams: "2 g" },
-  { label: "50%", grams: "4 g", recommended: true },
-  { label: "75%", grams: "6 g" },
-  { label: "100%", grams: "8 g" },
-];
+import { sweetnessLevels as levels } from "@/data/sweetness";
+
+interface Props {
+  /** `false` where the block around it already heads it "Sweetness". */
+  label?: boolean;
+}
+
+const { label = true } = Astro.props;
 ---
 
 <div class="fade-up">
-  <p class="mono mb-3 text-xs uppercase tracking-widest text-ink-muted">
-    Sweetness
-  </p>
+  {label && (
+    <p class="mono mb-3 text-xs uppercase tracking-widest text-ink-muted">
+      Sweetness
+    </p>
+  )}
 
   <figure class="m-0">
     <!-- percentage scale -->
