@@ -1,0 +1,168 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import CompactMenuTable, {
+  type CompactRow,
+} from "@/components/compact-menu/CompactMenuTable.astro";
+import { getMenuGroups, type MenuGroup } from "@/lib/menu";
+import { getLiveSeasons, seasonMenu, type SeasonCover } from "@/lib/seasonal";
+
+/* The whole menu on one screen — the counter board, not the reading copy. Same
+   data as the landing page: the standing menu from getMenuGroups(), the season
+   from its menu.ts. No nav, no footer, no story: a picture per block and a
+   record per blend. */
+
+interface Table {
+  id: string;
+  label: string;
+  eyebrow?: string;
+  columns: string[];
+  rows: CompactRow[];
+}
+
+interface Picture {
+  image: ImageMetadata;
+  alt: string;
+}
+
+/* Every price label any row in the block is sold as, in first-seen order — so
+   a blend's own written order decides the columns, and a blend that is not sold
+   in one leaves that cell blank. */
+const columnsOf = (rows: CompactRow[]) => [
+  ...new Set(rows.flatMap((row) => Object.keys(row.prices))),
+];
+
+const toTable = (t: Omit<Table, "columns">): Table => ({
+  ...t,
+  columns: columnsOf(t.rows),
+});
+
+const standingBlock = (group: MenuGroup): { table: Table; picture?: Picture } => {
+  const { label, gallery } = group.category.data;
+  const id = `compact-${group.category.id}`;
+  /* The first of the category's photographs — a board has no room to crossfade. */
+  const first = gallery?.[0];
+  const picture = first && { image: first.image, alt: first.description ?? "" };
+  const rows: CompactRow[] =
+    group.kind === "matcha"
+      ? group.blends.map(({ blend, menuItems, href }) => ({
+          name: blend.data.name,
+          notes: blend.data.notes.join(" · ") || undefined,
+          href,
+          prices: Object.fromEntries(menuItems),
+        }))
+      : group.items.map((item) => ({
+          name: item.name,
+          notes: item.notes?.join(" · ") || item.description,
+          href: item.href,
+          prices: Object.fromEntries(item.prices),
+        }));
+  return { table: toTable({ id, label, rows }), picture };
+};
+
+const standing = (await getMenuGroups()).map(standingBlock);
+
+const seasonal = (await getLiveSeasons()).flatMap(
+  (season): { table: Table; cover?: SeasonCover }[] => {
+    const menu = seasonMenu(season.data.slug);
+    if (!menu || menu.items.length === 0) return [];
+    return [
+      {
+        table: toTable({
+          id: `compact-seasonal-${season.data.slug}`,
+          label: season.data.title,
+          eyebrow: `Seasonal · ${season.data.display}`,
+          rows: menu.items.map((item) => ({
+            name: item.name,
+            notes: item.notes?.join(" · ") || item.description,
+            prices: Object.fromEntries(item.prices),
+          })),
+        }),
+        cover: menu.cover,
+      },
+    ];
+  },
+);
+
+/* Widest each picture is drawn, so Astro emits sized images rather than the
+   originals: the season cover's cap (36rem) and the category photograph's
+   column beside its table (14rem). Below 80rem the photograph runs full width. */
+const COVER_IMAGE_PX = 576;
+const CATEGORY_IMAGE_PX = 224;
+---
+
+<Layout
+  title="Menu at a glance — ALTR"
+  description="The whole ALTR menu on one page — every blend, every price."
+  footer={false}
+>
+  <main class="page-gutter pt-12 pb-16">
+    <div class="mx-auto max-w-[120rem]">
+      <h1
+        data-optical
+        class="display mb-10 text-3xl italic leading-tight tracking-snug text-ink"
+      >
+        Menu
+      </h1>
+
+      {/* Season on the left, the standing menu on the right and running on
+          down its own column. With no season on, the standing menu takes both
+          columns and flows across them; a block never splits between two. */}
+      <div
+        class:list={[
+          seasonal.length > 0
+            ? "grid gap-y-14 min-[62rem]:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] min-[62rem]:items-start min-[62rem]:gap-x-16"
+            : "min-[62rem]:columns-2 min-[62rem]:gap-x-16",
+        ]}
+      >
+        {seasonal.length > 0 && (
+          <div class="flex flex-col gap-y-14">
+            {seasonal.map(({ table, cover }) => (
+              <div>
+                <CompactMenuTable {...table} />
+                {/* The season's own cover, kept whole — no crop, no frame. */}
+                {cover && (
+                  <Image
+                    src={cover.image}
+                    alt={cover.alt}
+                    widths={[COVER_IMAGE_PX, COVER_IMAGE_PX * 2]}
+                    sizes="(min-width: 36rem) 36rem, 100vw"
+                    loading="lazy"
+                    decoding="async"
+                    class="mt-8 w-full max-w-[36rem] bg-paper-2"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div class="flex flex-col gap-y-14 min-[62rem]:block min-[62rem]:[&>*+*]:mt-14">
+          {standing.map(({ table, picture }) => (
+            /* Photograph beside the table from 80rem, above it below that. */
+            <div
+              class:list={[
+                "break-inside-avoid",
+                picture &&
+                  "grid gap-y-6 min-[80rem]:grid-cols-[14rem_minmax(0,1fr)] min-[80rem]:items-start min-[80rem]:gap-x-10",
+              ]}
+            >
+              {picture && (
+                <Image
+                  src={picture.image}
+                  alt={picture.alt}
+                  widths={[CATEGORY_IMAGE_PX, CATEGORY_IMAGE_PX * 2, 960]}
+                  sizes="(min-width: 80rem) 14rem, 100vw"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[16/9] w-full bg-paper-2 object-cover min-[80rem]:aspect-[4/5]"
+                />
+              )}
+              <CompactMenuTable {...table} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

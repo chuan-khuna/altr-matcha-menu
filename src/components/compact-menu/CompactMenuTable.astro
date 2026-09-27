@@ -1,0 +1,104 @@
+---
+export interface CompactRow {
+  name: string;
+  /** One line under the name, across the full width of the block. */
+  notes?: string;
+  href?: string;
+  /** Column label → price. A column this row is not sold in is left blank. */
+  prices: Record<string, number>;
+}
+
+interface Props {
+  label: string;
+  /** Micro-type above the label — "Seasonal · September 2026". */
+  eyebrow?: string;
+  /** Price columns, left to right. */
+  columns: string[];
+  rows: CompactRow[];
+  id: string;
+}
+
+const { label, eyebrow, columns, rows, id } = Astro.props;
+
+const formatPrice = (n: number) => (n > 0 ? n.toLocaleString("en-US") : "—");
+
+/* One way to buy everything in the block — the column head would only repeat
+   "single", so it is dropped, the way MenuGridTile drops a lone label. */
+const labelled = columns.length > 1 || columns[0] !== "single";
+const headId = `${id}-label`;
+---
+
+{/* A grid, not a <table>: the category label is a heading and has to sit on the
+    same line as the column heads, and a heading cannot live in a <th>. Every
+    row is a subgrid of the block, so the figures of every blend land under
+    their column head. Each figure carries its column name for a screen reader. */}
+<section
+  id={id}
+  aria-labelledby={headId}
+  class="grid grid-cols-[minmax(0,1fr)_repeat(var(--cols),4.25rem)] min-[46rem]:grid-cols-[minmax(0,1fr)_repeat(var(--cols),5rem)]"
+  style={`--cols: ${columns.length}`}
+>
+  <header class="col-span-full grid grid-cols-subgrid items-end border-b border-ink pb-2">
+    <div class="min-w-0">
+      {eyebrow && <p class="eyebrow text-2xs">{eyebrow}</p>}
+      <h2
+        id={headId}
+        data-optical
+        class="display text-2xl leading-tight tracking-snug text-ink"
+      >
+        {label}
+      </h2>
+    </div>
+    {columns.map((column) => (
+      <p
+        class="mono pb-1 text-right text-2xs uppercase leading-snug tracking-wider text-ink-muted"
+        aria-hidden="true"
+      >
+        {labelled ? column : ""}
+      </p>
+    ))}
+  </header>
+
+  <ul
+    class="col-span-full m-0 grid list-none grid-cols-subgrid divide-y divide-rule p-0"
+    role="list"
+  >
+    {rows.map((row) => (
+      <li class="col-span-full grid grid-cols-subgrid items-baseline-last gap-y-1 py-3">
+        <div class="min-w-0">
+          {row.href ? (
+            <a
+              href={row.href}
+              class="mono text-md leading-tight text-ink underline-offset-[0.16em] hover:text-accent-ink hover:underline hover:decoration-accent hover:decoration-1"
+            >
+              {row.name}
+            </a>
+          ) : (
+            <p class="mono text-md leading-tight text-ink">{row.name}</p>
+          )}
+        </div>
+        {columns.map((column) => {
+          const price = row.prices[column];
+          return (
+            <p class="mono text-right text-sm tabular-nums text-ink">
+              {price !== undefined && (
+                <Fragment>
+                  {labelled && <span class="sr-only">{column} </span>}
+                  {formatPrice(price)}
+                </Fragment>
+              )}
+            </p>
+          );
+        })}
+        {row.notes && (
+          <p
+            class="mono col-span-full text-sm leading-snug text-ink-muted"
+            aria-label="Tasting notes"
+          >
+            {row.notes}
+          </p>
+        )}
+      </li>
+    ))}
+  </ul>
+</section>
