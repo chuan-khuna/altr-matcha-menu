@@ -7,8 +7,10 @@
     "source": "matcha",
     "layout": "list",
     "gallery": [
-      { "image": "./menu-categories/clear.jpg" },
-      { "image": "./menu-categories/clear-usucha.jpg", "description": "Usucha" }
+      {
+        "image": "./menu-categories/ai-usucha.png",
+        "description": "Usucha - AI generated image for placeholder"
+      }
     ],
     "sweetnessScale": false
   },
@@ -21,8 +23,8 @@
     "layout": "list",
     "gallery": [
       {
-        "image": "./menu-categories/latte-dirty-matcha.jpg",
-        "description": "Dirty matcha"
+        "image": "./menu-categories/ai-dirty-matcha.png",
+        "description": "Dirty Matcha - AI generated image for placeholder"
       }
     ],
     "sweetnessScale": true
