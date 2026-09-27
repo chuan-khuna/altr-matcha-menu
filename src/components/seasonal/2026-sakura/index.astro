@@ -3,44 +3,13 @@ import { Image } from "astro:assets";
 import type { SeasonLayoutProps } from "@/lib/seasonal";
 import SeasonHead from "@/components/seasonal/ui/SeasonHead.astro";
 import MenuGridTile from "@/components/matcha-info/ui/MenuGridTile.astro";
-import cover from "@/components/seasonal/2026-sakura/cover.jpg";
-import sparkling from "@/components/seasonal/2026-sakura/matcha-sparkling-sakura.jpg";
-import float from "@/components/seasonal/2026-sakura/sakura-float.jpg";
-import monaka from "@/components/seasonal/2026-sakura/sakura-monaka.jpg";
+import { cover, items } from "@/components/seasonal/2026-sakura/menu";
 
 type Props = SeasonLayoutProps;
 const { season, headingLevel = "h2" } = Astro.props;
 
 /* Spring 2026 — a cover the width of the measure, then the three things that
    were on it. Prices are placeholders. */
-const items = [
-  {
-    name: "Matcha Sparkling Sakura",
-    prices: [["single", 220]] as [string, number][],
-    description: "Usucha poured over sparkling sakura, unstirred",
-    notes: ["salted blossom", "green apple", "sea air"],
-    image: sparkling,
-    imageAlt:
-      "Clear cup, matcha layered dark green over pink sakura sparkling and ice",
-  },
-  {
-    name: "Sakura Float",
-    prices: [["single", 240]] as [string, number][],
-    description: "Sparkling sakura under a scoop of sakura gelato",
-    notes: ["cherry leaf", "milk", "almond"],
-    image: float,
-    imageAlt:
-      "Pink sparkling sakura in a clear cup with a scoop of sakura gelato on the rim",
-  },
-  {
-    name: "Sakura Monaka",
-    prices: [["single", 160]] as [string, number][],
-    description: "Wafer shell stamped with a blossom, filled to order",
-    image: monaka,
-    imageAlt:
-      "Sakura monaka on a small white plate, wafer shell stamped with a cherry blossom",
-  },
-];
 
 /* Widest a tile gets: the measure, three across, with no photo rail beside it
    the way the standing menu has. */
@@ -59,8 +28,8 @@ const TILE_IMAGE_PX = 380;
       source is a macro: the green-over-pink boundary is what has to survive the
       crop, so the frame is held above centre. */}
   <Image
-    src={cover}
-    alt="Matcha settling through sparkling sakura, salted blossom suspended in the bubbles"
+    src={cover.image}
+    alt={cover.alt}
     width={1152}
     loading="lazy"
     decoding="async"

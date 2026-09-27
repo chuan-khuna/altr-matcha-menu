@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import type { SeasonLayoutProps } from "@/lib/seasonal";
 import SeasonHead from "@/components/seasonal/ui/SeasonHead.astro";
-import cover from "@/components/seasonal/2025-christmas/cover.jpg";
+import { cover, items } from "@/components/seasonal/2025-christmas/menu";
 
 type Props = SeasonLayoutProps;
 const { season, headingLevel = "h2" } = Astro.props;
@@ -15,20 +15,6 @@ const { season, headingLevel = "h2" } = Astro.props;
    that exist, not a shape every season has to fit.
  *
  * Prices are placeholders. */
-const items = [
-  {
-    name: "MTCH™ Ichigo Latte",
-    price: 200,
-    description: "Strawberry compote, milk, usucha poured last",
-    notes: ["strawberry", "condensed milk", "cocoa"],
-  },
-  {
-    name: "MTCH™ Strawberry Honey Lemon",
-    price: 210,
-    description: "Sparkling honey lemon with whole strawberries, usucha on top",
-    notes: ["honey", "lemon peel", "strawberry"],
-  },
-];
 
 const formatPrice = (n: number) => n.toLocaleString("en-US");
 
@@ -49,8 +35,8 @@ const COVER_IMAGE_PX = 416;
   >
     {/* Kept whole — no crop, no frame, no radius, on the paper. */}
     <Image
-      src={cover}
-      alt="Usucha poured from a glass katakuchi into an ichigo latte and a strawberry honey lemon, red baubles alongside"
+      src={cover.image}
+      alt={cover.alt}
       width={COVER_IMAGE_PX}
       densities={[1, 2]}
       loading="lazy"
@@ -90,7 +76,7 @@ const COVER_IMAGE_PX = 416;
                 </p>
               </div>
               <p class="mono shrink-0 text-right text-sm tabular-nums text-ink">
-                {formatPrice(item.price)}
+                {formatPrice(item.prices[0][1])}
               </p>
             </li>
           ))

@@ -33,6 +33,44 @@ const layouts = new Map<string, SeasonLayout>(
 
 export const seasonLayout = (slug: string) => layouts.get(slug);
 
+/** One thing on a season's menu. Same fields `MenuGridTile` takes. */
+export interface SeasonItem {
+  name: string;
+  /** Variant label → price, in written order. One way to buy it → `[["single", n]]`. */
+  prices: [string, number][];
+  description?: string;
+  notes?: string[];
+  image?: ImageMetadata;
+  imageAlt?: string;
+}
+
+/** The photograph a season opens on. */
+export interface SeasonCover {
+  image: ImageMetadata;
+  alt: string;
+}
+
+export interface SeasonMenu {
+  items: SeasonItem[];
+  cover?: SeasonCover;
+}
+
+/**
+ * Every season's items and cover, keyed by slug, from `menu.ts` beside its
+ * `index.astro`. The layout imports the same module, so the season's own page
+ * and the compact menu never disagree on a name, a price or a picture. A season
+ * without one is left off the compact menu — its layout still renders.
+ */
+const menus = new Map<string, SeasonMenu>(
+  Object.entries(
+    import.meta.glob<SeasonMenu>('/src/components/seasonal/*/menu.ts', {
+      eager: true,
+    })
+  ).map(([path, mod]) => [path.split('/').at(-2)!, { items: mod.items, cover: mod.cover }])
+);
+
+export const seasonMenu = (slug: string) => menus.get(slug);
+
 export const seasonHref = (slug: string) => `/seasonal/${slug}`;
 
 /**

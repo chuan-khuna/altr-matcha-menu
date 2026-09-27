@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import type { SeasonLayoutProps } from "@/lib/seasonal";
 import SeasonHead from "@/components/seasonal/ui/SeasonHead.astro";
-import cover from "@/components/seasonal/2026-zairai/cover.jpg";
+import { cover, items } from "@/components/seasonal/2026-zairai/menu";
 
 type Props = SeasonLayoutProps;
 const { season, headingLevel = "h2" } = Astro.props;
@@ -10,14 +10,6 @@ const { season, headingLevel = "h2" } = Astro.props;
 /* September 2026 — one blend rather than a set of drinks, so this season is the
    December 2025 column again: the maker's square card kept whole beside a short
    list of type. The story lives on the blend's own page; this links to it. */
-const items = [
-  {
-    name: "Zairai Usucha",
-    price: 110,
-    description: "Wild, seed-grown · Kyoto–Nara border · stone milled",
-    notes: ["round umami", "forest air", "deep moss", "nashi pear", "lemon zest"],
-  },
-];
 
 const blendHref = "/matcha/2026/zairai";
 
@@ -40,8 +32,8 @@ const COVER_IMAGE_PX = 416;
   >
     {/* The maker's card, square and kept whole — no crop, no frame, no radius. */}
     <Image
-      src={cover}
-      alt="MTCH's monthly matcha card for Zairai — tea bushes in a motion blur, with the origin, tasting notes and menu set in white type"
+      src={cover.image}
+      alt={cover.alt}
       width={COVER_IMAGE_PX}
       densities={[1, 2]}
       loading="lazy"
@@ -79,7 +71,7 @@ const COVER_IMAGE_PX = 416;
                 </p>
               </div>
               <p class="mono shrink-0 text-right text-sm tabular-nums text-ink">
-                {formatPrice(item.price)}
+                {formatPrice(item.prices[0][1])}
               </p>
             </li>
           ))
