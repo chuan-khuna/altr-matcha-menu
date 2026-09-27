@@ -34,11 +34,17 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 
 | File | Exports | Used by |
 |---|---|---|
+| `src/lib/content.ts` | `entryId` | `generateId` of the `matcha`, `desserts` and `teaware` glob loaders |
 | `src/lib/seasonal.ts` | `getSeasons`, `getLiveSeasons`, `seasonLayout`, `seasonHref` | `Seasonal.astro`, `seasonal/[slug].astro`, `Footer.astro` |
 
 `seasonal.ts` also holds the layout registry — the glob over
 `src/components/seasonal/*/index.astro` that maps a slug to the component
 rendering it. Each season is one folder: its `index.astro` and its photographs.
+
+`entryId` makes the id of a folder-per-entry collection its folder path,
+`index.md` dropped: `matcha/2026/narino/index.md` → `2026/narino`. The detail
+pages (`matcha/[...slug].astro`, `teaware/[...slug].astro`) and the menu links
+use `entry.id` as-is, so ids and URLs stay unique across year folders.
 
 ---
 

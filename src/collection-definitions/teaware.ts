@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { entryId } from '@/lib/content';
 
 /**
  * The bowls, whisks and scoops we use at the counter and sell across it.
@@ -12,10 +13,19 @@ import { glob } from 'astro/loaders';
  * `matcha` collection takes).
  */
 export const teaware = defineCollection({
-  loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/teaware' }),
+  loader: glob({
+    pattern: '**/index.{md,mdx}',
+    base: './src/content/teaware',
+    generateId: entryId,
+  }),
   schema: ({ image }) => z.object({
     name: z.string(),
     order: z.number().default(0),
+    /**
+     * Set `false` to take the whole entry off the site — off the menu, and
+     * no page of its own — without deleting the file.
+     */
+    available: z.boolean().default(true),
     /**
      * Variant label → price in THB, in written order. A piece sold one way has
      * a single key and the label is not printed; a bowl offered in two glazes

@@ -8,13 +8,9 @@ const { Content } = Astro.props;
 ---
 
 <div class="fade-up">
-  <div class="blend__story-body font-sans text-base leading-relaxed text-ink max-w-[52ch]">
+  <div
+    class="blend__story-body prose max-w-[52ch] font-sans text-base leading-relaxed [--tw-prose-body:var(--color-ink)] prose-p:my-4 prose-hr:my-10 prose-hr:w-16 prose-hr:border-rule"
+  >
     <Content />
   </div>
 </div>
-
-<style>
-  .blend__story-body :global(p + p) {
-    margin-top: 1rem;
-  }
-</style>

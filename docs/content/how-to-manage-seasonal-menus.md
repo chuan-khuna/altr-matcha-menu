@@ -48,7 +48,8 @@ src/components/seasonal/
   "year_month": "2026-03",    // yyyy-mm — sorts the archive, newest first. Never printed.
   "display": "Spring 2026",   // what the archive prints beside the title
   "description": "…",         // (optional) one line under the title
-  "live": true                // (optional, default false) show it on the landing page
+  "live": true,               // (optional, default false) show it on the landing page
+  "available": true           // (optional, default true) false = off the site entirely
 }
 ```
 
@@ -57,7 +58,12 @@ src/components/seasonal/
 renders it. Change it and rename the folder to match, or the season drops off
 the site.
 
-`live` is the only thing that decides what the landing page shows. A season stays
+`available: false` takes a season off the site entirely — off the landing page,
+out of the footer archive, and no `/seasonal/<slug>` page — without deleting the
+row or its folder. Use it to pull a season, not to retire one: a retired season
+keeps `available: true` and just sets `live: false`, so it stays in the archive.
+
+`live` decides what the landing page shows, among available seasons. A season stays
 in the footer archive for good; retiring one is a one-word edit. Set it on more
 than one and the index stacks them, newest first.
 
@@ -101,11 +107,11 @@ archive all pick it up — there is no third place to register it.
 
 | Where | Component | Shows |
 |---|---|---|
-| Landing page, between the nav and the menu | `src/components/sections/Seasonal.astro` | seasons with `live: true`, newest first |
+| Landing page, between the nav and the menu | `src/components/sections/Seasonal.astro` | available seasons with `live: true`, newest first |
 | `/seasonal/<slug>` | `src/pages/seasonal/[slug].astro` | that one season, head as `<h1>` |
-| Footer, every page | `src/components/Footer.astro` | every season, newest first |
+| Footer, every page | `src/components/Footer.astro` | every available season, newest first |
 
-A row whose folder is missing is **dropped everywhere** rather than linked to a
+A row marked `available: false`, or whose folder is missing, is **dropped everywhere** rather than linked to a
 404 — see `getSeasons()` in `src/lib/seasonal.ts`. That is the safe way to sketch
 a season in the JSON before its layout exists.
 

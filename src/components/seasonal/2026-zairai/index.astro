@@ -1,0 +1,99 @@
+---
+import { Image } from "astro:assets";
+import type { SeasonLayoutProps } from "@/lib/seasonal";
+import SeasonHead from "@/components/seasonal/ui/SeasonHead.astro";
+import cover from "@/components/seasonal/2026-zairai/cover.jpg";
+
+type Props = SeasonLayoutProps;
+const { season, headingLevel = "h2" } = Astro.props;
+
+/* September 2026 — one blend rather than a set of drinks, so this season is the
+   December 2025 column again: the maker's square card kept whole beside a short
+   list of type. The story lives on the blend's own page; this links to it. */
+const items = [
+  {
+    name: "Zairai Usucha",
+    price: 110,
+    description: "Wild, seed-grown · Kyoto–Nara border · stone milled",
+    notes: ["round umami", "forest air", "deep moss", "nashi pear", "lemon zest"],
+  },
+];
+
+const blendHref = "/matcha/2026/zairai";
+
+const formatPrice = (n: number) => n.toLocaleString("en-US");
+
+/* Rendered width of the cover column (26rem), so Astro emits a sized image
+   rather than the full-resolution original. */
+const COVER_IMAGE_PX = 416;
+---
+
+<article aria-labelledby={`seasonal-${season.data.slug}-label`}>
+  <SeasonHead
+    season={season}
+    headingLevel={headingLevel}
+    linked={headingLevel !== "h1"}
+  />
+
+  <div
+    class="mt-8 grid gap-y-10 min-[46rem]:grid-cols-[26rem_minmax(0,1fr)] min-[46rem]:items-start min-[46rem]:gap-x-12"
+  >
+    {/* The maker's card, square and kept whole — no crop, no frame, no radius. */}
+    <Image
+      src={cover}
+      alt="MTCH's monthly matcha card for Zairai — tea bushes in a motion blur, with the origin, tasting notes and menu set in white type"
+      width={COVER_IMAGE_PX}
+      densities={[1, 2]}
+      loading="lazy"
+      decoding="async"
+      class="fade-up aspect-square w-full bg-paper-2 object-cover"
+    />
+
+    <div class="min-w-0">
+      <p class="fade-up max-w-[52ch] font-sans text-base leading-relaxed text-ink">
+        Zairai (在来) means native — tea grown from seed, not cloned, so every
+        bush is genetically its own. These are more than sixty years old, on
+        steep hand-worked slopes along the Kyoto–Nara border. No fixed
+        character, just the place and the year, in the cup.
+      </p>
+
+      <ul class="m-0 mt-10 list-none divide-y divide-rule border-t border-rule p-0" role="list">
+        {
+          items.map((item) => (
+            <li class="fade-up flex min-w-0 items-baseline justify-between gap-x-6 py-5">
+              <div class="min-w-0">
+                <p
+                  data-optical
+                  class="display text-lg italic leading-tight tracking-snug text-ink"
+                >
+                  {item.name}
+                </p>
+                <p class="mono mt-2 max-w-[40ch] text-sm leading-snug text-ink-muted">
+                  {item.description}
+                </p>
+                <p
+                  class="mono mt-2 max-w-[40ch] text-sm leading-snug text-ink-muted"
+                  aria-label="Tasting notes"
+                >
+                  {item.notes.join(" · ")}
+                </p>
+              </div>
+              <p class="mono shrink-0 text-right text-sm tabular-nums text-ink">
+                {formatPrice(item.price)}
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p class="fade-up mt-6">
+        <a
+          href={blendHref}
+          class="mono border-b border-sand text-sm text-ink transition-colors duration-150 hover:border-accent hover:text-accent"
+        >
+          The full story →
+        </a>
+      </p>
+    </div>
+  </div>
+</article>

@@ -52,5 +52,12 @@ export const seasonal = defineCollection({
      * newest first.
      */
     live: z.boolean().default(false),
+    /**
+     * Set `false` to take the season off the site entirely — off the landing
+     * page, out of the footer archive, and no `/seasonal/<slug>` page — without
+     * deleting the row or its folder. `live` only decides the landing page;
+     * this decides whether the season exists on the site at all.
+     */
+    available: z.boolean().default(true),
   }),
 });

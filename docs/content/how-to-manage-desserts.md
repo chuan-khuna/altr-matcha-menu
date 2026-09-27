@@ -6,7 +6,7 @@ Content folder: `src/content/desserts/<slug>/index.md`
 File format: `.md` with YAML frontmatter
 
 **One dessert per folder**, the same shape a matcha blend uses — so a dessert's
-photograph sits beside the file that names it, and the folder name is the slug:
+photograph sits beside the file that names it, and the folder path is the entry id:
 
 ```
 src/content/desserts/
@@ -30,6 +30,7 @@ so they sit flat under `desserts/`.)
 ```yaml
 name: string            # Display name of the dessert
 order: number           # Sort order on the menu (default: 0, lower = first)
+available: boolean      # (default: true) false = hidden from the menu
 
 prices:                 # Variant label → price (THB). At least one key.
   <label>: number
@@ -45,8 +46,7 @@ imageAlt: string        # (optional) defaults to "" (decorative)
 
 ## `prices` — one dessert, one or several figures
 
-Same shape as a matcha blend's `menus.<category>`: an ordered map of variant
-label to price.
+An ordered map of variant label to price.
 
 ```yaml
 # Sold one way — the label is not printed, only the figure.
@@ -72,6 +72,9 @@ Keys are printed verbatim, so write them the way they should read on the menu
 pull a dessert off the menu without deleting the file — the same mechanism that
 keeps the `powder` category off the page.
 
+To hide a dessert and keep its prices written down, set `available: false`
+instead.
+
 ---
 
 ## Example file — `src/content/desserts/matcha-monaka/index.md`
@@ -80,6 +83,7 @@ keeps the `powder` category off the page.
 ---
 name: "Matcha Monaka"
 order: 4
+available: true
 prices:
   single: 160
   large: 190
@@ -132,7 +136,8 @@ The Dessert category is set to `grid`. See
 ## Notes
 
 - All prices are in Thai Baht (THB).
-- The folder name is the entry slug. Keep it kebab-case and matching `name`.
+- `entry.id` is the folder path under `src/content/desserts/` (e.g. `sakura-monaka`, or
+  `2026/sakura-monaka` if you nest it). Keep folder names kebab-case and matching `name`.
 - `order` controls sort order across all desserts (ascending).
 - `notes` and `description` are both optional and both render in muted ink under
   the name. Use `description` for a sentence about the dessert, `notes` for

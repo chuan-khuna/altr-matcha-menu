@@ -1,0 +1,9 @@
+# Documents
+
+- [How the main page picks and renders content](./main-page-rendering.md): The order of sections on `index.astro`, and how Seasonal and Menu load collections. Covers filtering on `available` and on prices, dropping empty categories, and choosing list, grid or card rows. Also lists which detail pages are built.
+- [Manage matcha](./manage-matcha.md): One folder per blend under `matcha/<yyyy>/<slug>/`. The top-level `available` hides the whole blend and its page. Each `menus` item (`title`, `price`, `available`) can be switched off on its own. Blends appear under the categories their `menus` keys match.
+- [Manage desserts](./manage-desserts.md): One folder per dessert with its photo beside it. `prices` maps variant label to THB. `available: false` or empty prices hide it. Desserts appear only as grid tiles in the Dessert category and have no page of their own.
+- [Manage teaware](./manage-teaware.md): One folder per piece. Same fields as desserts, minus `notes`. `available: false` hides both the menu tile and the `/teaware/<slug>` page. The file body becomes the story on that page.
+- [Manage menu categories](./manage-menu-categories.md): `menu-category.json` sets the menu's sections: their order, label, gloss, photo, `source` collection and `list`/`grid` layout. A category with no available entries is not rendered and is left out of the category index.
+- [Manage seasonal menus](./manage-seasonal.md): A season needs a row in `seasonal.json` and a component folder with the same slug. `live: true` shows it above the menu on the main page. Every season stays in the footer archive and at `/seasonal/<slug>`.
+- [Manage site data](./manage-site-data.md): `src/data/site.ts` holds the announcement strip, address, opening hours, contact links and nav links. These are plain TypeScript exports, so you edit the values directly. There is no collection or schema.

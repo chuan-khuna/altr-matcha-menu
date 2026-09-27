@@ -59,4 +59,5 @@ renders it.
   below-the-fold, `client:only="react"` for window/WebGL/canvas).
 - If an animation or effect breaks on the site but works in isolation, first
   check the component has a `client:*` directive — Astro ships no JS without one.
-- Save LLM artifacts to `docs/artifacts/<type>/yyyy-mm-dd-<topic>.md`.
+- Save session artifacts (PRDs, plans, research and design notes) under
+  `.scratch/<feature-slug>/` — see `docs/agents/issue-tracker.md`.

@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { entryId } from '@/lib/content';
 
 /**
  * One dessert per folder — `desserts/<slug>/index.md`, the same shape a matcha
@@ -9,14 +10,22 @@ import { glob } from 'astro/loaders';
  * column of price rows.
  */
 export const desserts = defineCollection({
-  loader: glob({ pattern: '**/index.{md,mdx}', base: './src/content/desserts' }),
+  loader: glob({
+    pattern: '**/index.{md,mdx}',
+    base: './src/content/desserts',
+    generateId: entryId,
+  }),
   schema: ({ image }) => z.object({
     name: z.string(),
     order: z.number().default(0),
     /**
-     * Variant label → price in THB, in written order. Same shape as a matcha
-     * blend's `menus.<category>`: a dessert sold one way has a single key and
-     * the label is not printed; a monaka sold singly and by the box has several
+     * Set `false` to take the whole entry off the site — off the menu, and
+     * no page of its own — without deleting the file.
+     */
+    available: z.boolean().default(true),
+    /**
+     * Variant label → price in THB, in written order. A dessert sold one way
+     * has a single key and the label is not printed; a monaka sold singly and by the box has several
      * and every label shows.
      *
      * An entry with no priced variant is not rendered — comment the prices out
