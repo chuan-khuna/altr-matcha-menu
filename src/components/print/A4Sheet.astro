@@ -1,0 +1,28 @@
+---
+/**
+ * One A4 sheet.
+ *
+ * In PRINT it is a plain padded page that breaks after itself, so each sheet
+ * lands on a sheet of paper. On SCREEN it is a true-to-size 210×297mm region,
+ * zoomed as a whole by A4Canvas to fit the window. Only an outline marks the
+ * page edge — the sheet shares the paper background — and nothing about its
+ * width changes between the two, so what wraps on screen wraps on paper.
+ * Content taller than the sheet spills visibly past its bottom edge: the
+ * preview's warning that the page will not fit.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    "box-border p-[14mm] break-after-page last:break-after-auto",
+    "[@media_screen]:h-[297mm] [@media_screen]:w-[210mm] [@media_screen]:shrink-0 [@media_screen]:outline-1 [@media_screen]:outline-ink/30 [@media_screen]:outline-solid [@media_screen]:[zoom:var(--sheet-zoom,1.25)]",
+    className,
+  ]}
+>
+  <slot />
+</div>

@@ -1,0 +1,30 @@
+---
+import MenuRemark from "@/components/matcha-info/MenuRemark.astro";
+
+interface Props {
+  /** Categories the scale applies to — "Latte". */
+  appliesTo: string[];
+}
+
+const { appliesTo } = Astro.props;
+---
+
+{/* Headed like a CompactMenuTable — label over an ink rule — so it reads as one
+    more block of the board. The scale under it is the landing page's own. */}
+<section aria-labelledby="compact-sweetness-label">
+  <header class="border-b border-ink pb-2">
+    {appliesTo.length > 0 && (
+      <p class="eyebrow text-2xs">For {appliesTo.join(" · ")}</p>
+    )}
+    <h2
+      id="compact-sweetness-label"
+      data-optical
+      class="display text-2xl leading-tight tracking-snug text-ink"
+    >
+      Sweetness
+    </h2>
+  </header>
+  <div class="pt-6">
+    <MenuRemark label={false} />
+  </div>
+</section>

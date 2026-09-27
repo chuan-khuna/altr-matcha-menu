@@ -1,22 +1,7 @@
 ---
-export interface CompactRow {
-  name: string;
-  /** One line under the name, across the full width of the block. */
-  notes?: string;
-  href?: string;
-  /** Column label → price. A column this row is not sold in is left blank. */
-  prices: Record<string, number>;
-}
+import type { CompactTable } from "@/lib/compact-menu";
 
-interface Props {
-  label: string;
-  /** Micro-type above the label — "Seasonal · September 2026". */
-  eyebrow?: string;
-  /** Price columns, left to right. */
-  columns: string[];
-  rows: CompactRow[];
-  id: string;
-}
+type Props = CompactTable;
 
 const { label, eyebrow, columns, rows, id } = Astro.props;
 
@@ -35,7 +20,7 @@ const headId = `${id}-label`;
 <section
   id={id}
   aria-labelledby={headId}
-  class="grid grid-cols-[minmax(0,1fr)_repeat(var(--cols),4.25rem)] min-[46rem]:grid-cols-[minmax(0,1fr)_repeat(var(--cols),5rem)]"
+  class="grid grid-cols-[minmax(0,1fr)_repeat(var(--cols),4.25rem)] gap-x-4 min-[46rem]:grid-cols-[minmax(0,1fr)_repeat(var(--cols),5rem)] min-[46rem]:gap-x-6"
   style={`--cols: ${columns.length}`}
 >
   <header class="col-span-full grid grid-cols-subgrid items-end border-b border-ink pb-2">
@@ -92,7 +77,7 @@ const headId = `${id}-label`;
         })}
         {row.notes && (
           <p
-            class="mono col-span-full text-sm leading-snug text-ink-muted"
+            class="mono col-start-1 text-sm leading-snug text-ink-muted"
             aria-label="Tasting notes"
           >
             {row.notes}

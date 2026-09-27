@@ -1,88 +1,15 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
-import CompactMenuTable, {
-  type CompactRow,
-} from "@/components/compact-menu/CompactMenuTable.astro";
-import { getMenuGroups, type MenuGroup } from "@/lib/menu";
-import { getLiveSeasons, seasonMenu, type SeasonCover } from "@/lib/seasonal";
+import CompactMenuTable from "@/components/compact-menu/CompactMenuTable.astro";
+import CompactSweetness from "@/components/compact-menu/CompactSweetness.astro";
+import { getCompactMenu } from "@/lib/compact-menu";
 
-/* The whole menu on one screen — the counter board, not the reading copy. Same
-   data as the landing page: the standing menu from getMenuGroups(), the season
-   from its menu.ts. No nav, no footer, no story: a picture per block and a
-   record per blend. */
+/* The whole menu on one screen — the counter board, not the reading copy. No
+   nav, no footer, no story: a picture per block and a record per blend. The
+   same blocks, one to an A4 sheet, are at /compact-menu/print. */
 
-interface Table {
-  id: string;
-  label: string;
-  eyebrow?: string;
-  columns: string[];
-  rows: CompactRow[];
-}
-
-interface Picture {
-  image: ImageMetadata;
-  alt: string;
-}
-
-/* Every price label any row in the block is sold as, in first-seen order — so
-   a blend's own written order decides the columns, and a blend that is not sold
-   in one leaves that cell blank. */
-const columnsOf = (rows: CompactRow[]) => [
-  ...new Set(rows.flatMap((row) => Object.keys(row.prices))),
-];
-
-const toTable = (t: Omit<Table, "columns">): Table => ({
-  ...t,
-  columns: columnsOf(t.rows),
-});
-
-const standingBlock = (group: MenuGroup): { table: Table; picture?: Picture } => {
-  const { label, gallery } = group.category.data;
-  const id = `compact-${group.category.id}`;
-  /* The first of the category's photographs — a board has no room to crossfade. */
-  const first = gallery?.[0];
-  const picture = first && { image: first.image, alt: first.description ?? "" };
-  const rows: CompactRow[] =
-    group.kind === "matcha"
-      ? group.blends.map(({ blend, menuItems, href }) => ({
-          name: blend.data.name,
-          notes: blend.data.notes.join(" · ") || undefined,
-          href,
-          prices: Object.fromEntries(menuItems),
-        }))
-      : group.items.map((item) => ({
-          name: item.name,
-          notes: item.notes?.join(" · ") || item.description,
-          href: item.href,
-          prices: Object.fromEntries(item.prices),
-        }));
-  return { table: toTable({ id, label, rows }), picture };
-};
-
-const standing = (await getMenuGroups()).map(standingBlock);
-
-const seasonal = (await getLiveSeasons()).flatMap(
-  (season): { table: Table; cover?: SeasonCover }[] => {
-    const menu = seasonMenu(season.data.slug);
-    if (!menu || menu.items.length === 0) return [];
-    return [
-      {
-        table: toTable({
-          id: `compact-seasonal-${season.data.slug}`,
-          label: season.data.title,
-          eyebrow: `Seasonal · ${season.data.display}`,
-          rows: menu.items.map((item) => ({
-            name: item.name,
-            notes: item.notes?.join(" · ") || item.description,
-            prices: Object.fromEntries(item.prices),
-          })),
-        }),
-        cover: menu.cover,
-      },
-    ];
-  },
-);
+const { seasonal, standing, sweetnessFor } = await getCompactMenu();
 
 /* Widest each picture is drawn, so Astro emits sized images rather than the
    originals: the season cover's cap (36rem) and the category photograph's
@@ -117,14 +44,14 @@ const CATEGORY_IMAGE_PX = 224;
       >
         {seasonal.length > 0 && (
           <div class="flex flex-col gap-y-14">
-            {seasonal.map(({ table, cover }) => (
+            {seasonal.map(({ table, picture }) => (
               <div>
                 <CompactMenuTable {...table} />
                 {/* The season's own cover, kept whole — no crop, no frame. */}
-                {cover && (
+                {picture && (
                   <Image
-                    src={cover.image}
-                    alt={cover.alt}
+                    src={picture.image}
+                    alt={picture.alt}
                     widths={[COVER_IMAGE_PX, COVER_IMAGE_PX * 2]}
                     sizes="(min-width: 36rem) 36rem, 100vw"
                     loading="lazy"
@@ -161,6 +88,9 @@ const CATEGORY_IMAGE_PX = 224;
               <CompactMenuTable {...table} />
             </div>
           ))}
+          {/* The scale for the drinks that take syrup — after the categories it
+              applies to, as one more block. */}
+          {sweetnessFor.length > 0 && <CompactSweetness appliesTo={sweetnessFor} />}
         </div>
       </div>
     </div>
