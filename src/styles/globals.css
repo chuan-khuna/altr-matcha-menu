@@ -176,6 +176,16 @@
   transform: translateY(0);
 }
 
+/* Paper has no scroll — anything that never entered the viewport would print
+   blank. */
+@media print {
+  .fade-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fade-up {
     opacity: 1;

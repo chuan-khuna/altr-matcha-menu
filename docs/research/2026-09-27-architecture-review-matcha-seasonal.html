@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Architecture review for altr-matcha</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+  mermaid.initialize({ startOnLoad: true, theme: "neutral", securityLevel: "loose" });
+</script>
+<style>
+  .seam { border-style: dashed; }
+  .deep { background: linear-gradient(135deg, #0f172a, #1e293b); }
+  .faded { opacity: .55; }
+  .mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body class="bg-stone-50 text-slate-900 font-sans">
+<main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
+
+<header class="space-y-4">
+  <p class="text-xs uppercase tracking-wider text-slate-500">Architecture review · 27 Sep 2026 · scope: matcha collection + seasonal menus</p>
+  <h1 class="font-serif text-4xl">altr-matcha</h1>
+  <div class="flex flex-wrap gap-6 text-xs uppercase tracking-wider text-slate-600">
+    <span class="flex items-center gap-2"><span class="inline-block w-5 h-4 border-2 border-slate-400 bg-white"></span>module</span>
+    <span class="flex items-center gap-2"><span class="inline-block w-8 border-t-2 border-dashed border-slate-500"></span>seam</span>
+    <span class="flex items-center gap-2"><span class="inline-block w-8 border-t-2 border-red-600"></span>leakage</span>
+    <span class="flex items-center gap-2"><span class="inline-block w-5 h-4 deep"></span>deep module</span>
+  </div>
+  <p class="text-sm text-slate-500">No <code>CONTEXT.md</code> and no ADRs in the repo, so the domain words below come from the schema comments and <code>docs/content/</code>: <em>blend</em>, <em>menu category</em>, <em>season</em>, <em>live</em>, <em>available</em>. There are no tests in the repo, so "tests" below means tests that become possible.</p>
+</header>
+
+<section id="candidates" class="space-y-10">
+
+<!-- 1 -->
+<article id="c1" class="rounded-xl border border-slate-200 bg-white p-8 space-y-6 shadow-sm">
+  <div class="flex flex-wrap items-center gap-3">
+    <h2 class="font-serif text-2xl">1 · Deepen a blend-menu module</h2>
+    <span class="rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1">Strong</span>
+    <span class="rounded-full bg-slate-100 text-slate-700 text-xs px-3 py-1">in-process</span>
+  </div>
+  <ul class="font-mono text-sm text-slate-700 space-y-0.5">
+    <li>src/collection-definitions/matcha.ts <span class="text-slate-400">(menus: clear | latte | powder)</span></li>
+    <li>src/content/menu-category.json <span class="text-slate-400">(ids, labels, sweetnessScale)</span></li>
+    <li>src/components/sections/Menu.astro:13-100 <span class="text-slate-400">(MATCHA_MENU_KEYS, byOrder, filters, href)</span></li>
+    <li>src/pages/matcha/[...slug].astro:30-44, 88 <span class="text-slate-400">(categoryLabels, "latte" rule)</span></li>
+    <li>src/components/matcha-info/AvailableMenu.astro:17</li>
+    <li>src/lib/content.ts <span class="text-slate-400">(availableMenuItems)</span></li>
+  </ul>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 bg-stone-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-slate-500 mb-2">Before: the concept lives in two pages</p>
+      <pre class="mermaid">
+flowchart LR
+  M[Menu.astro]
+  P["matcha/[...slug].astro"]
+  A[AvailableMenu.astro]
+  S[(matcha.ts<br/>menus keys)]
+  J[(menu-category.json<br/>ids · labels · sweetness)]
+  C[content.ts<br/>availableMenuItems]
+  M -- "MATCHA_MENU_KEYS copy" --> S
+  M --> J
+  M --> C
+  P -- "categoryLabels copy" --> S
+  P -- "'latte' literal" --> S
+  P --> C
+  A -- "re-filters empties" --> C
+  linkStyle 0,3,4 stroke:#dc2626,stroke-width:2px
+      </pre>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-stone-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-slate-500 mb-3">After: one deep module, two callers</p>
+      <div class="flex flex-col items-center gap-3">
+        <div class="flex gap-3">
+          <div class="border-2 border-slate-400 bg-white px-3 py-2 text-xs uppercase tracking-wider">Menu.astro</div>
+          <div class="border-2 border-slate-400 bg-white px-3 py-2 text-xs uppercase tracking-wider">blend page</div>
+        </div>
+        <div class="text-slate-400 text-lg leading-none">↓ ↓</div>
+        <div class="w-full border-t-2 border-dashed border-slate-500 relative">
+          <span class="absolute -top-3 right-0 bg-stone-50 px-1 text-[10px] uppercase tracking-wider text-slate-500">seam</span>
+        </div>
+        <div class="deep w-full rounded-md p-4 text-white space-y-3">
+          <p class="text-xs uppercase tracking-wider text-emerald-300">Blend-menu module</p>
+          <p class="text-[11px] text-slate-300">small interface: menu for a category · menus for a blend · blend href</p>
+          <div class="grid grid-cols-2 gap-2 text-[10px] uppercase tracking-wider faded">
+            <div class="border border-slate-500 p-1.5">available + order</div>
+            <div class="border border-slate-500 p-1.5">key set from schema</div>
+            <div class="border border-slate-500 p-1.5">drop empty items / groups</div>
+            <div class="border border-slate-500 p-1.5">labels from menu-category</div>
+            <div class="border border-slate-500 p-1.5">sweetness rule</div>
+            <div class="border border-slate-500 p-1.5">/matcha/&lt;id&gt; href</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 text-sm">
+    <div><p class="font-semibold">Problem</p><p>"What a blend offers under a menu category" has no module; the key set is typed out in 4+ places, the blend page labels categories differently from the menu, and the sweetness remark follows two different rules (<code>sweetnessScale</code> vs <code>key === "latte"</code>).</p></div>
+    <div><p class="font-semibold">Solution</p><p>Put the rules into one module next to <code>lib/seasonal.ts</code>, fed by the matcha and menu-category collections. The landing menu and the blend page both read from it. <code>availableMenuItems</code> and <code>MATCHA_MENU_KEYS</code> become its implementation.</p></div>
+  </div>
+  <div class="text-sm">
+    <p class="font-semibold mb-1">Wins</p>
+    <ul class="list-disc pl-5 space-y-0.5">
+      <li>locality: new category key in one place</li>
+      <li>leverage: one interface, two pages</li>
+      <li>labels and sweetness rule stop diverging</li>
+      <li>unmatched category id fails loudly</li>
+      <li>pure data in, rows out: testable</li>
+    </ul>
+  </div>
+</article>
+
+<!-- 2 -->
+<article id="c2" class="rounded-xl border border-slate-200 bg-white p-8 space-y-6 shadow-sm">
+  <div class="flex flex-wrap items-center gap-3">
+    <h2 class="font-serif text-2xl">2 · Make the season registry check its own join</h2>
+    <span class="rounded-full bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1">Worth exploring</span>
+    <span class="rounded-full bg-slate-100 text-slate-700 text-xs px-3 py-1">in-process</span>
+  </div>
+  <ul class="font-mono text-sm text-slate-700 space-y-0.5">
+    <li>src/content/seasonal.json</li>
+    <li>src/collection-definitions/seasonal.ts</li>
+    <li>src/lib/seasonal.ts <span class="text-slate-400">(already deep: passes the deletion test)</span></li>
+    <li>src/components/seasonal/&lt;slug&gt;/index.astro</li>
+    <li>src/components/sections/Seasonal.astro:22 · src/pages/seasonal/[slug].astro:23 <span class="text-slate-400">(the <code>!</code>)</span></li>
+  </ul>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 bg-stone-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-slate-500 mb-3">Before: mismatches vanish</p>
+      <div class="grid grid-cols-[1fr_auto_1fr] gap-x-3 gap-y-2 text-[11px] font-mono items-center">
+        <div class="text-xs uppercase tracking-wider font-sans text-slate-500">seasonal.json row</div><div></div><div class="text-xs uppercase tracking-wider font-sans text-slate-500">component folder</div>
+        <div class="border-2 border-slate-400 bg-white p-1.5">2026-zairai</div><div class="text-emerald-700">━━</div><div class="border-2 border-slate-400 bg-white p-1.5">2026-zairai/</div>
+        <div class="border-2 border-slate-400 bg-white p-1.5">2026-sakrua <span class="text-red-600">typo</span></div><div class="text-red-600">╳</div><div class="border-2 border-slate-400 bg-white p-1.5">2026-sakura/</div>
+        <div class="border-2 border-slate-400 bg-white p-1.5">live ✓ · available ✗</div><div class="text-red-600">╳</div><div class="border-2 border-slate-300 bg-white p-1.5 text-slate-400">—</div>
+        <div class="border-2 border-slate-400 bg-white p-1.5">slug 2026-… · year_month 2025-12</div><div class="text-red-600">?</div><div class="border-2 border-slate-300 bg-white p-1.5 text-slate-400">—</div>
+      </div>
+      <p class="mt-3 text-[11px] text-red-700">All four build green. Season silently missing; callers still write <code>seasonLayout(slug)!</code>.</p>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-stone-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-slate-500 mb-3">After: registry owns the invariant</p>
+      <div class="space-y-2">
+        <div class="flex gap-2 text-[10px] uppercase tracking-wider">
+          <div class="border-2 border-slate-400 bg-white px-2 py-1">landing</div>
+          <div class="border-2 border-slate-400 bg-white px-2 py-1">/seasonal/[slug]</div>
+          <div class="border-2 border-slate-400 bg-white px-2 py-1">footer</div>
+        </div>
+        <div class="border-t-2 border-dashed border-slate-500"></div>
+        <div class="deep rounded-md p-4 text-white space-y-2">
+          <p class="text-xs uppercase tracking-wider text-emerald-300">Season registry</p>
+          <p class="text-[11px] text-slate-300">returns season <em>with</em> its layout: no <code>!</code> at call sites</p>
+          <div class="text-[10px] uppercase tracking-wider space-y-1 faded">
+            <div class="border border-slate-500 p-1.5">row ↔ folder: build error both ways</div>
+            <div class="border border-slate-500 p-1.5">slug year = year_month year</div>
+            <div class="border border-slate-500 p-1.5">live ∧ ¬available: rejected</div>
+            <div class="border border-slate-500 p-1.5">available filter · newest-first sort</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 text-sm">
+    <div><p class="font-semibold">Problem</p><p><code>lib/seasonal.ts</code> is the one deep module here, but its interface leaks an invariant: callers must know a layout exists (<code>!</code>), and every inconsistency between <code>seasonal.json</code> and the folders is dropped without a signal.</p></div>
+    <div><p class="font-semibold">Solution</p><p>Keep the module and deepen it: hand out season and layout as a pair, and fail the build on join mismatches, slug/<code>year_month</code> disagreement and <code>live</code> without <code>available</code>.</p></div>
+  </div>
+  <div class="text-sm">
+    <p class="font-semibold mb-1">Wins</p>
+    <ul class="list-disc pl-5 space-y-0.5">
+      <li>interface shrinks: no caller-side <code>!</code></li>
+      <li>locality: rules checked in one place</li>
+      <li>typo'd slug fails the build</li>
+      <li>join logic testable with fake glob map</li>
+    </ul>
+  </div>
+</article>
+
+<!-- 3 -->
+<article id="c3" class="rounded-xl border border-slate-200 bg-white p-8 space-y-6 shadow-sm">
+  <div class="flex flex-wrap items-center gap-3">
+    <h2 class="font-serif text-2xl">3 · Link seasons to blends through the blend-menu module</h2>
+    <span class="rounded-full bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1">Worth exploring</span>
+    <span class="rounded-full bg-slate-100 text-slate-700 text-xs px-3 py-1">in-process</span>
+    <span class="rounded-full bg-slate-100 text-slate-500 text-xs px-3 py-1">depends on 1</span>
+  </div>
+  <ul class="font-mono text-sm text-slate-700 space-y-0.5">
+    <li>src/components/seasonal/2026-zairai/index.astro:14-22 <span class="text-slate-400">(price 110, notes, blendHref)</span></li>
+    <li>src/content/matcha/2026/zairai/index.md</li>
+  </ul>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 bg-stone-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-slate-500 mb-2">Before: a string copy of the blend</p>
+      <pre class="mermaid">
+flowchart LR
+  Z["2026-zairai/index.astro<br/>'/matcha/2026/zairai'<br/>price: 110 · notes[…]"]
+  B["matcha/2026/zairai<br/>Usucha 110 · notes"]
+  Z -. "hand-copied" .-> B
+  X["moved to archived/<br/>or available: false"] --> B
+  Z -. "404, no warning" .-> X
+  linkStyle 0,2 stroke:#dc2626,stroke-width:2px
+      </pre>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-stone-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-slate-500 mb-2">After: season asks the module</p>
+      <pre class="mermaid">
+flowchart LR
+  Z["2026-zairai/index.astro"]
+  M["Blend-menu module<br/>blend('2026/zairai')"]
+  B[(matcha collection)]
+  Z --> M --> B
+  classDef deep fill:#0f172a,color:#fff,stroke:#0f172a
+  class M deep
+      </pre>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 text-sm">
+    <div><p class="font-semibold">Problem</p><p>A live season links and prices a blend by copying it. Archiving the blend (which changes its id) or hiding it breaks the link and the build stays green.</p></div>
+    <div><p class="font-semibold">Solution</p><p>Seasons that feature a blend fetch its href (and, if wanted, its live price) through the blend-menu module, which fails on a missing or unavailable blend. Past seasons can keep hand-set prices as a record.</p></div>
+  </div>
+  <div class="text-sm">
+    <p class="font-semibold mb-1">Wins</p>
+    <ul class="list-disc pl-5 space-y-0.5">
+      <li>leverage: third caller, same interface</li>
+      <li>broken blend link fails the build</li>
+      <li>live price can't drift</li>
+    </ul>
+  </div>
+</article>
+
+<!-- 4 -->
+<article id="c4" class="rounded-xl border border-slate-200 bg-white p-8 space-y-6 shadow-sm">
+  <div class="flex flex-wrap items-center gap-3">
+    <h2 class="font-serif text-2xl">4 · Separate "archived" from the blend id</h2>
+    <span class="rounded-full bg-slate-200 text-slate-700 text-xs font-semibold px-3 py-1">Speculative</span>
+    <span class="rounded-full bg-slate-100 text-slate-700 text-xs px-3 py-1">in-process</span>
+  </div>
+  <ul class="font-mono text-sm text-slate-700 space-y-0.5">
+    <li>src/collection-definitions/matcha.ts <span class="text-slate-400">(glob **/index.md, generateId: entryId)</span></li>
+    <li>src/lib/content.ts <span class="text-slate-400">(entryId)</span></li>
+    <li>src/content/matcha/archived/2026/*</li>
+  </ul>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="rounded-lg border border-slate-200 bg-stone-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-slate-500 mb-3">Before: one path, three meanings</p>
+      <div class="space-y-1.5">
+        <div class="h-10 border-l-4 border-red-500 bg-white px-3 flex items-center text-[11px] font-mono">archived/2026/asatsuyu/index.md</div>
+        <div class="h-10 border-l-4 border-slate-400 bg-white px-3 flex items-center text-[11px]"><span class="uppercase tracking-wider mr-2 text-slate-500">id</span> archived/2026/asatsuyu</div>
+        <div class="h-10 border-l-4 border-slate-400 bg-white px-3 flex items-center text-[11px]"><span class="uppercase tracking-wider mr-2 text-slate-500">url</span> /matcha/archived/2026/asatsuyu</div>
+        <div class="h-10 border-l-4 border-red-500 bg-white px-3 flex items-center text-[11px]"><span class="uppercase tracking-wider mr-2 text-slate-500">hidden?</span> only if <code class="mx-1">available: false</code> was also set</div>
+      </div>
+    </div>
+    <div class="rounded-lg border border-slate-200 bg-stone-50 p-4">
+      <p class="text-xs uppercase tracking-wider text-slate-500 mb-3">After: folder is storage, flag is state</p>
+      <div class="space-y-1.5">
+        <div class="h-10 border-l-4 border-slate-400 bg-white px-3 flex items-center text-[11px] font-mono">archived/2026/asatsuyu/index.md</div>
+        <div class="h-20 deep text-white px-3 flex flex-col justify-center text-[11px] rounded-r">
+          <span class="uppercase tracking-wider text-emerald-300">matcha loader</span>
+          <span class="text-slate-300">archived/ excluded (or id strips it) · one rule, one place</span>
+        </div>
+        <div class="h-10 border-l-4 border-slate-400 bg-white px-3 flex items-center text-[11px]"><span class="uppercase tracking-wider mr-2 text-slate-500">url</span> stable: /matcha/2026/asatsuyu</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 text-sm">
+    <div><p class="font-semibold">Problem</p><p>Moving a blend to <code>archived/</code> changes its id and URL but hides nothing. The convention is in no doc, and both <code>2026/asatsuyu</code> and <code>archived/2026/asatsuyu</code> exist today.</p></div>
+    <div><p class="font-semibold">Solution</p><p>Pick one meaning for <code>archived/</code> and put it in the loader: excluded from the collection, or stripped from the id with <code>available</code> derived from it.</p></div>
+  </div>
+  <div class="text-sm">
+    <p class="font-semibold mb-1">Wins</p>
+    <ul class="list-disc pl-5 space-y-0.5">
+      <li>locality: archive rule in the loader</li>
+      <li>URLs survive archiving</li>
+      <li>one flag instead of two</li>
+    </ul>
+  </div>
+</article>
+
+</section>
+
+<section id="top-recommendation" class="rounded-xl deep text-white p-10 space-y-3">
+  <p class="text-xs uppercase tracking-wider text-emerald-300">Top recommendation</p>
+  <h2 class="font-serif text-3xl"><a href="#c1" class="underline decoration-emerald-400/60 underline-offset-4">1 · Deepen a blend-menu module</a></h2>
+  <p class="text-slate-300 max-w-2xl">It touches the most recently changed code, it's the one place where the site already shows two different answers to the same question (labels, the sweetness remark), and candidate 3 depends on it.</p>
+</section>
+
+</main>
+</body>
+</html>

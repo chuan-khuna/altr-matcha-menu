@@ -4,6 +4,7 @@ Collection key: `seasonal`
 Definition: `src/collection-definitions/seasonal.ts`
 Content file: `src/content/seasonal.json`
 Layouts: `src/components/seasonal/<slug>/index.astro`
+Items: `src/components/seasonal/<slug>/menu.ts`
 File format: single JSON array + one folder per season
 
 The short runs that sit beside the standing menu — Sakura in spring, Christmas
@@ -18,9 +19,11 @@ src/content/seasonal.json                  # the archive — slug, title, date, 
 src/components/seasonal/
   2026-sakura/                             # the season, named after the slug
     index.astro                            # its layout
+    menu.ts                                # its items, prices and cover
     cover.jpg  sakura-float.jpg  …         # its photographs
   2025-christmas/
     index.astro
+    menu.ts
     cover.jpg
   ui/
     SeasonHead.astro                       # the head every season opens on
@@ -75,7 +78,39 @@ than one and the index stacks them, newest first.
    outgoing season's `live` back to `false`.
 2. **Make the folder** `src/components/seasonal/<slug>/` and put the
    photographs in it.
-3. **Write the layout** at `src/components/seasonal/<slug>/index.astro`. It
+3. **List the items** in `src/components/seasonal/<slug>/menu.ts` — the one
+   place a season's names and prices are written. The layout imports it, and
+   so does `/compact-menu`:
+
+   ```ts
+   import type { SeasonItem } from '@/lib/seasonal';
+
+   export const items: SeasonItem[] = [
+     {
+       name: 'Matcha Sparkling Sakura',
+       prices: [['single', 220]],   // one way to buy it → "single"; several → one pair each
+       description: 'Usucha poured over sparkling sakura, unstirred', // (optional)
+       notes: ['salted blossom', 'green apple'],                     // (optional)
+       image: sparkling,            // (optional) imported photograph
+       imageAlt: '…',               // (optional)
+     },
+   ];
+   ```
+
+   Export the season's cover from the same file — the layout draws it, and
+   `/compact-menu` sets it under the season's price table:
+
+   ```ts
+   import type { SeasonCover } from '@/lib/seasonal';
+   import coverImage from '@/components/seasonal/2026-sakura/cover.jpg';
+
+   export const cover: SeasonCover = { image: coverImage, alt: '…' };
+   ```
+
+   A season without a `menu.ts` still renders its own layout, but is left off
+   `/compact-menu`. `cover` is optional; without it the compact menu shows the
+   table alone.
+4. **Write the layout** at `src/components/seasonal/<slug>/index.astro`. It
    receives `season` and `headingLevel` and should open with `<SeasonHead>`:
 
    ```astro
@@ -109,6 +144,7 @@ archive all pick it up — there is no third place to register it.
 |---|---|---|
 | Landing page, between the nav and the menu | `src/components/sections/Seasonal.astro` | available seasons with `live: true`, newest first |
 | `/seasonal/<slug>` | `src/pages/seasonal/[slug].astro` | that one season, head as `<h1>` |
+| `/compact-menu`, left column | `src/pages/compact-menu.astro` | `live` seasons that have a `menu.ts`, one price table each with the cover under it |
 | Footer, every page | `src/components/Footer.astro` | every available season, newest first |
 
 A row marked `available: false`, or whose folder is missing, is **dropped everywhere** rather than linked to a
@@ -120,7 +156,7 @@ a season in the JSON before its layout exists.
 ## Notes
 
 - All prices are in Thai Baht (THB).
-- Prices live **in the component**, not in the JSON. A season is over when it is
+- Prices live **in the season's `menu.ts`**, not in the JSON. A season is over when it is
   over; its figures are a record of what it cost, not a live price list.
 - Reuse `MenuGridTile` (`@/components/matcha-info/ui/MenuGridTile.astro`) for a
   photographed season — it takes `name`, `prices`, `description`, `notes`,

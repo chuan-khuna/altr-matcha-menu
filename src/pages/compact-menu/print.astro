@@ -1,0 +1,92 @@
+---
+import { Image } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import CompactMenuTable from "@/components/compact-menu/CompactMenuTable.astro";
+import CompactSweetness from "@/components/compact-menu/CompactSweetness.astro";
+import A4Canvas from "@/components/print/A4Canvas.astro";
+import A4Sheet from "@/components/print/A4Sheet.astro";
+import { getCompactMenu } from "@/lib/compact-menu";
+
+/* The compact menu for paper — the same blocks as /compact-menu, one to an A4
+   sheet: the season first, then each category in running order, then the
+   sweetness scale. On screen the
+   sheets are previewed at size; Ctrl + P prints them as they are shown. */
+
+const { seasonal, standing, sweetnessFor } = await getCompactMenu();
+const sheets = [
+  ...seasonal.map((block) => ({ ...block, kind: "season" as const })),
+  ...standing.map((block) => ({ ...block, kind: "category" as const })),
+];
+
+/* The sheet's content width is 210mm less 2 × 14mm = 182mm ≈ 688px. Twice that
+   so the photograph stays sharp on a printer and in the zoomed preview. */
+const SHEET_IMAGE_PX = 688;
+---
+
+<Layout
+  title="Menu for print — ALTR"
+  description="The ALTR menu set on A4 sheets, one category to a page."
+  footer={false}
+>
+  <main>
+    <A4Canvas>
+      {sheets.map(({ table, picture, kind }, i) => (
+        <A4Sheet>
+          {i === 0 && (
+            <p
+              data-optical
+              class="display mb-8 text-3xl italic leading-tight tracking-snug text-ink"
+            >
+              Menu
+            </p>
+          )}
+
+          <CompactMenuTable {...table} />
+
+          {/* The picture goes under the table: a season's cover is the maker's
+              card and is kept whole; a category's photograph is cropped to a
+              banner the width of the table. */}
+          {picture && (
+            <Image
+              src={picture.image}
+              alt={picture.alt}
+              widths={[SHEET_IMAGE_PX, SHEET_IMAGE_PX * 2]}
+              sizes={kind === "season" ? "120mm" : "182mm"}
+              decoding="async"
+              class:list={[
+                "mt-10 bg-paper-2",
+                kind === "season"
+                  ? "w-[120mm] max-w-full"
+                  : "aspect-[16/9] w-full object-cover",
+              ]}
+            />
+          )}
+        </A4Sheet>
+      ))}
+      {/* The sweetness scale gets the last sheet of its own. */}
+      {sweetnessFor.length > 0 && (
+        <A4Sheet>
+          <CompactSweetness appliesTo={sweetnessFor} />
+        </A4Sheet>
+      )}
+    </A4Canvas>
+  </main>
+</Layout>
+
+{/* Paper: Tailwind has no @page and no print-color-adjust. Margin zero so the
+    paper colour runs to the edge of the sheet — A4Sheet's padding is the
+    margin — and color-adjust stops the browser dropping the background. */}
+<style is:global>
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+    html,
+    body {
+      background: var(--color-paper);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>

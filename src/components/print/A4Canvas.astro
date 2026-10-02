@@ -1,0 +1,49 @@
+---
+/**
+ * The print-preview canvas that holds A4Sheets.
+ *
+ * On SCREEN it stacks the sheets down the middle of the window, with a hint to
+ * print, and scales every sheet by one factor so the widest fits the window —
+ * `zoom`, not a transform, so the page reserves the scaled size and scrolls
+ * normally. In PRINT it is a bare block: no gap, no hint, no zoom, and the
+ * sheets break the pages themselves.
+ *
+ * Paper size and colour in print are the page's job (`@page`,
+ * `print-color-adjust`), not this component's — see compact-menu/print.astro.
+ */
+---
+
+<div
+  data-a4-canvas
+  class="[@media_screen]:flex [@media_screen]:flex-col [@media_screen]:items-center [@media_screen]:gap-6 [@media_screen]:px-4 [@media_screen]:py-8"
+>
+  <p class="mono m-0 text-center text-xs tracking-wide text-ink-muted print:hidden">
+    Press <kbd class="rounded-sm border border-rule px-1 py-0.5 text-2xs">Ctrl</kbd>
+    + <kbd class="rounded-sm border border-rule px-1 py-0.5 text-2xs">P</kbd> to
+    print or save as PDF — A4, portrait, one page each
+  </p>
+  <slot />
+</div>
+
+<script is:inline>
+  /* Fit-to-width: scale each sheet up to a comfortable desktop size (1.25×) and
+     down on a narrow window so it never scrolls sideways. Only sets
+     --sheet-zoom; the zoom itself is declared for screen only on A4Sheet, so
+     print never sees it. */
+  (() => {
+    const MAX_SCALE = 1.25;
+    const SHEET_PX = 793.7; /* 210mm at 96dpi */
+    const fit = (canvas) => {
+      const cs = getComputedStyle(canvas);
+      const avail =
+        canvas.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      let scale = Math.min(MAX_SCALE, avail / SHEET_PX);
+      if (!isFinite(scale) || scale <= 0) scale = MAX_SCALE;
+      canvas.style.setProperty("--sheet-zoom", String(Math.max(scale, 0.15)));
+    };
+    document.querySelectorAll("[data-a4-canvas]").forEach((canvas) => {
+      fit(canvas);
+      if ("ResizeObserver" in window) new ResizeObserver(() => fit(canvas)).observe(canvas);
+    });
+  })();
+</script>

@@ -143,3 +143,38 @@ export const nav = [
 - To add a new nav item, append a new object to `nav` (order reflects render order).
 - `announcement` is site-wide — it shows on the matcha blend pages too, not just
   the landing page.
+
+---
+
+## Sweetness scale — `src/data/sweetness.ts`
+
+`sweetnessLevels` — the counter sweetness scale, one entry per level, in the
+order they are printed.
+
+```ts
+export const sweetnessLevels = [
+  { label: "0%",   grams: "—" },
+  { label: "25%",  grams: "2 g" },
+  { label: "50%",  grams: "4 g", recommended: true },  // exactly one recommended
+  { label: "75%",  grams: "6 g" },
+  { label: "100%", grams: "8 g" },
+];
+```
+
+| Field | Type | Notes |
+|---|---|---|
+| `label` | string | The level as printed — "50%" |
+| `grams` | string | Syrup added, as printed. "—" for none |
+| `recommended` | boolean (optional) | Highlighted as the house recommendation |
+
+Where it renders:
+
+- Landing page menu — under every category whose `sweetnessScale` is `true`
+  (`MenuRemark.astro`).
+- `/compact-menu` — the same `MenuRemark` scale in a Sweetness block after the
+  categories, headed with the
+  categories it applies to (`CompactSweetness.astro`).
+- `/compact-menu/print` — as the last A4 sheet.
+
+The compact menu shows the block only when at least one live category has
+`sweetnessScale: true`.
