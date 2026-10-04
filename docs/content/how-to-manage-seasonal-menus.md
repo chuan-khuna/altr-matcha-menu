@@ -107,9 +107,18 @@ than one and the index stacks them, newest first.
    export const cover: SeasonCover = { image: coverImage, alt: '…' };
    ```
 
+   And the season's story — the paragraph its layout opens on. The layout
+   prints it as `{story}`, and `/menu-board` and `/menu-board/print` set it
+   under the season's price table:
+
+   ```ts
+   export const story =
+     'Cherry season is short and we do not stretch it. …';
+   ```
+
    A season without a `menu.ts` still renders its own layout, but is left off
-   `/menu-board`. `cover` is optional; without it the menu board shows the
-   table alone.
+   `/menu-board`. `cover` and `story` are optional; without them the menu
+   board shows the table alone.
 4. **Write the layout** at `src/components/seasonal/<slug>/index.astro`. It
    receives `season` and `headingLevel` and should open with `<SeasonHead>`:
 
@@ -144,7 +153,8 @@ archive all pick it up — there is no third place to register it.
 |---|---|---|
 | Landing page, between the nav and the menu | `src/components/sections/Seasonal.astro` | available seasons with `live: true`, newest first |
 | `/seasonal/<slug>` | `src/pages/seasonal/[slug].astro` | that one season, head as `<h1>` |
-| `/menu-board`, left column | `src/pages/menu-board/index.astro` | `live` seasons that have a `menu.ts`, one price table each with the cover under it |
+| `/menu-board`, left column | `src/pages/menu-board/index.astro` | `live` seasons that have a `menu.ts`, one price table each, the story and then the cover under it |
+| `/menu-board/print`, first sheets | `src/pages/menu-board/print.astro` | the same seasons, one A4 sheet each: table, story, cover |
 | Footer, every page | `src/components/Footer.astro` | every available season, newest first |
 
 A row marked `available: false`, or whose folder is missing, is **dropped everywhere** rather than linked to a

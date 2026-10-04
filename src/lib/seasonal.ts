@@ -53,6 +53,8 @@ export interface SeasonCover {
 export interface SeasonMenu {
   items: SeasonItem[];
   cover?: SeasonCover;
+  /** The paragraph the season opens on. */
+  story?: string;
 }
 
 /**
@@ -66,7 +68,7 @@ const menus = new Map<string, SeasonMenu>(
     import.meta.glob<SeasonMenu>('/src/components/seasonal/*/menu.ts', {
       eager: true,
     })
-  ).map(([path, mod]) => [path.split('/').at(-2)!, { items: mod.items, cover: mod.cover }])
+  ).map(([path, mod]) => [path.split('/').at(-2)!, { items: mod.items, cover: mod.cover, story: mod.story }])
 );
 
 export const seasonMenu = (slug: string) => menus.get(slug);

@@ -9,8 +9,9 @@ import { getMenuBoard } from "@/lib/menu-board";
 
 /* The menu board for paper — the same blocks as /menu-board, one to an A4
    sheet: the season first, then each category in running order, then the
-   sweetness scale. On screen the
-   sheets are previewed at size; Ctrl + P prints them as they are shown. */
+   sweetness scale. A season's sheet carries its story under the table. On
+   screen the sheets are previewed at size; Ctrl + P prints them as they are
+   shown. */
 
 const { seasonal, standing, sweetnessFor } = await getMenuBoard();
 const sheets = [
@@ -30,7 +31,7 @@ const SHEET_IMAGE_PX = 688;
 >
   <main>
     <A4Canvas>
-      {sheets.map(({ table, picture, kind }, i) => (
+      {sheets.map(({ table, picture, story, kind }, i) => (
         <A4Sheet>
           {i === 0 && (
             <p
@@ -42,6 +43,12 @@ const SHEET_IMAGE_PX = 688;
           )}
 
           <MenuBoardTable {...table} />
+
+          {story && (
+            <p class="mt-6 max-w-[52ch] font-sans text-base leading-relaxed text-ink">
+              {story}
+            </p>
+          )}
 
           {/* The picture goes under the table: a season's cover is the maker's
               card and is kept whole; a category's photograph is cropped to a

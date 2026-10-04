@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import type { SeasonLayoutProps } from "@/lib/seasonal";
 import SeasonHead from "@/components/seasonal/ui/SeasonHead.astro";
-import { cover, items } from "@/components/seasonal/2025-christmas/menu";
+import { cover, items, story } from "@/components/seasonal/2025-christmas/menu";
 
 type Props = SeasonLayoutProps;
 const { season, headingLevel = "h2" } = Astro.props;
@@ -46,9 +46,7 @@ const COVER_IMAGE_PX = 416;
 
     <div class="min-w-0">
       <p class="fade-up max-w-[52ch] font-sans text-base leading-relaxed text-ink">
-        The winter pair, built to be looked at before it is stirred: a red base,
-        a white or clear middle, and a band of usucha poured over the top at the
-        counter.
+        {story}
       </p>
 
       {/* Two drinks and no photographs of their own, so they are set as type —

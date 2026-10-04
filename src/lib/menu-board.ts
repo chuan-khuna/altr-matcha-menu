@@ -33,6 +33,8 @@ export interface BoardPicture {
 export interface BoardBlock {
   table: BoardTable;
   picture?: BoardPicture;
+  /** A season's story, set under its table. Standing categories have none. */
+  story?: string;
 }
 
 /* Every price label any row in the block is sold as, in first-seen order — so
@@ -72,9 +74,10 @@ const standingBlock = (group: MenuGroup): BoardBlock => {
 };
 
 /**
- * `seasonal` — one block per live season that has a `menu.ts`, its cover as
- * the picture. `standing` — one block per category with something to price,
- * in running order, its first photograph as the picture.
+ * `seasonal` — one block per live season that has a `menu.ts`, its story under
+ * the table and its cover as the picture. `standing` — one block per category
+ * with something to price, in running order, its first photograph as the
+ * picture.
  */
 export async function getMenuBoard(): Promise<{
   seasonal: BoardBlock[];
@@ -104,6 +107,7 @@ export async function getMenuBoard(): Promise<{
           })),
         }),
         picture: menu.cover,
+        story: menu.story,
       },
     ];
   });

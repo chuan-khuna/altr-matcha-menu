@@ -44,9 +44,15 @@ const CATEGORY_IMAGE_PX = 224;
       >
         {seasonal.length > 0 && (
           <div class="flex flex-col gap-y-14">
-            {seasonal.map(({ table, picture }) => (
+            {seasonal.map(({ table, picture, story }) => (
               <div>
                 <MenuBoardTable {...table} />
+                {/* The paragraph the season's own page opens on. */}
+                {story && (
+                  <p class="mt-6 max-w-[52ch] font-sans text-base leading-relaxed text-ink">
+                    {story}
+                  </p>
+                )}
                 {/* The season's own cover, kept whole — no crop, no frame. */}
                 {picture && (
                   <Image

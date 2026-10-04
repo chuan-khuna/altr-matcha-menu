@@ -21,3 +21,7 @@ export const cover: SeasonCover = {
   image: coverImage,
   alt: "Usucha poured from a glass katakuchi into an ichigo latte and a strawberry honey lemon, red baubles alongside",
 };
+
+/** The paragraph the season opens on — its page and the menu board both print it. */
+export const story =
+  'The winter pair, built to be looked at before it is stirred: a red base, a white or clear middle, and a band of usucha poured over the top at the counter.';

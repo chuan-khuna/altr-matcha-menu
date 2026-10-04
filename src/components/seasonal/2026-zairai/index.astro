@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import type { SeasonLayoutProps } from "@/lib/seasonal";
 import SeasonHead from "@/components/seasonal/ui/SeasonHead.astro";
-import { cover, items } from "@/components/seasonal/2026-zairai/menu";
+import { cover, items, story } from "@/components/seasonal/2026-zairai/menu";
 
 type Props = SeasonLayoutProps;
 const { season, headingLevel = "h2" } = Astro.props;
@@ -43,10 +43,7 @@ const COVER_IMAGE_PX = 416;
 
     <div class="min-w-0">
       <p class="fade-up max-w-[52ch] font-sans text-base leading-relaxed text-ink">
-        Zairai (在来) means native — tea grown from seed, not cloned, so every
-        bush is genetically its own. These are more than sixty years old, on
-        steep hand-worked slopes along the Kyoto–Nara border. No fixed
-        character, just the place and the year, in the cup.
+        {story}
       </p>
 
       <ul class="m-0 mt-10 list-none divide-y divide-rule border-t border-rule p-0" role="list">
