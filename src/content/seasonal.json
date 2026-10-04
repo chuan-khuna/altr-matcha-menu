@@ -15,7 +15,7 @@
     "display": "Spring 2026",
     "description": "Blossom season — salted petals, sparkling, and the leaf underneath.",
     "live": false,
-    "available": true
+    "available": false
   },
   {
     "slug": "2025-christmas",
@@ -24,6 +24,6 @@
     "display": "December 2025",
     "description": "Red fruit and the leaf, poured at the counter.",
     "live": false,
-    "available": true
+    "available": false
   }
 ]

@@ -190,6 +190,14 @@
     --rule-accent: 1px solid var(--primary);
     --rule-dotted: 1px dotted var(--accent); /* menu leaders — sand */
 
+    /* ─── project: scrollbar ─── */
+    /* The thumb is the one part you grab, so it takes the link-underline tone
+       (keeps its 3:1) rather than the sub-floor --rule; the track is the paper
+       itself, so the bar reads as a thin rule in the margin, not a gutter. */
+    --scrollbar-track: var(--background);
+    --scrollbar-thumb: var(--underline);
+    --scrollbar-thumb-hover: var(--primary);
+
     /* ─── compat aliases (existing code keeps working) ─── */
 
     --color-paper: var(--background);
