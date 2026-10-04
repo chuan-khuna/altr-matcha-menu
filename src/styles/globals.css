@@ -116,6 +116,31 @@
       scroll-behavior: smooth;
     }
   }
+  /* Scrollbar — thin, square, and in the paper's own tones. Inherited, so any
+     scroll container picks it up; containers that hide their bar
+     (scrollbar-width: none) still win. */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
+  /* Safari has no scrollbar-color yet; Chrome and Firefox ignore this block
+     because they take the standard properties above. */
+  @supports not (scrollbar-color: auto) {
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--scrollbar-track);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb);
+      border: 3px solid var(--scrollbar-track);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--scrollbar-thumb-hover);
+    }
+  }
   body {
     margin: 0;
     min-height: 100vh;
