@@ -171,10 +171,10 @@ Where it renders:
 
 - Landing page menu — under every category whose `sweetnessScale` is `true`
   (`MenuRemark.astro`).
-- `/compact-menu` — the same `MenuRemark` scale in a Sweetness block after the
+- `/menu-board` — the same `MenuRemark` scale in a Sweetness block after the
   categories, headed with the
-  categories it applies to (`CompactSweetness.astro`).
-- `/compact-menu/print` — as the last A4 sheet.
+  categories it applies to (`MenuBoardSweetness.astro`).
+- `/menu-board/print` — as the last A4 sheet.
 
-The compact menu shows the block only when at least one live category has
+The menu board shows the block only when at least one live category has
 `sweetnessScale: true`.

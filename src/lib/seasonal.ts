@@ -58,8 +58,8 @@ export interface SeasonMenu {
 /**
  * Every season's items and cover, keyed by slug, from `menu.ts` beside its
  * `index.astro`. The layout imports the same module, so the season's own page
- * and the compact menu never disagree on a name, a price or a picture. A season
- * without one is left off the compact menu — its layout still renders.
+ * and the menu board never disagree on a name, a price or a picture. A season
+ * without one is left off the menu board — its layout still renders.
  */
 const menus = new Map<string, SeasonMenu>(
   Object.entries(
