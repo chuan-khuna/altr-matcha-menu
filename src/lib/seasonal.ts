@@ -53,20 +53,22 @@ export interface SeasonCover {
 export interface SeasonMenu {
   items: SeasonItem[];
   cover?: SeasonCover;
+  /** The paragraph the season opens on. */
+  story?: string;
 }
 
 /**
  * Every season's items and cover, keyed by slug, from `menu.ts` beside its
  * `index.astro`. The layout imports the same module, so the season's own page
- * and the compact menu never disagree on a name, a price or a picture. A season
- * without one is left off the compact menu — its layout still renders.
+ * and the menu board never disagree on a name, a price or a picture. A season
+ * without one is left off the menu board — its layout still renders.
  */
 const menus = new Map<string, SeasonMenu>(
   Object.entries(
     import.meta.glob<SeasonMenu>('/src/components/seasonal/*/menu.ts', {
       eager: true,
     })
-  ).map(([path, mod]) => [path.split('/').at(-2)!, { items: mod.items, cover: mod.cover }])
+  ).map(([path, mod]) => [path.split('/').at(-2)!, { items: mod.items, cover: mod.cover, story: mod.story }])
 );
 
 export const seasonMenu = (slug: string) => menus.get(slug);

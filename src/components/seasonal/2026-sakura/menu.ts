@@ -35,3 +35,7 @@ export const cover: SeasonCover = {
   image: coverImage,
   alt: "Matcha settling through sparkling sakura, salted blossom suspended in the bubbles",
 };
+
+/** The paragraph the season opens on — its page and the menu board both print it. */
+export const story =
+  'Cherry season is short and we do not stretch it. The blossoms are salt-cured, not flavoured — they go into the syrup whole and stay in the cup, so the drink turns rounder and saltier the longer you sit with it.';

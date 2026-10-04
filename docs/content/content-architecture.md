@@ -16,6 +16,7 @@ Content files live in `src/content/<plural-folder>/` as `.md` files.
 | `teaware` | `src/collection-definitions/teaware.ts` | `src/content/teaware/<slug>/index.md` | `.md` |
 | `seasonal` | `src/collection-definitions/seasonal.ts` | `src/content/seasonal.json` (+ one folder per season in `src/components/seasonal/`) | single JSON array |
 | `menuCategories` | `src/collection-definitions/menu-category.ts` | `src/content/menu-category.json` (+ images in `src/content/menu-categories/`) | single JSON array |
+| `announcements` | `src/collection-definitions/announcement.ts` | `src/content/announcement.json` | single JSON array |
 
 > `matchaDrinks` / `src/content/matcha-drinks/` used to be listed here but has
 > never existed in the tree or in `content.config.ts`. Row removed.
@@ -28,7 +29,7 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 
 | File | Exports | Used by |
 |---|---|---|
-| `src/data/site.ts` | `announcement`, `address`, `hours`, `reach`, `nav` | `Contact.astro`, `Nav.astro`, `Announcement.astro`, `Footer.astro` |
+| `src/data/site.ts` | `address`, `hours`, `reach`, `nav` | `Contact.astro`, `Nav.astro`, `Footer.astro` |
 
 ### Helper modules
 
@@ -36,6 +37,7 @@ Typed TypeScript exports consumed directly by Astro components — no collection
 |---|---|---|
 | `src/lib/content.ts` | `entryId` | `generateId` of the `matcha`, `desserts` and `teaware` glob loaders |
 | `src/lib/seasonal.ts` | `getSeasons`, `getLiveSeasons`, `seasonLayout`, `seasonHref` | `Seasonal.astro`, `seasonal/[slug].astro`, `Footer.astro` |
+| `src/lib/announcement.ts` | `getAnnouncement` | `Announcement.astro`, `Layout.astro` |
 
 `seasonal.ts` also holds the layout registry — the glob over
 `src/components/seasonal/*/index.astro` that maps a slug to the component

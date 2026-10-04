@@ -24,7 +24,7 @@ menus:
       price: 110
       available: true
     - title: "Light Brew"
-      price: 110
+      price: 150
       available: true
 ---
 

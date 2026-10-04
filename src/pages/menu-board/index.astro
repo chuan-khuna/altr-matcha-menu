@@ -1,15 +1,15 @@
 ---
 import { Image } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
-import CompactMenuTable from "@/components/compact-menu/CompactMenuTable.astro";
-import CompactSweetness from "@/components/compact-menu/CompactSweetness.astro";
-import { getCompactMenu } from "@/lib/compact-menu";
+import MenuBoardTable from "@/components/menu-board/MenuBoardTable.astro";
+import MenuBoardSweetness from "@/components/menu-board/MenuBoardSweetness.astro";
+import { getMenuBoard } from "@/lib/menu-board";
 
 /* The whole menu on one screen — the counter board, not the reading copy. No
    nav, no footer, no story: a picture per block and a record per blend. The
-   same blocks, one to an A4 sheet, are at /compact-menu/print. */
+   same blocks, one to an A4 sheet, are at /menu-board/print. */
 
-const { seasonal, standing, sweetnessFor } = await getCompactMenu();
+const { seasonal, standing, sweetnessFor } = await getMenuBoard();
 
 /* Widest each picture is drawn, so Astro emits sized images rather than the
    originals: the season cover's cap (36rem) and the category photograph's
@@ -44,9 +44,15 @@ const CATEGORY_IMAGE_PX = 224;
       >
         {seasonal.length > 0 && (
           <div class="flex flex-col gap-y-14">
-            {seasonal.map(({ table, picture }) => (
+            {seasonal.map(({ table, picture, story }) => (
               <div>
-                <CompactMenuTable {...table} />
+                <MenuBoardTable {...table} />
+                {/* The paragraph the season's own page opens on. */}
+                {story && (
+                  <p class="mt-6 max-w-[52ch] font-sans text-base leading-relaxed text-ink">
+                    {story}
+                  </p>
+                )}
                 {/* The season's own cover, kept whole — no crop, no frame. */}
                 {picture && (
                   <Image
@@ -85,12 +91,12 @@ const CATEGORY_IMAGE_PX = 224;
                   class="aspect-[16/9] w-full bg-paper-2 object-cover min-[80rem]:aspect-[4/5]"
                 />
               )}
-              <CompactMenuTable {...table} />
+              <MenuBoardTable {...table} />
             </div>
           ))}
           {/* The scale for the drinks that take syrup — after the categories it
               applies to, as one more block. */}
-          {sweetnessFor.length > 0 && <CompactSweetness appliesTo={sweetnessFor} />}
+          {sweetnessFor.length > 0 && <MenuBoardSweetness appliesTo={sweetnessFor} />}
         </div>
       </div>
     </div>

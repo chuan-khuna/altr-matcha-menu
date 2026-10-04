@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import type { SeasonLayoutProps } from "@/lib/seasonal";
 import SeasonHead from "@/components/seasonal/ui/SeasonHead.astro";
 import MenuGridTile from "@/components/matcha-info/ui/MenuGridTile.astro";
-import { cover, items } from "@/components/seasonal/2026-sakura/menu";
+import { cover, items, story } from "@/components/seasonal/2026-sakura/menu";
 
 type Props = SeasonLayoutProps;
 const { season, headingLevel = "h2" } = Astro.props;
@@ -39,9 +39,7 @@ const TILE_IMAGE_PX = 380;
   <p
     class="fade-up mt-8 max-w-[52ch] font-sans text-base leading-relaxed text-ink"
   >
-    Cherry season is short and we do not stretch it. The blossoms are salt-cured,
-    not flavoured — they go into the syrup whole and stay in the cup, so the
-    drink turns rounder and saltier the longer you sit with it.
+    {story}
   </p>
 
   <ul

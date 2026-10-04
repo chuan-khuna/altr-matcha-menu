@@ -1,7 +1,7 @@
 /**
  * The counter sweetness scale — how much syrup each level adds to a drink.
  * Shown under every menu category with `sweetnessScale: true`, and as its own
- * block on the compact menu. Exactly one level should be `recommended`.
+ * block on the menu board. Exactly one level should be `recommended`.
  */
 export const sweetnessLevels: {
   label: string;
