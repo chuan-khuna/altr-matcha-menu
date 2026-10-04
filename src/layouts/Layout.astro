@@ -2,6 +2,7 @@
 import '@/styles/globals.css';
 import FontLoader from '@/components/FontLoader.astro';
 import Footer from '@/components/Footer.astro';
+import { getAnnouncement } from '@/lib/announcement';
 
 interface Props {
   title?: string;
@@ -15,9 +16,13 @@ const {
   title = 'ALTR — Specialty Matcha Cafe',
   description = 'Single-cultivar and carefully blended matcha, sourced directly from Japanese farms and served with precision.',
 } = Astro.props;
+
+/* --nav-h counts the announcement strip; with no notice live the strip is not
+   rendered, so its height comes out of every offset taken off --nav-h. */
+const announcement = await getAnnouncement();
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" style={announcement ? undefined : '--announce-h: 0rem'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
